@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="../../css/base.css" />
+		<link rel="stylesheet" type="text/css" href="../../font/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="../../js/plugin/toastr.css" />
+		<link rel="stylesheet" type="text/css" href="list.css" />
+	</head>
+
+	<body>
+		<div class="main-container">
+			<dl class="tab-list no-select">
+				<dt class="tab-item">角色列表</dt>
+			</dl>
+			<div class="tab-container">
+				<div class="tab-content">
+					<dl class="operation-list no-select">
+						<dt class="operation-item" id="add">添加</dt>
+						<dt class="operation-item" id="update">修改</dt>
+						<dt class="operation-item" name="delete">删除</dt>
+					</dl>
+					
+					<div class="update-container">
+						<div class="title">
+							<h1 class="first-title">角色添加</h1>
+						</div>
+						<h2 class="second-title">角色信息</h2>
+						<dl class="update-content">
+							<dt class="update-item">
+								<label for="role-name">角色名称：</label>
+								<input type="text" id="role-name" name="role-name" class="input" placeholder="角色名称" autocomplete="off" tabindex="-1" required="required" />
+								<input type="button" class="btn red" name="save" value="保存" tabindex="-1" data-index = "1" pattern="^[a-zA-Z0-9\u4e00-\u9fa5]{4,30}$" />
+								<input type="button" class="btn red" name="clear" value="清空" tabindex="-1" data-index = "1" />
+							</dt>
+							<dt class="update-item">
+								<label for="permission-info">权限信息：</label>
+								<input type="checkbox" id="permission" name="permission" value="权限" />
+								<label for="permissions">超级管理员</label>
+								<input type="checkbox" id="permission" name="permission" value="权限" />
+								<label for="permissions">普通管理员</label>
+								<input type="checkbox" id="permission" name="permission" value="权限" />
+								<label for="permissions">机构用户</label>
+								<input type="checkbox" id="permission" name="permission" value="权限" />
+								<label for="permissions">VIP用户</label>
+								<input type="checkbox" id="permission" name="permission" value="权限" />
+								<label for="permissions">普通用户</label>
+							</dt>
+						</dl>
+					</div>
+					
+					<table class="data-table">
+						<tr>
+							<th></th>
+							<th>序号</th>
+							<th>角色名称</th>
+							<th>权限数量</th>
+							<th>用户数量</th>
+							<th>有效用户</th>
+							<th>无效用户</th>
+							<th>就业网用户</th>
+							<th>机构用户</th>
+							<th>角色状态</th>
+						</tr>
+					</table>
+					
+					<dl class="page-list no-select">
+						<dt class="page-item page-info">
+							总计<span id="totalRows"></span>条记录，<span id="currentPage">1</span>/<span id="totalPages"></span>页
+						</dt>
+						<dt class="page-item page-operation">
+							<a name="prevBtn">上一页</a> <a class="page-active">1</a> <a>2</a> <a>3</a> <a class="page-disable">4</a> <a class="page-disable">5</a> <a name="nextBtn">下一页</a>
+						</dt>
+					</dl>
+					
+					
+				</div>
+
+			</div>
+		</div>
+
+
+		<script src="../../js/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/pid.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/plugin/toastr.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/permission.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/tab.js" type="text/javascript" charset="utf-8"></script>
+		<script src="list.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+
+</html>

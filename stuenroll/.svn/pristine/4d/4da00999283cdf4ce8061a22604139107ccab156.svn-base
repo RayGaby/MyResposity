@@ -1,0 +1,31 @@
+package cn.gov.hrss.ln.stuenroll.db;
+
+import java.util.List;
+
+import com.jfinal.plugin.activerecord.Record;
+
+/**
+ * Organization表Dao接口
+ */
+public interface I_OrganizationDao {
+	  
+	  /**
+	   * 查询机构名称
+	   * @param id 机构ID
+	   * @return 查询结果
+	   */
+	  public Record search(long id);
+	/**
+	 * 查询机构id
+	 * 
+	 * @param name
+	 * @return
+	 */
+	  public String searchId(String name);
+	  /**
+	   * 查询所有机构
+	   * 
+	   * @return
+	   */
+	  public List<Record> searchAll();
+}

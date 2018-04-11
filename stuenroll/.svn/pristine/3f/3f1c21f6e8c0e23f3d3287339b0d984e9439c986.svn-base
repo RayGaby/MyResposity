@@ -1,0 +1,50 @@
+package cn.gov.hrss.ln.stuenroll.report;
+
+import java.util.List;
+
+import com.jfinal.plugin.activerecord.Page;
+import com.jfinal.plugin.activerecord.Record;
+
+import cn.gov.hrss.ln.stuenroll.db.I_EnrollDao;
+import cn.gov.hrss.ln.stuenroll.db.I_NewsfeedDao;
+
+public class ReportService implements I_ReportService {
+
+	private I_EnrollDao i_EnrollDao;
+	private I_NewsfeedDao i_NewsfeedDao;
+
+	@Override
+	public Record searchPersonalEnroll(long id) {
+		Record record = i_EnrollDao.searchPersonalEnroll(id);
+		return record;
+	}
+
+	@Override
+	public Record searchPersonalState(long id) {
+		Record record = i_EnrollDao.searchPersonalState(id);
+		return record;
+	}
+
+	@Override
+	public List<Record> getNewsfeed(long id, int currentPage) {
+		List<Record> page = i_NewsfeedDao.getNewsfeed(id, currentPage);
+		return page;
+	}
+
+	public I_EnrollDao getI_EnrollDao() {
+		return i_EnrollDao;
+	}
+
+	public void setI_EnrollDao(I_EnrollDao i_EnrollDao) {
+		this.i_EnrollDao = i_EnrollDao;
+	}
+
+	public I_NewsfeedDao getI_NewsfeedDao() {
+		return i_NewsfeedDao;
+	}
+
+	public void setI_NewsfeedDao(I_NewsfeedDao i_NewsfeedDao) {
+		this.i_NewsfeedDao = i_NewsfeedDao;
+	}
+
+}

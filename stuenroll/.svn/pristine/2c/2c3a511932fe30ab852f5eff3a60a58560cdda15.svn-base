@@ -1,0 +1,214 @@
+package cn.gov.hrss.ln.stuenroll.setting;
+
+import java.io.File;
+import java.util.Date;
+import java.util.List;
+
+import com.alibaba.rocketmq.common.message.Message;
+import com.jfinal.aop.Before;
+import com.jfinal.plugin.activerecord.Record;
+import com.jfinal.plugin.activerecord.tx.Tx;
+
+import cn.gov.hrss.ln.stuenroll.db.I_AppFeedbackMongoDao;
+import cn.gov.hrss.ln.stuenroll.db.I_AppVersionLogDao;
+import cn.gov.hrss.ln.stuenroll.db.I_StudentAppUserDao;
+import cn.gov.hrss.ln.stuenroll.db.I_StudentAppUserLogDao;
+import cn.gov.hrss.ln.stuenroll.rocketmq.I_Producer;
+import jodd.util.Base64;
+
+public class SettingService implements I_SettingService {
+	private I_StudentAppUserDao i_StudentAppUserDao;
+	private I_AppFeedbackMongoDao i_AppFeedbackMongoDao;
+	private I_Producer i_Producer;
+	private I_StudentAppUserLogDao i_StudentAppUserLogDao;
+	private I_AppVersionLogDao i_AppVersionLogDao;
+
+	@Override
+	public boolean setIcon(long id, File file) {
+		boolean bool = i_StudentAppUserDao.setIcon(id, file);
+		return bool;
+	}
+
+	@Override
+	public File getIcon(long id) {
+		File file = i_StudentAppUserDao.getIcon(id);
+		return file;
+	}
+
+	@Override
+	public Record getInfo(long id) {
+		Record record = i_StudentAppUserDao.getInfo(id);
+		return record;
+
+	}
+
+	@Override
+	public Record getMoreInfo(long id) {
+		Record record = i_StudentAppUserDao.getMoreInfo(id);
+		return record;
+
+	}
+
+	@Before(Tx.class)
+	@Override
+	public String setPassword(long id, String username, String password, String newpassword) {
+		String info = "密码修改失败";
+		boolean bool = i_StudentAppUserDao.checkPassword(id, username, password);
+		if (bool) {
+			bool = bool && i_StudentAppUserDao.setPassword(id, username, password, newpassword);
+			if (bool) {
+				info = "密码修改成功";
+			}
+		}
+		else {
+			info = "原密码输入不正确";
+		}
+
+		String status;
+		if (info == "密码修改成功") {
+			status = "成功";
+		}
+		else {
+			status = "失败";
+		}
+		i_StudentAppUserLogDao.save(id, "修改密码", newpassword, status, new Date().getTime());
+		return info;
+	}
+
+	@Before(Tx.class)
+	@Override
+	public boolean setTel(long id, long tel) {
+		boolean bool = i_StudentAppUserDao.setTel(id, tel);
+		if (bool) {
+			i_StudentAppUserLogDao.save(id, "修改手机号", tel + "", "成功", new Date().getTime());
+		}
+		return bool;
+
+	}
+
+	@Before(Tx.class)
+	@Override
+	public boolean setEmail(long id, String email, long time) {
+		boolean bool = false;
+		List<Record> records = i_StudentAppUserLogDao.checkStatus(id, "修改邮箱", email, "进行中", time);
+		if (!records.isEmpty()) {
+			bool = i_StudentAppUserDao.setEmail(id, email);
+			for (Record record : records) {
+				bool = bool && i_StudentAppUserLogDao.update(record.getLong("id"), "成功");
+			}
+			List<Record> records2 = i_StudentAppUserLogDao.checkStatus(id, "修改邮箱", null, "进行中", null);
+			for (Record record : records2) {
+				bool = bool && i_StudentAppUserLogDao.update(record.getLong("id"), "失败");
+			}
+		}
+
+		return bool;
+	}
+
+	@Before(Tx.class)
+	@Override
+	public boolean sendEmail(long id, String email) {
+		boolean bool = false;
+		long time = new Date().getTime();
+		bool = i_StudentAppUserLogDao.save(id, "修改邮箱", email, "进行中", time);
+		String url = "http://127.0.0.1/stuenroll/setting/setEmail?id=" + Base64.encodeToString(id + "") + "&email="
+				+ Base64.encodeToString(email) + "&time=" + time;
+		Record record = i_StudentAppUserDao.getInfo(id);
+		String nickname = record.getStr("name");
+		String username = record.getStr("username");
+
+		record = i_StudentAppUserDao.getMoreInfo(id);
+		String oldEmail = record.getStr("email");
+		Message message_old = new Message();
+		message_old.setTopic("UserTopic");
+		message_old.setTags("AppRecoverEmailToOld");
+		message_old.setBody("用户重置邮箱".getBytes());
+
+		message_old.putUserProperty("email", oldEmail);
+		message_old.putUserProperty("nickname", Base64.encodeToString(nickname));
+		message_old.putUserProperty("username", username);
+
+		Message message_new = new Message();
+		message_new.setTopic("UserTopic");
+		message_new.setTags("AppRecoverEmailToNew");
+		message_new.setBody("用户重置邮箱".getBytes());
+
+		message_new.putUserProperty("email", email);
+		message_new.putUserProperty("nickname", Base64.encodeToString(nickname));
+		message_new.putUserProperty("username", username);
+		message_new.putUserProperty("url", url);
+
+		try {
+			i_Producer.sendMessage(message_old);
+			i_Producer.sendMessage(message_new);
+			bool = bool && true;
+		}
+		catch (Exception e) {
+			bool = bool && false;
+		}
+		return bool;
+	}
+
+	@Override
+	public boolean setNickname(long id, String nickname) {
+		boolean bool = i_StudentAppUserDao.setNickname(id, nickname);
+		return bool;
+	}
+
+	@Override
+	public boolean saveFeedback(Record record, List<File> files) {
+		if (files.size() != 0) {
+			List<String> picsId = i_AppFeedbackMongoDao.savePic(files);
+			record.set("pic", picsId);
+		}
+		i_AppFeedbackMongoDao.saveRecord(record);
+		return true;
+	}
+
+	@Override
+	public Record checkupdate(String appid) {
+		Record record = i_AppVersionLogDao.checkupdate(appid);
+		return record;
+	}
+
+	public I_StudentAppUserDao getI_StudentAppUserDao() {
+		return i_StudentAppUserDao;
+	}
+
+	public void setI_StudentAppUserDao(I_StudentAppUserDao i_StudentAppUserDao) {
+		this.i_StudentAppUserDao = i_StudentAppUserDao;
+	}
+
+	public I_AppFeedbackMongoDao getI_AppFeedbackMongoDao() {
+		return i_AppFeedbackMongoDao;
+	}
+
+	public void setI_AppFeedbackMongoDao(I_AppFeedbackMongoDao i_AppFeedbackMongoDao) {
+		this.i_AppFeedbackMongoDao = i_AppFeedbackMongoDao;
+	}
+
+	public I_Producer getI_Producer() {
+		return i_Producer;
+	}
+
+	public void setI_Producer(I_Producer i_Producer) {
+		this.i_Producer = i_Producer;
+	}
+
+	public I_StudentAppUserLogDao getI_StudentAppUserLogDao() {
+		return i_StudentAppUserLogDao;
+	}
+
+	public void setI_StudentAppUserLogDao(I_StudentAppUserLogDao i_StudentAppUserLogDao) {
+		this.i_StudentAppUserLogDao = i_StudentAppUserLogDao;
+	}
+
+	public I_AppVersionLogDao getI_AppVersionLogDao() {
+		return i_AppVersionLogDao;
+	}
+
+	public void setI_AppVersionLogDao(I_AppVersionLogDao i_AppVersionLogDao) {
+		this.i_AppVersionLogDao = i_AppVersionLogDao;
+	}
+
+}

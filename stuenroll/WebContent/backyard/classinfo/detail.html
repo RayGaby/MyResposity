@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="../../css/base.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/table.css" />
+		<link rel="stylesheet" type="text/css" href="../../js/plugin/toastr.css" />
+		<link rel="stylesheet" type="text/css" href="../../font/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="../../js/plugin/dropdown.css"/>
+		<link rel="stylesheet" type="text/css" href="detail.css" />
+		<script type="text/javascript"> 
+		 	/**
+		 	 * 判断上传文件是否符合要求：
+		 	 * 格式：.xml/.csv/.xls/.xlsx
+		 	 * 大小：2M
+		 	 */
+		 	var isIE = /msie/i.test(navigator.userAgent) && !window.opera; 
+		 	function fileChange(target,id) { 
+			 	var fileSize = 0; 
+			 	var filetypes =[".xml"]; 
+			 	var filepath = target.value; 
+			 	var filemaxsize = 1024*2;//2M 
+			 	if(filepath){ 
+				 	var isnext = false; 
+				 	var fileend = filepath.substring(filepath.indexOf(".")); 
+				 	if(filetypes && filetypes.length>0){ 
+					 	for(var i =0; i<filetypes.length;i++){ 
+						 	if(filetypes[i]==fileend){ 
+						 	  isnext = true; 
+						 	  break; 
+						 	} 
+			 	        } 
+		 	         } 
+				 	if(!isnext){ 
+				 		alert("不接受此文件类型！"); 
+				 		target.value =""; 
+				 		return false; 
+				 	} 
+			 	}
+			 	else{ 
+			 		return false; 
+			 	} 
+			 	if (isIE && !target.files) { 
+				 	var filePath = target.value; 
+				 	var fileSystem = new ActiveXObject("Scripting.FileSystemObject"); 
+				 	if(!fileSystem.FileExists(filePath)){ 
+					 	alert("附件不存在，请重新输入！"); 
+					 	return false; 
+			 	    } 
+				 	var file = fileSystem.GetFile (filePath); 
+				 	fileSize = file.Size; 
+			 	} 
+			 	else { 
+			 		fileSize = target.files[0].size; 
+			 	} 
+			
+			 	var size = fileSize / 1024; 
+			 	if(size>filemaxsize){ 
+				 	alert("附件大小不能大于"+filemaxsize/1024+"M！"); 
+				 	target.value =""; 
+				 	return false; 
+			 	} 
+				 	if(size<=0){ 
+				 	alert("附件大小不能为0M！"); 
+				 	target.value =""; 
+				 	return false; 
+			 	} 
+		 	} 
+		</script> 
+	</head>
+	<body>
+		<div class="main-container">
+			<dl class="tab-list">
+				<dt class="tab-item"><span id="organization">大连中软国际计算机培训中心</span>,<span id="classinfo">软件1602</span>班电话回访记录表</dt>
+			</dl>
+			<div class="tab">
+				<div class="tab-content">
+					<dl class="operation-list">
+						<dt class="operation-item" name="search">查询
+							<div id="searchMenu" class="menu">
+								<h4 class="menu-title">回访信息查询</h4>
+								<dl>
+									<dt class="condition-title">回访信息</dt>
+									<dd>
+										<dl class="condition-list">
+											<dt class="label">回访人:</dt>
+											<dt class="condition">
+													<input type="text" name="name" class="keyword" value="" placeholder="回访人"  autocomplete="off" required="required" pattern="^[\u4e00-\u9fa5]{2,15}$" />
+											</dt>
+											<dt class="label">执行人:</dt>
+											<dt class="condition">
+												<input type="text" name="executor" class="keyword" value="" placeholder="执行人"   autocomplete="off" required="required" pattern="^[\u4e00-\u9fa5]{2,15}$" />
+											</dt>
+											<dt class="label">起始日期:</dt>
+											<dt class="condition">
+												<input type="date" name="start-date" class="keyword" value="" placeholder="起始日期" />
+											</dt>
+											<dt class="label">结束日期:</dt>
+											<dt class="condition">
+												<input type="date" name="end-date" class="keyword" value="" placeholder="结束日期" />
+											</dt>
+											<dt class="label">满意度:</dt>
+											<dt class="condition">
+												<div name="satisfaction" class="dropdown">
+													<span class="value" name="satisfy">- 选择 -</span>
+													<i class="iconfont arrowhead">&#xe610;</i>
+													<dl class="dropdown-list">
+														<dt class="dropdown-item" data-result="很满意">很满意</dt>
+														<dt class="dropdown-item" data-result="满意">满意</dt>
+														<dt class="dropdown-item" data-result="一般">一般</dt>
+														<dt class="dropdown-item" data-result="不满意">不满意</dt>
+													</dl>
+												</div>
+											</dt>
+											<dt class="label">回访结果:</dt>
+											<dt class="condition">
+												<div name="result" class="dropdown">
+													<span class="value" name="result">- 选择 -</span>
+													<i class="iconfont arrowhead">&#xe610;</i>
+													<dl class="dropdown-list">
+														<dt class="dropdown-item" data-id="1">成功</dt>
+														<dt class="dropdown-item" data-id="0">失败</dt>
+													</dl>
+												</div>
+											</dt>
+										</dl>
+									</dd>
+									<dd>
+										<input type="button" class="menu-btn" value="查询" ng-click="addEnroll()" data-stuName="" data-userName="" data-start="" data-end="" data-satisfy="" data-result=""/>
+										<input type="button" class="menu-btn" value="清除" ng-click="cleanEnroll()" />
+									</dd>
+								</dl>
+							</div>
+						</dt>
+						<dt class="operation-item" name="delete">删除</dt>
+						<dt class="operation-item" name="import">导入
+							<div id="importMenu" class="menu">
+								<h4 class="menu-title">回访信息导入</h4>
+								<dl>
+									<dt class="condition-title">回访导入</dt>
+									<dd>
+										<dl class="condition-list">
+											<dt class="condition">
+												<span class="import-text">* 仅支持xml文件</span>
+											</dt>
+										    <dt class="condition">
+										        <input type="file" name="file" onchange="fileChange(this);" class="file" id="file"/>
+										    </dt>
+										</dl>
+									</dd>
+									<dd>
+										<input type="button" class="menu-btn" value="导入" id="import" /> 
+								    </dd>
+								</dl>
+							</div>
+						</dt>
+						<dt class="operation-item" name="export">导出
+							<form id="exportMenu" name="exportForm" class="menu" method="post" action="">
+								<h4 class="menu-title">专业信息导出</h4>
+								<dl>
+									<dt class="condition-title">专业导出</dt>
+									<dd>
+										<input type="button" class="menu-btn" value="导出为excel" id="excelBtn" data-index="0" /> 
+								    </dd>
+								    <dd>
+										<input type="button" class="menu-btn" value="导出为xml" id="xmlBtn" data-index="1"/> 
+								    </dd>
+								    <dd>
+										<input type="button" class="menu-btn" value="导出为csv" id="csvBtn" data-index="2"/> 
+								    </dd>
+								</dl>
+							</form>
+						</dt>
+						<dt class="return">[ 返回 ]</dt>
+					</dl>
+					<table class="fixed-table">
+						<tr>
+							<th></th>
+							<th>序号</th>
+							<th>回访人</th>
+							<th>日期时间</th>
+							<th>时长</th>
+							<th>问询人</th>
+							<th>满意度</th>
+							<th>回访内容</th>
+							<th>回访结果</th>
+						</tr>
+						<tr>
+							<th><input type="checkbox" name="id" class="" value="" /></th>
+							<td>1</td>
+							<td>回访人</td>
+							<td>2016-07-23 15:44:11</td>
+							<td>00:05:09</td>
+							<td>问询人</td>
+							<td>满意</td>
+							<td>并没有实际意义，仅仅当做测试这是一段测试文字，并1并没有实际意义，仅仅当做测试</td>
+							<td>[详细记录]</td>
+						</tr>
+					</table>
+					<dl class="page-list no-select">
+						<dt class="page-item page-info">
+							总计<span id="totalRows"></span>条记录，<span id="currentPage">1</span>/<span id="totalPages"></span>页
+						</dt>
+						<dt class="page-item page-operation">
+							<a name="prevBtn">上一页</a> <a class="page-num">1</a> <a class="page-num">2</a> <a class="page-num">3</a> <a class="page-num">4</a> <a class="page-num">5</a> <a name="nextBtn">下一页</a>
+						</dt>
+					</dl>
+				</div>
+			</div>
+		</div>
+		<script src="../../js/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/plugin/dropdown.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/pid.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/plugin/toastr.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/permission.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/tab.js" type="text/javascript" charset="utf-8"></script>
+ 		<script src="../../js/ajaxfileupload.js" type="text/javascript" charset="utf-8" ></script>
+		<script src="analysisSrc.js" type="text/javascript" charset="utf-8"></script>
+		<script src="checkError.js" type="text/javascript" charset="utf-8"></script>
+		<script src="detail.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+</html>

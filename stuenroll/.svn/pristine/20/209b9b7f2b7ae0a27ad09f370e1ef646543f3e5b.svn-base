@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="../../css/base.css" />
+		<link rel="stylesheet" type="text/css" href="../../font/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="../../js/plugin/toastr.css" />
+		<link rel="stylesheet" type="text/css" href="../../js/plugin/dropdown.css" />
+         <link rel="stylesheet" type="text/css" href="../../js/plugin/modal.css" />
+		<link rel="stylesheet" type="text/css" href="profession.css" />
+		<script type="text/javascript"> 
+		 	/**
+		 	 * 判断上传文件是否符合要求：
+		 	 * 格式：.xml/.csv/.xls/.xlsx
+		 	 * 大小：2M
+		 	 */
+		 	var isIE = /msie/i.test(navigator.userAgent) && !window.opera; 
+		 	function fileChange(target,id) { 
+			 	var fileSize = 0; 
+			 	var filetypes =[".xml",".csv",".xls",".xlsx"]; 
+			 	var filepath = target.value; 
+			 	var filemaxsize = 1024*2;//2M 
+			 	if(filepath){ 
+				 	var isnext = false; 
+				 	var fileend = filepath.substring(filepath.indexOf(".")); 
+				 	if(filetypes && filetypes.length>0){ 
+					 	for(var i =0; i<filetypes.length;i++){ 
+						 	if(filetypes[i]==fileend){ 
+						 	  isnext = true; 
+						 	  break; 
+						 	} 
+			 	        } 
+		 	         } 
+				 	if(!isnext){ 
+				 		alert("不接受此文件类型！"); 
+				 		target.value =""; 
+				 		return false; 
+				 	} 
+			 	}
+			 	else{ 
+			 		return false; 
+			 	} 
+			 	if (isIE && !target.files) { 
+				 	var filePath = target.value; 
+				 	var fileSystem = new ActiveXObject("Scripting.FileSystemObject"); 
+				 	if(!fileSystem.FileExists(filePath)){ 
+					 	alert("附件不存在，请重新输入！"); 
+					 	return false; 
+			 	    } 
+				 	var file = fileSystem.GetFile (filePath); 
+				 	fileSize = file.Size; 
+			 	} 
+			 	else { 
+			 		fileSize = target.files[0].size; 
+			 	} 
+			
+			 	var size = fileSize / 1024; 
+			 	if(size>filemaxsize){ 
+				 	alert("附件大小不能大于"+filemaxsize/1024+"M！"); 
+				 	target.value =""; 
+				 	return false; 
+			 	} 
+				 	if(size<=0){ 
+				 	alert("附件大小不能为0M！"); 
+				 	target.value =""; 
+				 	return false; 
+			 	} 
+		 	} 
+		</script> 
+	</head>
+	<body>
+		<div class="main-container">
+			<div class="tab-list no-select">
+				<a class="tab-item">专业列表</a>
+			</div>
+			<div class="tab-container">
+				<dl class="operation-list no-select">
+					<dt class="operation-item" name="add">添加
+						<div id="add" class="menu">
+							<h4 class="pro-title">专业信息添加</h4>
+							<dl class="content-list">
+								<dt class="pro-info">专业信息</dt>
+								<dt class="pro">专业名称：</dt>
+								<dt><input type="text" name="name" value="" class="keyword" placeholder="专业名称" autocomplete="off" required="required" pattern="^[a-zA-Z0-9\u4e00-\u9fa5]{2,30}$" /></dt>
+								<dt><input type="button" name="save" class="save" value="保存" /></dt>
+							</dl>
+						</div>
+					</dt>
+					<dt class="operation-item" name="modify">修改
+						<div id="modify" class="menu">
+							<h4 class="pro-title">专业信息修改</h4>
+							<dl class="content-list">
+								<dt class="pro-info">专业信息</dt>
+								<dt class="pro">专业名称：</dt>
+								<dt><input type="text" name="name" value="" class="keyword" placeholder="专业名称" autocomplete="off" required="required" pattern="^[a-zA-Z0-9\u4e00-\u9fa5]{2,30}$" /></dt>
+								<dt><input type="button" name="save" class="save" value="保存" /></dt>
+							</dl>
+						</div>
+					</dt>
+					<dt class="operation-item" name="delete">删除</dt>
+					<dt class="operation-item" name="import">导入
+						<div id="import" class="menu">
+							<h4 class="pro-title">专业信息导入</h4>
+							<dl class="content-list">
+								<dt class="pro-info">专业导入</dt>
+								<dt class="condition">
+									<input type="file" name="file" onchange="fileChange(this);" class="file" id="file"/>
+								</dt>
+								<dt>
+									<input type="button" class="save" value="导入" id="import-file" /> 
+							    </dt>
+							</dl>
+						</div>
+					</dt>
+					<dt class="operation-item" name="export">导出
+						<form id="export" name="exportForm" class="menu" method="post" action="">
+							<h4 class="pro-title">专业信息导出</h4>
+							<dl class="content-list">
+								<dt class="pro-info">专业导出</dt>
+								<dt>
+									<input type="button" class="save" value="导出为excel" id="excelBtn" data-index="0" /> 
+							    </dt>
+							    <dt>
+									<input type="button" class="save" value="导出为xml" id="xmlBtn" data-index="1"/> 
+							    </dt>
+							    <dt>
+									<input type="button" class="save" value="导出为csv" id="csvBtn" data-index="2"/> 
+							    </dt>
+							</dl>
+						</form>
+					</dt>
+				</dl>
+				<table class="data-table">
+					<tr>
+						<td></td>
+						<td>序号</td>
+						<td>专业名称</td>
+						<td>关联机构</td>
+						<td>关联年届</td>
+						<td>班级数量</td>
+						<td>培训人数</td>
+						<td>就业率</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>序号</td>
+						<td>专业名称</td>
+						<td>关联机构</td>
+						<td>关联年届</td>
+						<td>班级数量</td>
+						<td>培训人数</td>
+						<td>就业率</td>
+					</tr>
+					
+				</table>
+				
+				<dl class="page-list no-select">
+					<dt class="page-item page-info">
+						总计<span id="totalRows"></span>条记录，<span id="currentPage">1</span>/<span id="totalPages"></span>页
+					</dt>
+					<dt class="page-item page-operation">
+						<a name="prevBtn">上一页</a> <a class="page-num">1</a> <a class="page-num">2</a> <a class="page-num">3</a> <a class="page-num">4</a> <a class="page-num">5</a> <a name="nextBtn">下一页</a>
+					</dt>
+				</dl>
+				<dl class="stu-menu">
+						<h4 class="stu-menu-title">班级成员</h4>
+						<dd>
+							<table class="stu-table">
+								<tr>
+									<th>序号</th>
+									<th>姓名</th>
+									<th>性别</th>
+									<th>电话</th>
+									<th>身份证号</th>
+									<th>学生状态</th>
+								</tr>
+								
+							</table>
+							<div class="stu-page-list no-select">
+								<div class="stu-page-item stu-page-info">
+									总计<span name="stu-totalRows">150</span>条记录，每页10条
+								</div>
+								<div class="stu-page-item stu-page-operation">
+									<a name="stu-prevBtn">上一页</a><span name="stu-currentPage">1</span>/<span name="stu-totalPages"></span>页<a name="stu-nextBtn">下一页</a>
+								</div>
+							</div>
+						</dd>
+						<dd>
+							<input type="button" class="stu-menu-btn" value="关闭" />
+						</dd>
+					</dl>
+			</div>
+			
+		</div>
+		
+		<script src="../../js/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/pid.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/plugin/toastr.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/plugin/dropdown.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/plugin/modal.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/permission.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/tab.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/ajaxfileupload.js" type="text/javascript" charset="utf-8" ></script>
+		<script src="profession.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+</html>

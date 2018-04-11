@@ -1,0 +1,233 @@
+body {
+  background-color: #e7e7e7;
+}
+.main-container {
+  background-color: #fff;
+  margin: 0.9375rem;
+  padding: 0.9375rem;
+}
+.main-container .tab-list {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #ebeef7;
+}
+.main-container .tab-list .tab-item {
+  height: 2.25rem;
+  line-height: 2.25rem;
+  text-align: left;
+  padding-left: 1.25rem;
+  letter-spacing: 0.0625rem;
+  font-size: 0.875rem;
+}
+.main-container .tab {
+  overflow: hidden;
+  width: 100%;
+}
+.main-container .tab .tab-content {
+  height: 1000px;
+}
+.main-container .tab .tab-content .operation-list {
+  margin: 0;
+  padding: 0;
+  height: 3rem;
+  position: relative;
+}
+.main-container .tab .tab-content .operation-list .operation-item {
+  float: left;
+  height: 3rem;
+  line-height: 3rem;
+  text-align: center;
+  letter-spacing: 0.0625rem;
+  font-size: 0.875rem;
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
+  cursor: pointer;
+}
+.main-container .tab .tab-content .operation-list .operation-item .menu {
+  display: none;
+  cursor: default;
+  position: absolute;
+  top: 2.375rem;
+  left: 0;
+  background-color: #f0f0f0;
+  width: 100%;
+  border: solid #E0E0E0 0.0625rem;
+  box-shadow: 0 0.1875rem 0.25rem rgba(0, 0, 0, 0.18);
+  z-index: 50;
+}
+.main-container .tab .tab-content .operation-list .operation-item .menu .value {
+  float: left;
+}
+.main-container .tab .tab-content .operation-list .operation-item .menu .arrowhead {
+  float: right;
+  font-size: 0.6875rem;
+}
+.main-container .tab .tab-content .operation-list .operation-item .menu .menu-title {
+  text-align: left;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 1.25rem;
+  padding-bottom: 0.625rem;
+  font-size: 0.9375rem;
+  letter-spacing: 0.0625rem;
+  border-bottom: #ccc dashed 0.0625rem;
+}
+.main-container .tab .tab-content .operation-list .operation-item .menu dl {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  margin-left: 1.25rem;
+}
+.main-container .tab .tab-content .operation-list .operation-item .menu dl .condition-title {
+  float: left;
+  letter-spacing: 0.0625rem;
+  height: 2rem;
+  line-height: 2rem;
+  font-weight: 600;
+  margin-right: 1.25rem;
+}
+.main-container .tab .tab-content .operation-list .operation-item .menu dl dd {
+  float: left;
+  margin-left: 0;
+}
+.main-container .tab .tab-content .operation-list .operation-item .menu dl dd .condition-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  width: 50rem;
+  min-width: 50rem;
+  height: 10.6875rem;
+}
+.main-container .tab .tab-content .operation-list .operation-item .menu dl dd .condition-list .dropdown-list {
+  margin: 0;
+  padding: 0;
+}
+.main-container .tab .tab-content .operation-list .operation-item .menu dl dd .condition-list .label {
+  float: left;
+  width: 5rem;
+  letter-spacing: 0.0625rem;
+  height: 2rem;
+  line-height: 2rem;
+  text-align: right;
+  padding-right: 0.3125rem;
+  margin-bottom: 1.5625rem;
+  margin-left: 0.625rem;
+}
+.main-container .tab .tab-content .operation-list .operation-item .menu dl dd .condition-list .condition {
+  float: left;
+  margin-right: 2.5rem;
+  margin-bottom: 0.625rem;
+  height: 3rem;
+  margin-left: 0;
+}
+.main-container .tab .tab-content .operation-list .operation-item .menu dl dd .condition-list .condition .keyword {
+  width: 16.25rem;
+  height: 2rem;
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
+  margin: 0;
+  border: solid #ccc 0.0625rem;
+  outline: none;
+  letter-spacing: 0.0625rem;
+  position: relative;
+  top: -0.5rem;
+}
+.main-container .tab .tab-content .operation-list .operation-item .menu dl dd .condition-list .condition .file{
+  height: 2rem;
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
+  margin: 0;
+  outline: none;
+  letter-spacing: 0.0625rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  position: relative;
+  top: -0.5rem;
+}
+.main-container .tab .tab-content .operation-list .operation-item .menu dl dd .menu-btn {
+  display: block;
+  width: 7.5rem;
+  height: 2rem;
+  margin-bottom: 1.5625rem;
+  margin-right: 1.5625rem;
+  background-color: #F4494E;
+  border: none;
+  color: #fff;
+  outline: none;
+  border-radius: 0.1875rem;
+  letter-spacing: 0.0625rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+.main-container .tab .tab-content .operation-list .operation-item .menu dl dd .menu-btn:active {
+  background-color: #CD0C12;
+}
+.main-container .tab .tab-content .operation-list .return {
+  float: right;
+  height: 3rem;
+  line-height: 3rem;
+  text-align: center;
+  letter-spacing: 0.0625rem;
+  font-size: 0.875rem;
+  padding-left: 0.625rem;
+  padding-right: 1.875rem;
+  cursor: pointer;
+  color: #0066FF;
+}
+.main-container .tab .tab-content .fixed-table .click {
+  cursor: pointer;
+  color: #0066FF;
+}
+.main-container .tab .tab-content .fixed-table .click:active {
+  color: #2EA8FF;
+}
+.main-container .tab .tab-content .fixed-table .click:visited {
+  color: #9933ff;
+}
+.main-container .tab .tab-content .page-list {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #EBEEF7;
+  margin-top: 0.9375rem;
+}
+.main-container .tab .tab-content .page-list .page-item {
+  height: 2.5rem;
+  font-size: 0.875rem;
+  line-height: 2.5rem;
+}
+.main-container .tab .tab-content .page-list .page-info {
+  float: left;
+  margin-left: 0.9375rem;
+}
+.main-container .tab .tab-content .page-list .page-info span {
+  margin-left: 0.3125rem;
+  margin-right: 0.3125rem;
+}
+.main-container .tab .tab-content .page-list .page-operation {
+  float: right;
+  margin-right: 0.625rem;
+}
+.main-container .tab .tab-content .page-list .page-operation a {
+  cursor: pointer;
+  padding-left: 0.3125rem;
+  padding-right: 0.3125rem;
+}
+.main-container .tab .tab-content .page-list .page-operation a:hover {
+  color: #ff6700;
+}
+.main-container .tab .tab-content .page-list .page-operation .page-active {
+  color: red;
+  font-weight: 600;
+}
+.main-container .tab .tab-content .page-list .page-operation .page-disable {
+  color: #B9B9B9;
+  cursor: default;
+}
+.main-container .tab .tab-content .page-list .page-operation .page-disable:hover {
+  color: #B9B9B9;
+}
+.main-container .error {
+  color: red !important;
+}
+/*# sourceMappingURL=detail.css.map */

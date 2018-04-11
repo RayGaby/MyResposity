@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="../../css/base.css" />
+		<link rel="stylesheet" type="text/css" href="../../font/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="../../js/plugin/toastr.css" />
+		<link rel="stylesheet" type="text/css" href="welcome.css" />
+	</head>
+
+	<body>
+		<div class="main-container">
+			<div class="chart-container">
+				<div class="annual-statistics">
+					<h2 class="title"><span class="year"></span>年辽宁省离校未就业转换数据</h2>
+					<dl class="step-list">
+						<dt class="step-item">起始</dt>
+						<dt class="step-item">报名期</dt>
+						<dt class="step-item">审查期</dt>
+						<dt class="step-item">归档期</dt>
+						<dt class="step-item">核查期</dt>
+						<dt class="step-item">……</dt>
+					</dl>
+					<div class="statistics"></div>
+				</div>
+				<div class="organiztion-statistics">
+					<dl class="statistics-4">
+						<dt>A</dt>
+						<dt>B</dt>
+						<dt>C</dt>
+						<dt>D</dt>
+					</dl>
+					<dl class="statistics-2">
+						<dt>1</dt>
+						<dt>2</dt>
+					</dl>
+				</div>
+			</div>
+			<div class="info-container">
+			</div>
+		</div>
+		<script src="../../js/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/echarts/echarts.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/plugin/toastr.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/permission.js" type="text/javascript" charset="utf-8"></script>
+		<script src="welcome.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+
+</html>

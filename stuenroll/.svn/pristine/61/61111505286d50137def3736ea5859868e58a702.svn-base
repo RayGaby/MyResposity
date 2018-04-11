@@ -1,0 +1,127 @@
+package cn.gov.hrss.ln.stuenroll.excelUtil;
+
+
+import java.io.*;
+import java.util.*;
+import java.text.SimpleDateFormat;
+import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.hssf.util.HSSFColor;
+
+import com.jfinal.plugin.activerecord.Record;
+
+/**
+ * 将jfinal的Record类型的list生成excel报表
+ * 前置条件：如果日期类型不是YYYY-MM-DD类型，修改getValue方法来适应
+ * 后置条件：生成的excel的报表内容的数据都为String类型，所以日期类型的数据在生成的excel里面不会自适应成excel的日期格式
+ * @author GoldRoger
+ *
+ */
+public class WriteExcel {	 
+	   /**
+	    * @param title
+	    *            表格标题名
+	    * @param headers
+	    *            表格属性列名数组
+	    * @param list
+	    *            处理的数据类型：jfinal的record对象的list
+	    * @param out
+	    *            与输出设备关联的流对象，可以将EXCEL文档导出到本地文件或者网络中
+	    */
+	   public void exportExcel(String title, String[] headers,
+	         List<Record> list, OutputStream out) {
+	      // 声明一个工作薄
+	      HSSFWorkbook workbook = new HSSFWorkbook();
+	      // 生成一个表格
+	      HSSFSheet sheet = workbook.createSheet(title);
+	     
+	      //sheet样式定义:getStyle()为自定义方法 - 在下面  - 可扩展
+          HSSFCellStyle style = this.getStyle(workbook);//单元格样式对象 
+	     
+	      //产生表格标题行
+	      HSSFRow row = sheet.createRow(0);
+	      for (int i = 0; i < headers.length; i++) {
+	         HSSFCell cell = row.createCell(i);
+	         cell.setCellStyle(style);
+	         HSSFRichTextString text = new HSSFRichTextString(headers[i]);
+	         cell.setCellValue(text);
+	      }
+	 
+	      try{
+	    	//遍历集合数据，产生数据行
+	    	  int index = 1;
+		      for(Record record:list){
+		    	  row = sheet.createRow(index);//从第二行开始放数据
+		    	  for (int i = 0; i < headers.length; i++) {
+		 	         HSSFCell cell = row.createCell(i);
+		 	         cell.setCellStyle(style);
+		 	         HSSFRichTextString text = new HSSFRichTextString(getValue(record.get(headers[i])));
+		 	         cell.setCellValue(text);
+		 	      }
+		    	  index++;
+		      }
+	      }catch(Exception e){
+	    	 e.printStackTrace(); 
+	    	 System.out.println("生成excel报表失败");
+	      }
+	      //将生成的报表写到指定路径下
+	      try {
+	         workbook.write(out);
+	      } catch (IOException e) {
+	         e.printStackTrace();
+	      }
+	   }
+	   
+	   
+	    /*   
+	     * 列数据信息单元格样式 
+	     */    
+	    public HSSFCellStyle getStyle(HSSFWorkbook workbook) {  
+	          // 设置字体  
+	          HSSFFont font = workbook.createFont();  
+	          //设置字体大小  
+	          font.setFontHeightInPoints((short)10);  
+	          //字体加粗  
+	          font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);  
+	          //设置字体名字   
+	          font.setFontName("Courier New");  
+	          //设置样式;   
+	          HSSFCellStyle style = workbook.createCellStyle();  
+	          //设置底边框;   
+	          style.setBorderBottom(HSSFCellStyle.BORDER_THIN);  
+	          //设置底边框颜色;    
+	          style.setBottomBorderColor(HSSFColor.BLACK.index);  
+	          //设置左边框;     
+	          style.setBorderLeft(HSSFCellStyle.BORDER_THIN);  
+	          //设置左边框颜色;   
+	          style.setLeftBorderColor(HSSFColor.BLACK.index);  
+	          //设置右边框;   
+	          style.setBorderRight(HSSFCellStyle.BORDER_THIN);  
+	          //设置右边框颜色;   
+	          style.setRightBorderColor(HSSFColor.BLACK.index);  
+	          //设置顶边框;   
+	          style.setBorderTop(HSSFCellStyle.BORDER_THIN);  
+	          //设置顶边框颜色;    
+	          style.setTopBorderColor(HSSFColor.BLACK.index);  
+	          //在样式用应用设置的字体;    
+	          style.setFont(font);  
+	          //设置自动换行;   
+	          style.setWrapText(false);  
+	          //设置水平对齐的样式为居中对齐;    
+	          style.setAlignment(HSSFCellStyle.ALIGN_CENTER);  
+	          //设置垂直对齐的样式为居中对齐;   
+	          style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);  
+	          return style;  
+	    }  
+	    
+	    public String getValue(Object obj){
+	    	 if (obj instanceof Date) {
+                 Date date = (Date) obj;
+                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+                 return sdf.format(date);
+             }else{
+                 //其它数据类型都当作字符串简单处理
+                 return String.valueOf(obj);
+             }
+             
+	    }
+}

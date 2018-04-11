@@ -1,0 +1,40 @@
+package cn.gov.hrss.ln.stuenroll.db;
+
+import java.util.HashMap;
+import java.util.List;
+
+import com.jfinal.plugin.activerecord.Record;
+
+public interface I_RolePermissionDao {
+	/**
+	 * 查询角色权限信息
+	 * @param start
+	 * @param length
+	 * @return
+	 */
+	public List<Record> searchRolePermission(long start, long length);
+//	public List<Record> searchPermissionAmount();
+ 
+	/**
+	 * 查询记录总数
+	 * 
+	 * @param map
+	 * @return
+	 */
+	public long searchRolePermissionCount(HashMap map);
+
+	/**
+	 * 根据id删除数据
+	 * 
+	 * @param id
+	 */
+	public int deleteRoleById(Long[] id);
+
+	/**
+	 * 插入角色权限信息
+	 * 
+	 * @param map
+	 * @return
+	 */
+	public int insertRolePermission(HashMap map);
+}

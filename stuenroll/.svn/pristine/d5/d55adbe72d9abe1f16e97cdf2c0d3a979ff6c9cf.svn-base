@@ -1,0 +1,69 @@
+package cn.gov.hrss.ln.stuenroll.db.mongo;
+
+import java.util.Date;
+/**
+ * 动态消息表Dao类实现
+ * 
+ */
+import java.util.HashMap;
+import java.util.List;
+
+import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.activerecord.Page;
+import com.jfinal.plugin.activerecord.Record;
+
+import cn.gov.hrss.ln.stuenroll.db.I_NewsfeedDao;
+import cn.gov.hrss.ln.stuenroll.plugin.MongoKit;
+
+public class NewsfeedDao implements I_NewsfeedDao {
+
+	@Override
+	public Page<Record> getNewsfeed(long id, int currentPage) {
+
+		StringBuffer sql = new StringBuffer();
+		String abbreviation = new String();
+		Page<Record> page = new Page<>(null, 0, 0, 0, 0);
+		
+		sql.append("SELECT ");
+		sql.append("	o.abbreviation ");
+		sql.append("FROM ");
+		sql.append("	organization o ");
+		sql.append("LEFT JOIN enroll e ON e.organization_id = o.id ");
+		sql.append("LEFT JOIN register r ON e.id = r.enroll_id ");
+		sql.append("WHERE ");
+		sql.append("	r.id = ? ");
+
+		try {
+			abbreviation = Db.queryStr(sql.toString(), id);
+		}
+		catch (Exception e) {
+			return page;
+		}
+
+		HashMap filter = new HashMap();
+		filter.put("abbreviation", abbreviation);
+		HashMap sort = new HashMap();
+		sort.put("savedate", null);
+		page = MongoKit.paginate("newsfeed", currentPage, 10, filter, null, sort);
+
+		
+		return page;
+	}
+
+	@Override
+	public int delNewsfeed() {
+		int count = MongoKit.removeAll("newsfeed");
+		return count;
+	}
+
+	@Override
+	public int addNewsfeed(String name, String content) {
+		Record records=new Record();
+		records.set("abbreviation", name);
+		records.set("content", content);
+		records.set("savedate", new Date().getTime());
+		int count =MongoKit.save("newsfeed", records);
+		return count;
+	}
+
+}

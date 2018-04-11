@@ -1,0 +1,411 @@
+body {
+    background-color: #e7e7e7;
+}
+.main-container {
+    background-color: #fff;
+    margin: 15/16rem;
+    padding: 15/16rem;
+    .tab-list {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #EBEEF7;
+        .tab-item {
+            float: left;
+            height: 36/16rem;
+            line-height: 36/16rem;
+            text-align: center;
+            padding-left: 20/16rem;
+            padding-right: 20/16rem;
+            letter-spacing: 1/16rem;
+            font-size: 14/16rem;
+            cursor: pointer;
+        }
+        .tab-active {
+            color: #fff;
+            background-color: #02A0E9;
+        }
+    }
+    .tab-container {
+        overflow: hidden;
+        .tab-content {
+            height:700/16rem;
+            display: none; //使得每个页面显示自己的内容
+            position: relative;
+            .operation-list {
+                margin: 0;
+                padding: 0;
+                height: 48/16rem;
+                position: relative;
+                .operation-item {
+                    float: left;
+                    height: 48/16rem;
+                    line-height: 48/16rem;
+                    text-align: center;
+                    letter-spacing: 1/16rem;
+                    font-size: 14/16rem;
+                    padding-left: 10/16rem;
+                    padding-right: 10/16rem;
+                    cursor: pointer;
+                    display:none;
+                    .menu {
+                        display: none;
+                        cursor: default;
+                        left: 0;
+                        top: 40/16rem;
+                        background-color: #f0f0f0;
+                        color: #333;
+                        width: 100%;
+                        border: solid #e0e0e0 1/16rem;
+                        box-shadow: 0 3/16rem 4/16rem rgba(0,0,0,0.18);
+                        padding: 20/16rem;
+                        position: absolute;
+                        z-index: 50;
+                        .value{
+                            float: left;
+                        }
+                        .arrowhead{
+                            float: right;
+                            font-size: 11/16rem;
+                        }
+                        .menu-title {
+                            text-align: left;
+                            margin-left: 20/16rem;
+                            margin-top: 0;
+                            margin-bottom: 0;
+                            padding-bottom: 10/16rem;
+                            font-size: 15/16rem;
+                            letter-spacing: 1/16rem;
+                            border-bottom: #ccc dashed 1/16rem;
+                        }
+                        dl {
+                            margin-top: 20/16rem;
+                            margin-bottom: 10/16rem;
+                            margin-left: 20/16rem;
+                            .condition-title{
+                                float: left;
+                                letter-spacing: 1/16rem;
+                                height: 32/16rem;
+                                line-height: 32/16rem;
+                                font-weight: 600;
+                                margin-right: 20/16rem;
+                                font-size: 14/16rem;
+                            }
+                            dd{
+                                float: left;
+                                margin-left: 0;
+                                .condition-list{
+                                    margin: 0;
+                                    padding: 0;
+                                    width: 800/16rem;
+                                    min-width: 680/16rem;
+                                    height: 150/16rem;
+                                    .dropdown-list{
+                                        margin: 0;
+                                    }
+                                    .label{
+                                        float: left;
+                                        width: 80/16rem;
+                                        letter-spacing: 1/16rem;
+                                        height: 32/16rem;
+                                        line-height: 32/16rem;
+                                        text-align: right;
+                                        padding-right: 5/16rem;
+                                        margin-bottom: 25/16rem;
+                                        margin-left: 10/16rem;
+                                    }
+                                    .condition{
+                                        float: left;
+                                        margin-right: 40/16rem;
+                                        margin-bottom: 10/16rem;
+                                        height: 48/16rem;
+                                        margin-left: 0;
+                                        .keyword{
+                                            width: 260/16rem;
+                                            height: 32/16rem;
+                                            padding-left: 10/16rem;
+                                            padding-right: 10/16rem;
+                                            margin: 0;
+                                            border: solid #ccc 1/16rem;
+                                            outline: none;
+                                            letter-spacing: 1/16rem;
+                                            position: relative;
+                                            top: -8/16rem;
+                                        }
+                                    }
+                                }
+                                .menu-btn {
+                                    display: block;
+                                    width: 120/16rem;
+                                    height: 32/16rem;
+                                    margin-bottom: 25/16rem;
+                                    background-color: #F4494E;
+                                    border: none;
+                                    color: #fff;
+                                    outline: none;
+                                    border-radius: 3/16rem;
+                                    letter-spacing: 1/16rem;
+                                    font-size: 14/16rem;
+                                    font-weight: 600;
+                                    &:active {
+                                        background-color: #CD0C12;
+                                    }
+                                } 
+                            }
+                            
+                            
+                        }
+                    }
+                    #searchMenu{
+                        height: 230/16rem;
+                    }
+                    #addMenu{
+                        height: 230/16rem;
+                    }
+                    #modifyMenu{
+                        height: 230/16rem;
+                    }
+                }
+            }
+            
+            .stu-menu{
+                display: none;
+                cursor: default;
+                left: 0;
+                position: absolute;
+                top: 33/16rem;
+                background-color: #f0f0f0;
+                color: #333;
+                width: 100%;
+                border: solid #e0e0e0 1/16rem;
+                box-shadow: 0 3/16rem 4/16rem rgba(0,0,0,0.18);
+                padding: 20/16rem;
+                position: absolute;
+                z-index: 50;
+                .stu-menu-title{
+                    height: 58/16rem;
+                    line-height: 48/16rem;
+                    text-align: left;
+                    margin-left: 20/16rem;
+                    margin-top: 0;
+                    margin-bottom: 0;
+                    padding-bottom: 10/16rem;
+                    font-size: 15/16rem;
+                    letter-spacing: 1/16rem;
+                    border-bottom: #ccc dashed 1/16rem;
+                }
+                dd{
+                    margin-top: 20/16rem;
+                    float: left;
+                    margin-left: 20/16rem;
+                    .stu-table{
+                        width: 840/16rem;
+                        margin-top: 10/16rem;
+                        margin-bottom: 20/16rem;
+                        margin-left: 20/16rem;
+                        clear: none;
+                        float: none;
+                        font-size: 14/16rem;
+                        border: solid #e0e0e0 1/16rem;
+                        border-collapse: collapse;
+                        tr{
+                            height: 35/16rem;
+                            &:nth-child(odd) {
+                                background-color: #F8F8F8;
+                            }
+                            &:nth-child(even) {
+                                background-color: #fff;
+                            }
+                        }
+                        td{
+                           max-width: 50%;
+                            padding: 0;
+                            margin: 0;
+                            border: solid #e0e0e0 1/16rem;
+                            padding-left: 10/16rem;
+                            padding-right: 10/16rem;
+                            font-size: 14/16rem;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                            &:first-child {
+                                width: 10%;
+                                text-align: left;
+                            }
+                            &:nth-child(2) {
+                                width: 15%;
+                            }
+                            &:nth-child(3) {
+                                width: 10%;
+                            } 
+                        }
+                        th{
+                            background-color: #0099ff;
+                            padding: 0;
+                            margin: 0;
+                            border: solid #e0e0e0 1/16rem;
+                            padding-left: 10/16rem;
+                            padding-right: 10/16rem;
+                            text-align: left;
+                            color: #fff;
+                            &:first-child {
+                                width: 10%;
+                                text-align: left;
+                            }
+                            &:nth-child(2) {
+                                width: 15%;
+                            }
+                            &:nth-child(3) {
+                                width: 10%;
+                            }
+                        }
+                    }
+                    .stu-page-list{
+                        margin-top: 20/16rem;
+                        background-color: #d7d7d7;
+                        margin-top: 20/16rem;
+                        height: 40/16rem;
+                        border-radius: 3/16rem;
+                        overflow: hidden;
+                        padding: 0;
+                        margin-left: 20/16rem;
+                        .stu-page-item{
+                            height: 40/16rem;
+                            font-size: 14/16rem;
+                            line-height: 40/16rem;
+                            overflow: hidden;
+                        }
+                        .stu-page-info{
+                            float: left;
+                            margin-left: 15/16rem;
+                            span {
+                                margin-left: 3/16rem;
+                                margin-right: 3/16rem;
+                            }
+                        }
+                        .stu-page-operation{
+                            float: right;
+                            margin-right: 10/16rem;
+                            a {
+                                cursor: pointer;
+                                padding-left: 5/16rem;
+                                padding-right: 5/16rem;
+                                margin-left: 15/16rem;
+                                margin-right: 15/16rem;
+                                &:hover {
+                                    color: #ff6700;
+                                }
+                            }
+                            span{
+                                margin-left: 3/16rem;
+                                margin-right: 3/16rem;
+                            }
+                        }
+                        .stu-page-active{
+                            color: red;
+                            font-weight: 600;
+                        }
+                    }
+                    .stu-menu-btn{
+                        display: block;
+                        width: 120/16rem;
+                        height: 32/16rem;
+                        margin-bottom: 25/16rem;
+                        margin-top: 10/16rem;
+                        margin-left: 30/16rem;
+                        background-color: #F4494E;
+                        border: none;
+                        color: #fff;
+                        outline: none;
+                        border-radius: 3/16rem;
+                        letter-spacing: 1/16rem;
+                        font-size: 14/16rem;
+                        font-weight: 600;
+                        &:active {
+                            background-color: #CD0C12;
+                        }
+                    }
+                }
+            }
+        }
+        .content-active {
+            display: block;
+        }
+        .data-table{
+            .click{
+                cursor: pointer;
+                &:active {
+                    color: #CD0C12;
+                }
+            }
+            .detail{
+                cursor: pointer;
+                color: #0066FF;
+                &:active{
+                    color: #2EA8FF;
+                }
+                &:visited{
+                    color:#9933ff;
+                }
+            }
+            .operation{
+                cursor: pointer;
+                color: #0066ff;
+                &:active{
+                    color: #2EA8FF;
+                }
+                &:visited{
+                    color:#9933ff;
+                }
+            }
+        }
+        .page-list {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #EBEEF7;
+            margin-top: 15/16rem;
+            .page-item {
+                height: 40/16rem;
+                font-size: 14/16rem;
+                line-height: 40/16rem;
+            }
+            .page-info {
+                float: left;
+                margin-left: 15/16rem;
+                span {
+                    margin-left: 5/16rem;
+                    margin-right: 5/16rem;
+                }
+            }
+            .page-operation {
+                float: right;
+                margin-right: 10/16rem;
+                a {
+                    cursor: pointer;
+                    padding-left: 5/16rem;
+                    padding-right: 5/16rem;
+                    &:hover {
+                        color: #ff6700;
+                    }
+                }
+                .page-active {
+                    color: red;
+                    font-weight: 600;
+                }
+                .page-disable {
+                    color: #B9B9B9;
+                    cursor: default;
+                    &:hover {
+                        color: #B9B9B9;
+                    }
+                }
+            }
+        }
+
+        
+    }
+    .error{
+        color: red !important;
+    }
+}

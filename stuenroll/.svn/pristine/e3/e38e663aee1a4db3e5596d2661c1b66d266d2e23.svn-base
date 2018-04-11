@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="description" content="辽宁省大学生离校未就业技能转换培训" />
+		<meta name="keywords" content="大学生就业,大学生就业难,免费培训,转换培训,辽宁省大学生离校未就业技能转换培训" />
+		<meta name="author" content="管睿" />
+		<meta name="copyright" content="辽宁省人力资源与社会保障厅" />
+		<title>辽宁省大学生离校未就业技能转换培训</title>
+		<link rel="shortcut icon" href="../../img/icon.png" />
+		<link rel="stylesheet" type="text/css" href="../../css/base.css" />
+		<link rel="stylesheet" type="text/css" href="../../font/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="../../js/plugin/toastr.css" />
+		<link rel="stylesheet" type="text/css" href="my.css" />
+		<title></title>
+	</head>
+
+	<body>
+		<div class="chart-container">
+			<div class="content1">
+				<div class="wrapper">
+					<ul class="slider">
+						<li class="item"><img src="../../img/20150521110130_6191107.jpg" class="top-photo" /></li>
+						<li class="item"><img src="../../img/20150521114308_8349428.jpg" class="top-photo" /></li>
+						<li class="item"><img src="../../img/20150521113023_816425.jpg" class="top-photo" /></li>
+						<li class="item"><img src="../../img/20150521112732_1455477.jpg" class="top-photo" /></li>
+						<li class="item"><img src="../../img/20150521114015_6669661.jpg" class="top-photo" /></li>
+						<li class="item"><img src="../../img/20150521133113_5146252.jpg" class="top-photo" /></li>
+					</ul>
+					<div class="top-btn">
+						<p class="top-prev">
+							<img src="../../img/prev.png" class="prev-top" />
+						</p>
+						<p class="top-next">
+							<img src="../../img/next.png" class="next-top" />
+						</p>
+					</div>
+
+				</div>
+				
+			</div>
+			<div class="content2">
+				<div class="news-container">
+					<div class="news-title">
+						<h3 class="newstitle-content">最新消息</h2>
+						<div class="turning-btn">
+							<p class="turning-prev">
+								<img src="../../img/prev.png" class="prev-photo"/>
+							</p>
+							<p class="turning-next">
+								<img src="../../img/next.png" class="next-photo"/>
+							</p>
+						</div>
+					</div>
+					<div class="news-content">
+						<div class="news-item">
+							<div class="news-time">
+								<p class="time-before">3小时前</p>
+								<p class="time-date">2016/07/21</p>
+								<p class="time-specific">22:16:30</p>
+							</div>
+							<p class="square square-red"></p>
+							<div class="news-substance">
+								<p class="substance-title">2016年9月份转换培训统计报表</p>
+								<p class="substance-content">本报告内容由系统自动生成，截止到2016年9月份，大连中软卓越计算机培训中心的转换报名数据。</p>
+							</div>
+						</div>
+						<div class="news-item">
+							<div class="news-time">
+								<p class="time-before">3小时前</p>
+								<p class="time-date">2016/07/21</p>
+								<p class="time-specific">22:16:30</p>
+							</div>
+							<p class="square square-green"></p>
+							<div class="news-substance">
+								<p class="substance-title">2016年9月份转换培训统计报表</p>
+								<p class="substance-content">本报告内容由系统自动生成，截止到2016年9月份，大连中软卓越计算机培训中心的转换报名数据。</p>
+							</div>
+						</div>
+						<div class="news-item">
+							<div class="news-time">
+								<p class="time-before">3小时前</p>
+								<p class="time-date">2016/07/21</p>
+								<p class="time-specific">22:16:30</p>
+							</div>
+							<p class="square square-blue"></p>
+							<div class="news-substance">
+								<p class="substance-title">2016年9月份转换培训统计报表</p>
+								<p class="substance-content">本报告内容由系统自动生成，截止到2016年9月份，大连中软卓越计算机培训中心的转换报名数据。</p>
+							</div>
+						</div>
+						<div class="news-item">
+							<div class="news-time">
+								<p class="time-before">3小时前</p>
+								<p class="time-date">2016/07/21</p>
+								<p class="time-specific">22:16:30</p>
+							</div>
+							<p class="square square-yellow"></p>
+							<div class="news-substance">
+								<p class="substance-title">2016年9月份转换培训统计报表</p>
+								<p class="substance-content">本报告内容由系统自动生成，截止到2016年9月份，大连中软卓越计算机培训中心的转换报名数据。</p>
+							</div>
+						</div>
+						
+						
+						<p class="line1"></p>
+						<p class="line2"></p>
+						<p class="line3"></p>
+						<p class="column1"></p>
+					</div>
+				</div>
+				<p class="column"></p>
+				<div class="personal-infomation">
+					<h3>个人资料</h3>
+						<div class="photo-container">
+							<!--  	<img src="http://127.0.0.1/stuenroll/friend/searchFile?id=57995832b26c1ba723d0cb2b" class="personal-photo" />	
+					<img src="http://127.0.0.1/stuenroll/friend/searchFile?id=57995ac3b26c14386b232e1d" class="personal-photo" />	 -->
+						</div>
+						<div class="personal-info-container">
+							<span class="personal-info">姓名：</span>&nbsp;<span id="personal-name"></span>
+						</div>
+						<div class="personal-info-container">
+							<span class="personal-info">性别：</span>&nbsp;<span id="personal-sex"></span>
+						</div>
+						<div class="personal-info-container">
+							<span class="personal-info">角色：</span>&nbsp;<span id="personal-role"></span>
+						</div>
+						<div class="personal-info-container">
+							<span class="personal-info">机构：</span>&nbsp;<span id="personal-organization"></span>
+						</div>
+						<div class="personal-info-container">
+							<span class="personal-info">电话：</span>&nbsp;<span id="personal-tel"></span>
+						</div>
+						<div class="personal-info-container">
+							<span class="personal-info">微信：</span>&nbsp;<span id="personal-wechat"></span>
+						</div>
+						<div class="personal-info-container">
+							<span class="personal-info">身份证号：</span>&nbsp;<span id="personal-pid"></span>
+						</div>
+						<div class="personal-info-container">
+							<span class="personal-info">E-mail：</span>&nbsp;<span id="personal-email"></span>
+						</div>
+
+						<!--以及信息修改-->
+					</div>
+				</div>
+				<div class="content3">
+					<div class="statistics1"></div>
+					<div class="content3_2">
+					</div>
+				</div>
+			</div>
+			<div class="myfriends-container no-select">
+				<div class="search-hidden"></div>
+				<div class="myfriends-title">
+
+					<h2 class="title-context">好友列表</h2>
+					<div class="title-mark">
+						+
+					</div>
+
+				</div>
+
+				<div class="myfriends-list">
+					<div class="myfriends-search myfriends-search-hidden">
+						<input type="text" name="search" id="search" value="" class="input" placeholder="查询用户" />
+
+						<img src="../../img/magnifier.png" class="magnifier" />
+						<img src="../../img/furcation.png" class="search-furcation" />
+					</div>
+
+					<dl class="list-container">
+						<!--
+                        	好友信息
+                        -->
+						<dt class="list-item bgc-active">	
+							<div class="photo-container">							
+								<img src="../../img/photo.png" class="user-photo"/>
+								<div class="small-circle circle-green"></div>
+							</div>
+									
+							<div class="personal-info">
+								
+								<dl class="info-container">
+									<dt class="myfriends-name">章思远</dt>
+						<dt class="myfriends-role">普通用户</dt>
+						<dt class="myfriends-organization">大连中软卓越计算机培训中心</dt>
+					</dl>
+				</div>
+				<div class="action">
+					<img src="../../img/star.png" class="star" />
+					<img src="../../img/furcation.png" class="furcation" />
+					<a class='friend-id'>aaaa</a>
+				</div>
+				</dt>
+				<!--
+                        	添加好友信息
+                        -->
+				<dt class="add-list-item">	
+							<div class="add-photo-container">							
+								<img src="../../img/photo.png" class="add-user-photo"/>
+								<div class="add-small-circle add-circle-green"></div>
+							</div>
+									
+							<div class="add-personal-info">
+								
+								<dl class="add-info-container">
+									<dt class="add-myfriends-name">章思远</dt>
+				<dt class="add-myfriends-role">普通用户</dt>
+				<dt class="add-myfriends-organization">大连中软卓越计算机培训中心</dt>
+				</dl>
+			</div>
+			<div class="add-action">
+				<input type="button" name="add" id="add" value="添加" class="add" />
+			</div>
+			</dt>
+
+			</dl>
+		</div>
+		<div class="myfriends-bottom">
+			<dl class="page-list no-select">
+				<dt class="page-item page-operation1">
+							<a name="prevBtn">上一页</a>						
+						</dt>
+				<dt class="page-item page-info">
+							<span id="currentPage">1</span>/
+							<span id="totalPages">1</span>页
+						</dt>
+				<dt class="page-item page-operation2">							
+							<a name="nextBtn">下一页</a>
+						</dt>
+			</dl>
+		</div>
+		</div>
+
+		<script src="../../js/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/echarts/echarts.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/plugin/toastr.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/permission.js" type="text/javascript" charset="utf-8"></script>
+		<script src="my.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+
+</html>

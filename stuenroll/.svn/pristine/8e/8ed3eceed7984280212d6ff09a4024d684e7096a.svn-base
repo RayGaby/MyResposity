@@ -1,0 +1,60 @@
+get_GraduateDate = function() {
+	var dt = new Date();
+	var date = "";
+	date += dt.getFullYear() + "-";
+	if (dt.getMonth() < 10) {
+		date += "0" + (dt.getMonth() + 1) + "-";
+	} else {
+		date += (dt.getMonth() + 1) + "-";
+	}
+	if (dt.getDate() < 10) {
+		date += "0" + dt.getDate();
+	} else {
+		date += dt.getDate();
+	}
+	return date;
+}
+get_GraduateYear = function() {
+	var dt = new Date();
+	var graduateYear = "";
+	graduateYear = dt.getFullYear();
+	var selectYear = $("#graduateYear");
+	var temp = "";
+	for (var i = graduateYear; i > graduateYear - 5; i--) {
+		temp += "<option value='" + i + "'>" + i + "年</option>";
+	}
+	selectYear.append(temp);
+}
+get_BirthdayDate = function() {
+	var dt = new Date();
+	var date = "";
+	date += (dt.getFullYear() - 20) + "-";
+	//	date = date + dt.getFullYear() + "-";
+	if (dt.getMonth() < 10) {
+		date = date + "0" + (dt.getMonth() + 1) + "-";
+	} else {
+		date = date + (dt.getMonth() + 1) + "-";
+	}
+	if (dt.getDate() < 10) {
+		date = date + "0" + dt.getDate();
+	} else {
+		date = date + dt.getDate();
+	}
+	return (date);
+}
+get_CreateTime = function() {
+	var dt = new Date();
+	var date = "";
+	date += dt.getFullYear() + "-";
+	if (dt.getMonth() < 10) {
+		date += "0" + (dt.getMonth() + 1) + "-";
+	} else {
+		date += (dt.getMonth() + 1) + "-";
+	}
+	if (dt.getDate() < 10) {
+		date += "0" + dt.getDate();
+	} else {
+		date += dt.getDate();
+	}
+	return date;
+}

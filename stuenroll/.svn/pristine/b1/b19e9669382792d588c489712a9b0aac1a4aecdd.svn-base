@@ -1,0 +1,647 @@
+package cn.gov.hrss.ln.stuenroll.classinfo;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
+
+import com.jfinal.aop.Before;
+import com.jfinal.kit.LogKit;
+import com.jfinal.plugin.activerecord.Record;
+import com.jfinal.plugin.activerecord.tx.Tx;
+
+public class VisitService implements I_VisitService{
+	private I_ClassinfoDao i_ClassinfoDao;
+	private I_EnrollDao i_EnrollDao;
+	private I_ArchiveDao i_ArchiveDao;
+	private I_VisitDao i_VisitDao;
+	
+	@Override
+	public Record randomQuery(HashMap map) {
+		Long classinfoId =(Long) map.get("classinfoId");
+		String username = (String) map.get("username");
+		
+		//根据classinfoid查找班级的状态
+		Record searchState = i_ClassinfoDao.searchClassinfoName(map);
+		Long classCount = searchState.getLong("count");
+		if(classCount != 0){
+			String state = searchState.getStr("state");
+			Record record;
+			
+			//判断班级中的状态，然后随机抽取一条记录
+			if(state.equals("未归档")){
+				//获取未回访和回访失败的总人数
+				Record stuRecord = i_EnrollDao.classStuCount(classinfoId);
+				Long unvisit = stuRecord.getLong("count");
+				int unvisit_count = unvisit.intValue();
+				//回去随机数
+				Random random = new Random();
+				int i = random.nextInt(unvisit_count);
+				if(i == 0){
+					unvisit = Long.parseLong((i)+"");
+				}
+				else{
+					unvisit = Long.parseLong((i-1)+"");
+				}
+				
+				
+				record = i_EnrollDao.randomSearch(classinfoId,unvisit);
+			}
+			else{
+				//获取未回访和回访失败的总人数
+				Record stuRecord = i_ArchiveDao.classStuCount(classinfoId);
+				Long unvisit = stuRecord.getLong("count");
+				int unvisit_count = unvisit.intValue();
+				//取随机数
+				Random random = new Random();
+				int i = random.nextInt(unvisit_count);
+				if(i == 0){
+					unvisit = Long.parseLong((i)+"");
+				}
+				else{
+					unvisit = Long.parseLong((i-1)+"");
+				}
+				
+				
+				record = i_ArchiveDao.randomSearch(classinfoId,unvisit);
+			}
+			
+			String stuId = record.getStr("id");
+			String name = record.getStr("name");
+			String sex = record.getStr("sex");
+			String pid = record.getStr("pid");
+			String graduate_school = record.getStr("graduate_school");
+			Date birthday = (Date) record.getDate("birthday");
+			String resident_address = record.getStr("resident_address");
+			String permanent_address = record.getStr("permanent_address");
+			String home_address = record.getStr("home_address");
+			String tel = record.getStr("tel");
+			String email = record.getStr("email");
+			String profession = record.getStr("profession");
+			
+			String[] birth_day = String.valueOf(birthday).split("-");
+			String birth_year = birth_day[0];
+			String birth_month = birth_day[1];
+			String birth_date = birth_day[2];
+			
+			int year = Integer.valueOf(birth_year);
+			int month = Integer.valueOf(birth_month);
+			int date = Integer.valueOf(birth_date);
+			
+			Date current_date = new Date();
+			
+			String[] currentDate = String.valueOf(current_date).split(" ");
+			String current_year = currentDate[5];
+			
+			int currentYear = Integer.valueOf(current_year);
+			
+			
+			
+			//调用查询用户id的方法，查找用户id
+			Record result = i_VisitDao.queryUserId(username);
+			//提取用户的id
+			Long userId = result.getLong("id");
+			
+			Long stu_id = Long.valueOf(stuId);
+			//查找当前用户和当前学生id的回访记录的数量
+			Record countStu = i_VisitDao.searchStuId(stu_id);
+			
+			Long count = countStu.getLong("count");
+			
+			HashMap addMap = new HashMap();
+			addMap.put("stuId", stu_id);
+			addMap.put("userId", userId);
+			addMap.put("classinfoId", classinfoId);
+			addMap.put("datetime", null);
+			//判断数量，如果为0，则添加回访记录
+			if(count == 0){
+				int i = i_VisitDao.addVisit(addMap);
+			}
+			
+			int modifyUserId = i_VisitDao.modifyStuId(addMap);
+			
+			Record finalRecord = new Record();
+			
+			finalRecord.set("id",stuId);
+			finalRecord.set("name",name);
+			finalRecord.set("sex",sex);
+			finalRecord.set("pid",pid);
+			finalRecord.set("graduateSchool",graduate_school);
+			finalRecord.set("year",year);
+			finalRecord.set("month",month);
+			finalRecord.set("date",date);
+			finalRecord.set("currentYear",currentYear);
+			finalRecord.set("resident_address",resident_address);
+			finalRecord.set("permanent_address",permanent_address);
+			finalRecord.set("home_address",home_address);
+			finalRecord.set("tel",tel);
+			finalRecord.set("email",email);
+			finalRecord.set("profession",profession);
+			
+			return finalRecord;
+		}
+		
+		else{
+			return null;
+		}
+		
+	}
+	
+	public Record searchStuVisit(HashMap map){
+		Long stuId = (Long) map.get("stuId");
+		Long classinfoId = (Long) map.get("classinfoId");
+		
+		//查询该班级的班级状态
+		Record searchState = i_ClassinfoDao.searchClassinfoName(map);
+		Long count = searchState.getLong("count");
+		if(count != 0){
+			
+			String state = searchState.getStr("state");
+			Record record;
+			if(state.equals("未归档")){
+				record = i_EnrollDao.searchStuById(stuId);
+			}
+			else{
+				record = i_ArchiveDao.searchStuById(stuId);
+			}
+			String name = record.getStr("name");
+			String sex = record.getStr("sex");
+			String pid = record.getStr("pid");
+			String graduate_school = record.getStr("graduate_school");
+			Date birthday = (Date) record.getDate("birthday");
+			String resident_address = record.getStr("resident_address");
+			String permanent_address = record.getStr("permanent_address");
+			String home_address = record.getStr("home_address");
+			String tel = record.getStr("tel");
+			String email = record.getStr("email");
+			String profession = record.getStr("profession");
+			
+			String[] birth_day = String.valueOf(birthday).split("-");
+			String birth_year = birth_day[0];
+			String birth_month = birth_day[1];
+			String birth_date = birth_day[2];
+			
+			int year = Integer.valueOf(birth_year);
+			int month = Integer.valueOf(birth_month);
+			int date = Integer.valueOf(birth_date);
+			
+			Date current_date = new Date();
+			
+			String[] currentDate = String.valueOf(current_date).split(" ");
+			String current_year = currentDate[5];
+			
+			int currentYear = Integer.valueOf(current_year);
+			//根据id查找此id是否存在
+			Record exist = i_VisitDao.searchStuIdAboutTel(stuId);
+			
+			Long idCount = exist.getLong("count");
+			String info = null;
+			String global = null;
+			String org_global = null;
+			String org_study = null;
+			String org_daily = null;
+			String pro_set = null;
+			String pro_study = null;
+			String change = null;
+			String get_job = null;
+			String size = null;
+			String type = null;
+			String income = null;
+			String fit = null;
+			String satisfy = null;
+			String way = null;
+			String job_satisty = null;
+			String advise = null;
+			String time = null;
+			
+			if(idCount == 1){
+				Record tel_visit = i_VisitDao.searchVisitByStuId(stuId);
+				info = tel_visit.getStr("info");
+				global = tel_visit.getStr("global");
+				org_global = tel_visit.getStr("org_global");
+				org_study = tel_visit.getStr("org_study");
+				org_daily = tel_visit.getStr("org_daily");
+				pro_set = tel_visit.getStr("pro_set");
+				pro_study = tel_visit.getStr("pro_study");
+				change = tel_visit.getStr("change");
+				get_job = tel_visit.getStr("get_job");
+				size = tel_visit.getStr("size");
+				type = tel_visit.getStr("type");
+				income = tel_visit.getStr("income");
+				fit = tel_visit.getStr("fit");
+				satisfy = tel_visit.getStr("satisfy");
+				way = tel_visit.getStr("way");
+				job_satisty = tel_visit.getStr("job_satisty");
+				advise = tel_visit.getStr("advise");
+				time = tel_visit.getStr("time");
+			}
+			
+			
+			
+			
+			Record finalRecord = new Record();
+			
+			finalRecord.set("id",stuId);
+			finalRecord.set("name",name);
+			finalRecord.set("sex",sex);
+			finalRecord.set("pid",pid);
+			finalRecord.set("graduateSchool",graduate_school);
+			finalRecord.set("year",year);
+			finalRecord.set("month",month);
+			finalRecord.set("date",date);
+			finalRecord.set("currentYear",currentYear);
+			finalRecord.set("resident_address",resident_address);
+			finalRecord.set("permanent_address",permanent_address);
+			finalRecord.set("home_address",home_address);
+			finalRecord.set("tel",tel);
+			finalRecord.set("email",email);
+			finalRecord.set("profession",profession);
+			finalRecord.set("info",info);
+			finalRecord.set("global",global);
+			finalRecord.set("org_global",org_global);
+			finalRecord.set("org_study",org_study);
+			finalRecord.set("org_daily",org_daily);
+			finalRecord.set("pro_set",pro_set);
+			finalRecord.set("pro_study",pro_study);
+			finalRecord.set("change",change);
+			finalRecord.set("get_job",get_job);
+			finalRecord.set("size",size);
+			finalRecord.set("type",type);
+			finalRecord.set("income",income);
+			finalRecord.set("fit",fit);
+			finalRecord.set("satisfy",satisfy);
+			finalRecord.set("way",way);
+			finalRecord.set("job_satisty",job_satisty);
+			finalRecord.set("advise",advise);
+			finalRecord.set("time",time);
+			
+			return finalRecord;
+		}
+		else{
+			return null;
+		}
+		
+		
+	}
+
+	@Before(Tx.class)
+	@Override
+	public int save(HashMap map) {
+		int i = i_VisitDao.addTelVisit(map);
+		
+		Long stuId = (Long)map.get("stuId");
+		String username = (String) map.get("username");
+		
+		Record record = i_VisitDao.queryUserId(username);
+		
+		Long userId = (Long)record.getLong("id");
+		
+		HashMap modifyMap = new HashMap();
+		modifyMap.put("stuId", stuId);
+		modifyMap.put("userId", userId);
+		modifyMap.put("datetime", null);
+		
+		int modify = i_VisitDao.modifyVisit(modifyMap);
+		
+		return modify;
+	}
+
+	public Record searchOraganizationAndClass(HashMap map){
+		Record record = i_ClassinfoDao.searchClassinfoName(map);
+		return record;
+	}
+	
+	public List<Record> queryVisitList(HashMap map){
+		Long classinfoId = (Long) map.get("classinfoId");
+		Record record = i_ClassinfoDao.searchClassinfoName(map);
+		Long count = record.getLong("count");
+		if(count != 0){
+			String state = (String) record.getStr("state");
+			String organization = (String) record.getStr("organization");
+			
+			String user_organization = (String) map.get("user_organization");
+			
+			List<Record> list;
+			if(state.equals("未归档")){
+				list = i_EnrollDao.queryVisitList(map);
+			}
+			else{
+				list = i_ArchiveDao.queryVisitList(map);
+			}
+			return list;
+		}
+		else{
+			return null;
+		}
+		
+		
+		
+		
+	}
+	
+	public Record queryVisitListCount(HashMap map){
+		Long classinfoId = (Long) map.get("classinfoId");
+		Record record = i_ClassinfoDao.searchClassinfoName(map);
+		Long count = record.getLong("count");
+		if(count != 0){
+			String state = (String) record.getStr("state");
+		
+			Record list;
+			if(state.equals("未归档")){
+				list = i_EnrollDao.queryVisitListCount(map);
+			}
+			else{
+				list = i_ArchiveDao.queryVisitListCount(map);
+			}
+			
+			return list;
+		}
+		else{
+			return null;
+		}
+		
+
+		
+		
+	}
+
+	@Override
+	public Record queryClassinfoCount(HashMap searchMap) {
+		
+		Record record = i_ClassinfoDao.searchClassinfoName(searchMap);
+		Long classCount = record.getLong("count");
+		if(classCount != 0){
+			String state = record.getStr("state");
+			Long classinfoId =(Long) searchMap.get("classinfoId");
+			HashMap map = new HashMap();
+			map.put("classinfoId", classinfoId);
+			
+			Record count;
+			if(state.equals("未归档")){
+				count = i_EnrollDao.queryCountAboutStudent(map);
+			}
+			else{
+				count = i_ArchiveDao.queryCountAboutStudent(map);
+			}
+			return count;
+		}
+		else{
+			return null;
+		}
+		
+	}
+
+	@Before(Tx.class)
+	@Override
+	public int deleteVisitById(Long[] id) {
+		int i = i_VisitDao.deleteVistById(id);
+		
+		int delete = i_VisitDao.deleteTelVistById(id);
+		
+		return i;
+	}
+
+	@Before(Tx.class)
+	@Override
+	public int importFile(List<Record> list, HashMap searchMap) throws ParseException {
+		int count = 0;
+		
+		for(Record record: list){
+			Long organizationId = (Long) searchMap.get("organizationId");
+			Long classinfoId = (Long) searchMap.get("classinfoId");
+			HashMap map = new HashMap<>();
+			map.put("classinfoId", classinfoId);
+			map.put("organizationId", organizationId);
+			
+			Record stateRecord = i_ClassinfoDao.searchClassinfoName(map);
+			Long classCount = stateRecord.getLong("count");
+			if(classCount == 0){
+				count = 0;
+			}
+			else{
+				String state =(String) stateRecord.getStr("state");
+				String stu_id =(String) record.getStr("stuId");
+				Long stuId = Long.valueOf(stu_id);
+				//如果解析出来的stuId为null的话，跳过当次循环
+				if(stuId == null){
+					continue;
+				}
+				
+				if(state.equals("未归档")){
+					//查找该记录的姓名
+					Record stuRecord =  i_EnrollDao.queryCountAboutIdAndClassinfoId(stuId, classinfoId);
+				
+					Long stuCount = stuRecord.getLong("count");
+					//判断记录中的姓名是否存在，如果为空，则跳过当次循环
+					if(stuCount == 0){
+						continue;
+					}
+				}
+				else{
+					//查找该记录的姓名
+					Record stuRecord =  i_ArchiveDao.queryCountAboutIdAndClassinfoId(stuId, classinfoId);
+				
+					Long stuCount =(Long) stuRecord.getLong("count");
+					//判断记录中的姓名是否存在，如果为空，则跳过当次循环
+					if(stuCount == 0){
+						continue;
+					}
+				}
+				String user_id = (String)record.getStr("userId");
+				if(user_id.equals(null)){
+					continue;
+				}
+				Long userId = Long.valueOf(user_id);
+				String datetime = (String)record.getStr("datetime");
+				if(datetime.equals(null)){
+					continue;
+				}
+				//SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			
+				//Date datetime = format.parse(date_time);
+				Record telRecord = i_VisitDao.searchStuIdAboutTel(stuId);
+				
+				Long telCount = telRecord.getLong("count");
+				//判断此id是否已经成功被回访
+				if(telCount == 1){
+					continue;
+				}
+				else{
+					HashMap visitMap = new HashMap<>();
+				
+					visitMap.put("stuId", stuId);
+					visitMap.put("userId", userId);
+					visitMap.put("classinfoId", classinfoId);
+					visitMap.put("datetime", datetime);
+					
+					//查找当前用户和当前学生id的回访记录的数量
+					Record countStu = i_VisitDao.searchStuId(stuId);
+					
+					Long stuCount = countStu.getLong("count");
+					
+					//判断数量，如果为0，则添加回访记录
+					if(stuCount == 0){
+						int i = i_VisitDao.addVisit(visitMap);
+					}
+					else{
+						int modifyUserId = i_VisitDao.modifyStuId(visitMap);
+					}
+					
+					String result = record.getStr("result");
+						
+					if(result.equals("成功")){
+						String info = (String)record.getStr("info");
+						if(info.equals(null)){
+							continue;
+						}
+						String global_1 = (String)record.getStr("global");
+						if(global_1.equals(null)){
+							continue;
+						}
+						Long global = Long.valueOf(global_1);
+						String org_global_1 = (String)record.getStr("org_global");
+						if(org_global_1.equals(null)){
+							continue;
+						}
+						Long org_global = Long.valueOf(org_global_1);
+						String org_study_1 = (String)record.getStr("org_study");
+						if(org_study_1.equals(null)){
+							continue;
+						}
+						Long org_study = Long.valueOf(org_study_1);
+						String org_daily_1 = (String)record.getStr("org_daily");
+						if(org_daily_1.equals(null)){
+							continue;
+						}
+						Long org_daily = Long.valueOf(org_daily_1);
+						
+						Long satisfy_degree =  org_global + org_study + org_daily + global;
+						String satisfyDegree = null;
+						if(satisfy_degree < 18 || satisfy_degree == 18){
+							satisfyDegree = "不满意" ;
+						}
+						else if(satisfy_degree > 18 && satisfy_degree < 26 || satisfy_degree == 26){
+							satisfyDegree = "一般" ;
+						}
+						else if(satisfy_degree > 26 && satisfy_degree < 34 || satisfy_degree == 34){
+							satisfyDegree = "满意" ;
+						}
+						else{
+							satisfyDegree = "很满意";
+						}
+						
+						String proSet = (String)record.getStr("proSet");
+						if(proSet.equals(null)){
+							continue;
+						}
+						String proStudy = (String)record.getStr("proStudy");
+						if(proStudy.equals(null)){
+							continue;
+						}
+						String change = (String) record.getStr("change");
+						if(change.equals(null)){
+							continue;
+						}
+						String getJob = (String)record.getStr("getJob");
+						if(getJob.equals(null)){
+							continue;
+						}
+						String size = null;
+						String type = null;
+						String income = null;
+						String fit = null;
+						String satisfy = null;
+						String way = null;
+						String jobSatisfy = null;
+						String advise = null;
+						String time = (String)record.getStr("time");
+						if(getJob.equals("是")){
+							size = (String)record.getStr("size");
+							type = (String)record.getStr("type");
+							income = (String)record.getStr("income");
+							fit = (String)record.getStr("fit");
+							satisfy = (String)record.getStr("satisfy");
+							way = (String)record.getStr("way");
+							jobSatisfy = (String)record.getStr("jobSatisfy");
+							advise = (String) record.getStr("advise");
+						} 
+						
+						HashMap telMap = new HashMap<>();
+						telMap.put("stuId", stuId);
+						telMap.put("info", info);
+						telMap.put("global", global_1);
+						telMap.put("org_global", org_global_1);
+						telMap.put("org_study", org_study_1);
+						telMap.put("org_daily", org_daily_1);
+						telMap.put("satisfyDegree", satisfyDegree);
+						telMap.put("proSet", proSet);
+						telMap.put("proStudy", proStudy);
+						telMap.put("change", change);
+						telMap.put("getJob", getJob);
+						telMap.put("size", size);
+						telMap.put("type", type);
+						telMap.put("income", income);
+						telMap.put("fit", fit);
+						telMap.put("satisfy", satisfy);
+						telMap.put("way", way);
+						telMap.put("jobSatisfy", jobSatisfy);
+						telMap.put("advise", advise);
+						telMap.put("time", time);
+						
+						int addTel = i_VisitDao.addTelVisit(telMap);
+						
+						HashMap modifyMap = new HashMap<>();
+						modifyMap.put("stuId", stuId);
+						modifyMap.put("userId", userId);
+						modifyMap.put("datetime", datetime);
+						
+						int modifyTel = i_VisitDao.modifyVisit(modifyMap);
+						
+					}
+				}	
+				count =count+1;
+			}
+		}
+		LogKit.info("成功添加了"+count+"条记录");
+		return count;	
+		
+	}
+
+	
+
+	public I_ClassinfoDao getI_ClassinfoDao() {
+		return i_ClassinfoDao;
+	}
+
+	public void setI_ClassinfoDao(I_ClassinfoDao i_ClassinfoDao) {
+		this.i_ClassinfoDao = i_ClassinfoDao;
+	}
+
+	public I_EnrollDao getI_EnrollDao() {
+		return i_EnrollDao;
+	}
+
+	public void setI_EnrollDao(I_EnrollDao i_EnrollDao) {
+		this.i_EnrollDao = i_EnrollDao;
+	}
+
+	public I_ArchiveDao getI_ArchiveDao() {
+		return i_ArchiveDao;
+	}
+
+	public void setI_ArchiveDao(I_ArchiveDao i_ArchiveDao) {
+		this.i_ArchiveDao = i_ArchiveDao;
+	}
+
+	public I_VisitDao getI_VisitDao() {
+		return i_VisitDao;
+	}
+
+	public void setI_VisitDao(I_VisitDao i_VisitDao) {
+		this.i_VisitDao = i_VisitDao;
+	}
+	
+	
+}

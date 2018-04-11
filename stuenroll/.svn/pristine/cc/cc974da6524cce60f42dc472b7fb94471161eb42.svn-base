@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="author" content="404_(:з」∠)_"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title></title>
+		<link rel="stylesheet" href="../../css/mui.min.css" />
+		<link rel="stylesheet" type="text/css" href="register.css" />
+		<link rel="stylesheet" type="text/css" href="../../js/plugin/toastr.css"/>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header">
+			<a class="mui-icon mui-icon-left-nav mui-pull-left mui-action-back f1"></a>
+			<a class="mui-icon mui-icon-reply mui-pull-right"></a>
+			<h1 class="mui-title f1">辽宁省就业网信息管理平台</h1>
+		</header>
+		<div class="mui-content">
+			<h4 class="f2">1. 个人信息</h4>
+			<div class="mui-card">
+				<div class="mui-input-group">
+					<div class="mui-input-row">
+						<label for="name">姓名</label>
+						<!--<input type="text" id="name" class="mui-input-clear" placeholder="输入姓名">-->
+						<input type="text" id="name" name="name" class="mui-input-clear input" placeholder="输入姓名" autocomplete="off" required="required" pattern="^[\u4e00-\u9fa5]{2,15}$" />
+					</div>
+					<div class="mui-input-row">
+						<label for="sex">性别</label> <select id="sex" class="input slt" required="required" pattern='\S+'>
+						<option value="">请选择</option>
+						<option value="男">男</option>
+						<option value="女">女</option>
+					</select>
+					</div>
+					<div class="mui-input-row">
+						<label for="birthday">出生日期</label>
+						<input type="date" id="birthday" required="required" pattern='\S+' />
+					</div>
+					<div class="mui-input-row">
+						<label for="nation">民族</label>
+						<select id="nation" class="input slt" required="required" pattern='\S+'>
+						<option value="">请选择</option>
+
+						<option value="汉族">汉族</option>
+						<option value="壮族">壮族</option>
+						<option value="回族">回族</option>
+						<option value="苗族">苗族</option>
+						<option value="满族">满族</option>
+						<option value="其他">其他</option>
+					</select>
+					</div>
+					<div class="mui-input-row">
+						<label for="pid">身份证号</label> <input type="text" id="pid" class="mui-input-clear pid_input" placeholder="输入身份证号" autocomplete="off" required="required">
+					</div>
+					<div class="mui-input-row">
+						<label>健康状况</label> <select id="healthy" class="input slt" required="required" pattern='\S+'>
+						<option value="">请选择</option>
+						</select>
+					</div>
+					<div class="mui-input-row">
+						<label>政治面貌</label> <select id="politics" class="input slt" required="required" pattern='\S+'>
+						<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<h4 class="f2">2. 教育信息</h4>
+			<div class="mui-card">
+				<div class="mui-input-group">
+					<div class="mui-input-row">
+						<label>毕业院校</label> <input type="text" name="graduateSchool" class="mui-input-clear input" placeholder="输入毕业院校" required="required" pattern='^(?=.*?[\u4E00-\u9FA5])[\dA-Za-z\u4E00-\u9FA5]{2,15}$'>
+					</div>
+					<div class="mui-input-row">
+						<label>毕业年届</label> <select id="graduateYear" class="input slt" required="required" pattern='\S+'>
+						<option value="">请选择</option>
+						</select>
+					</div>
+					<div class="mui-input-row">
+						<label>毕业时间</label> <input type="date" id="graduateDate" class="input" required="required" pattern='\S+'>
+					</div>
+					<div class="mui-input-row">
+						<label>所学专业</label> <select id="graduateSpecialty" class="input slt" required="required" pattern='\S+'>
+						<option value="">请选择</option>
+						</select>
+					</div>
+					<div class="mui-input-row">
+						<label>学历</label> <select id="education" class="input slt" required="required" pattern='\S+'>
+						<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<h4 class="f2">3. 联系方式</h4>
+			<div class="mui-card">
+				<div class="mui-input-group">
+					<div class="mui-input-row">
+
+						<!--^(?=.*?[\u4E00-\u9FA5])[\dA-Za-z\u4E00-\u9FA5]+ 
+						(?=.*?[\u4E00-\u9FA5])表示一定有汉字，也就说明不会全是数字或字母
+						[\dA-Za-z\u4E00-\u9FA5]+表示由汉字、数字、字母构成，越长越好-->
+
+						<label>居住地址</label> <input type="text" name="address" class="mui-input-clear input" placeholder="输入居住地址" required="required" pattern='^(?=.*?[\u4E00-\u9FA5])[\dA-Za-z\u4E00-\u9FA5]{2,15}$'>
+					</div>
+					<div class="mui-input-row">
+						<label>户籍地址</label> <input type="text" name="householdAddress" class="mui-input-clear input" placeholder="输入户籍地址" required="required" pattern='^[\u4e00-\u9fa5]{2,15}$'>
+					</div>
+					<div class="mui-input-row">
+						<label>家庭地址</label> <input type="text" name="homeAddress" class="mui-input-clear input" placeholder="输入家庭地址" required="required" pattern='^(?=.*?[\u4E00-\u9FA5])[\dA-Za-z\u4E00-\u9FA5]{2,15}$'>
+					</div>
+					<div class="mui-input-row">
+						<label>手机号码</label> <input type="text" id="tel" class="mui-input-clear input" placeholder="输入手机号码" required="required" pattern='^1\d{10}$'>
+					</div>
+					<div class="mui-input-row">
+						<label for="email">电子信箱</label> <input type="email" id="email" class="mui-input-clear input" placeholder="输入电子信箱" autocomplete="off" required="required">
+					</div>
+					<div class="mui-input-row">
+						<label>家庭电话</label> <input type="text" id="homeTel" class="mui-input-clear input" placeholder="家庭电话" required="required" pattern='(\d{11}$|\d{8}$)'>
+					</div>
+				</div>
+			</div>
+			<h4 class="f2">4. 申报信息</h4>
+			<div class="mui-card">
+				<div class="mui-input-group">
+					<div class="mui-input-row">
+						<label>申报专业</label> <select id="specialty" class="input slt" required="required" pattern='\S+'>
+						<option value="">请选择</option>
+						</select>
+					</div>
+					<div class="mui-input-row">
+						<label>培训机构</label> <select id="orgnization" class="input slt" required="required" pattern='\S+'>
+						<option value="">请选择</option>
+						</select>
+					</div>
+					<div class="mui-input-row">
+						<label>培训地点</label> <select id="place" class="input" required="required" pattern='\S+'>
+						<option class="slt" value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="operate">
+				<button id="registerBtn" class="mui-btn mui-btn-primary mui-btn-block">我要报名</button>
+			</div>
+
+		</div>
+		<script src="../../js/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="get_Date.js" type="text/javascript" charset="utf-8"></script>
+		<script src="register.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/pid.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/plugin/toastr.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+
+</html>

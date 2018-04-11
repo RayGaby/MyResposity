@@ -1,0 +1,121 @@
+body {
+    background-color: #e7e7e7;
+}
+.main-container {
+    height: 1250/16rem;
+    padding: 15/16rem;
+    .chart-container {
+        height: inherit;
+        width: 70%;
+        float: left;
+        padding-right: 15/16rem;
+        .annual-statistics {
+            background-color: #fff;
+            height: 671/16rem;
+            margin-bottom: 15/16rem;
+            overflow: hidden;
+            .title {
+                color: #555;
+                font-size: 18/16rem;
+                font-weight: 500;
+                letter-spacing: 1/16rem;
+                margin-left: 20/16rem;
+                margin-top: 22/16rem;
+                margin-bottom: 22/16rem;
+            }
+            .step-list {
+                margin: 0 0 0 20/16rem;
+                padding: 0;
+                height: 36/16rem;
+                .step-item {
+                    float: left;
+                    text-align: center;
+                    color: #fff;
+                    padding-left: 30/16rem;
+                    padding-right: 30/16rem;
+                    height: 30/16rem;
+                    font-size: 14/16rem;
+                    letter-spacing: 1/16rem;
+                    line-height: 30/16rem;
+                    &:nth-child(1) {
+                        background-color: #2AB0DB;
+                        border-top-left-radius: 18/16rem;
+                        border-bottom-left-radius: 18/16rem;
+                    }
+                    &:nth-child(2) {
+                        background-color: #40B8DF;
+                    }
+                    &:nth-child(3) {
+                        background-color: #56C0E3;
+                    }
+                    &:nth-child(4) {
+                        background-color: #6CC8E7;
+                    }
+                    &:nth-child(5) {
+                        background-color: #82D0EB;
+                    }
+                    &:nth-child(6) {
+                        background-color: #98D8EF;
+                    }
+                }
+                .step-active {
+                    height: 36/16rem;
+                    line-height: 36/16rem;
+                    margin-top: -3/16rem;
+                }
+            }
+            .statistics {
+                margin-left: 20/16rem;
+                margin-right: 20/16rem;
+                margin-top: 20/16rem;
+                height: 530/16rem;
+            }
+        }
+        .organiztion-statistics {
+            .statistics-4 {
+                display: -moz-box;
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: -webkit-flex;
+                display: flex;
+                margin: 0 0 15/16rem;
+                padding: 0;
+                dt {
+                    margin-right: 15/16rem;
+                    background-color: #fff;
+                    height: 350/16rem;
+                    flex-grow: 1;
+                    &:last-child {
+                        margin-right: 0;
+                    }
+                }
+            }
+            .statistics-2 {
+                display: -moz-box;
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: -webkit-flex;
+                display: flex;
+                margin: 0;
+                padding: 0;
+                dt {
+                    background-color: #fff;
+                    height: 380/16rem;
+                    &:first-child {
+                        flex-grow: 2;
+                        margin-right: 15/16rem;
+                    }
+                    &:last-child {
+                        flex-grow: 1;
+                    }
+                }
+            }
+        }
+    }
+    .info-container {
+        height: inherit;
+        width: 30%;
+        background-color: #fff;
+        float: left;
+    }
+}

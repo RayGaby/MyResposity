@@ -1,0 +1,273 @@
+package cn.gov.hrss.ln.stuenroll.db.mariadb;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+
+import org.eclipse.xtend2.lib.StringConcatenation;
+
+import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.activerecord.Record;
+
+import cn.gov.hrss.ln.stuenroll.db.I_RegisterDao;
+
+public class RegisterDao implements I_RegisterDao {
+	@Override
+	public List<Record> searchSelectableEducation() {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SHOW COLUMNS FROM enroll LIKE 'education'; ");
+		List<Record> list = Db.find(sql.toString());
+
+		return list;
+	}
+
+	@Override
+	public List<Record> searchSelectableMajor() {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SHOW COLUMNS FROM enroll LIKE 'major'; ");
+		List<Record> list = Db.find(sql.toString());
+
+		return list;
+	}
+
+	@Override
+	public List<Record> searchSelectableHealthy() {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SHOW COLUMNS FROM enroll LIKE 'healthy'; ");
+		List<Record> list = Db.find(sql.toString());
+
+		return list;
+	}
+
+	@Override
+	public List<Record> searchSelectablePolitics() {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SHOW COLUMNS FROM enroll LIKE 'politics'; ");
+		List<Record> list = Db.find(sql.toString());
+
+		return list;
+	}
+
+	@Override
+	public List<Record> searchSelectablePlace() {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SHOW COLUMNS FROM enroll LIKE 'place'; ");
+		List<Record> list = Db.find(sql.toString());
+
+		return list;
+	}
+
+	@Override
+	public List<Record> searchOrgnizationJoinInYearAtDropDown(int year) {
+		StringBuffer sql = new StringBuffer();
+
+		sql.append("SELECT ");
+		sql.append("	o.id, ");
+		sql.append("	o.`name` ");
+		sql.append("FROM ");
+		sql.append("	organization_join oj ");
+		sql.append("JOIN organization o ON oj.organization_id = o.id ");
+		sql.append("WHERE ");
+		sql.append("	oj.`year` = ? ");
+		sql.append("AND oj.block = FALSE; ");
+
+		List<Record> list = Db.find(sql.toString(), year);
+		return list;
+	}
+
+	@Override
+	public List<Record> searchOrgnizationJoinInYearWithProfessionAtDropDown(int year, long professionId) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT ");
+		sql.append("	o.id, ");
+		sql.append("	o.`name` ");
+		sql.append("FROM ");
+		sql.append("	organization o ");
+		sql.append("JOIN organization_join oj ON o.id = oj.organization_id ");
+		sql.append("JOIN organization_profession op ON oj.id = op.organization_join_id ");
+		sql.append("JOIN profession p ON op.profession_id = p.id ");
+		sql.append("WHERE ");
+		sql.append("	oj.`year` = ? ");
+		sql.append("AND oj.block = FALSE ");
+		sql.append("AND p.id = ?; ");
+
+		List<Record> list = Db.find(sql.toString(), year, professionId);
+		for (Record record : list) {
+			record.set("id", record.getLong("id").toString());
+		}
+		return  list;
+	}
+
+	@Override
+	public List<Record> searchProfessionInYearAtDropDown(int year) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT DISTINCT ");
+		sql.append("	t.id, ");
+		sql.append("	t.`name` ");
+		sql.append("FROM ");
+		sql.append("	( ");
+		sql.append("		SELECT ");
+		sql.append("			p.`name`, ");
+		sql.append("			CAST(p.id AS CHAR) AS id ");
+		sql.append("		FROM ");
+		sql.append("			organization o ");
+		sql.append("		JOIN organization_join oj ON o.id = oj.organization_id ");
+		sql.append("		JOIN organization_profession op ON op.organization_join_id = oj.id ");
+		sql.append("		JOIN profession p ON op.profession_id = p.id ");
+		sql.append("		WHERE ");
+		sql.append("			oj.`year` = ? ");
+		sql.append("		AND oj.block = FALSE ");
+		sql.append("		ORDER BY ");
+		sql.append("			p.id ");
+		sql.append("	) t; ");
+
+		List<Record> list = Db.find(sql.toString(), year);
+		return list;
+	}
+
+	@Override
+	public boolean registerSubmit(HashMap map) {
+		ArrayList param = new ArrayList();
+		// 1.个人信息
+		String name = (String) map.get("name");
+		String sex = (String) map.get("sex");
+		String birthday = (String) map.get("birthday");
+		String pid = (String) map.get("pid");
+		
+		String nation = (String) map.get("nation");
+		String healthy = (String) map.get("healthy");
+		String politics = (String) map.get("politics");
+		// 2.教育信息
+		String graduate_school = (String) map.get("graduate_school");
+		String graduate_year = (String) map.get("graduate_year");
+		String graduate_date = (String) map.get("graduate_date");
+		String major = (String) map.get("major");
+		String education = (String) map.get("education");
+		// 3.联系方式
+		String resident_address = (String) map.get("resident_address");
+		String permanent_address = (String) map.get("permanent_address");
+		String home_address = (String) map.get("home_address");
+		String tel = (String) map.get("tel");
+		String email = (String) map.get("email");
+		String home_tel = (String) map.get("home_tel");
+		// 4.申报信息
+		String profession_id = (String) map.get("profession_id");
+		// 右侧orgnization是前台的历史遗留问题，忽略
+		String organization_id = (String) map.get("organization_id");
+		String place = (String) map.get("place");
+
+		StringBuffer sql = new StringBuffer();
+		sql.append("INSERT INTO enroll ( ");
+		sql.append("	`id`, ");
+		sql.append("	`name`, ");
+		sql.append("	`sex`, ");
+		sql.append("	`nation`, ");
+		sql.append("	`pid`, ");
+		sql.append("	`graduate_school`, ");
+		sql.append("	`graduate_year`, ");
+		sql.append("	`graduate_date`, ");
+		sql.append("	`education`, ");
+		sql.append("	`major`, ");
+		sql.append("	`healthy`, ");
+		sql.append("	`politics`, ");
+		sql.append("	`birthday`, ");
+		sql.append("	`resident_address`, ");
+		sql.append("	`permanent_address`, ");
+		sql.append("	`home_address`, ");
+		sql.append("	`tel`, ");
+		sql.append("	`home_tel`, ");
+		sql.append("	`email`, ");
+		sql.append("	`wechat`, ");
+		sql.append("	`profession_id`, ");
+		sql.append("	`classinfo_id`, ");
+		sql.append("	`state_id`, ");
+		sql.append("	`organization_id`, ");
+		sql.append("	`place`, ");
+		sql.append("	`remark`, ");
+		sql.append("	`year`, ");
+		sql.append("	`create_time`, ");
+		sql.append("	`sharding` ");
+		sql.append(") ");
+		sql.append("VALUES ");
+		sql.append("	( ");
+		sql.append("		NEXT VALUE FOR MYCATSEQ_GLOBAL, ");
+		sql.append("?, ");
+		param.add(name);
+		sql.append("?, ");
+		param.add(sex);
+		sql.append("?, ");
+		param.add(nation);
+		sql.append("?, ");
+		param.add(pid);
+		sql.append("?, ");
+		param.add(graduate_school);
+		sql.append("?, ");
+		param.add(graduate_year);
+		sql.append("?, ");
+		param.add(graduate_date);
+		sql.append("?, ");
+		param.add(education);
+		sql.append("?, ");
+		param.add(major);
+		sql.append("?, ");
+		param.add(healthy);
+		sql.append("?, ");
+		param.add(politics);
+		sql.append("?, ");
+		param.add(birthday);
+		
+
+		sql.append("HEX(AES_ENCRYPT(?, 'HelloHrss')), ");
+		param.add(resident_address);
+		sql.append("HEX(AES_ENCRYPT(?, 'HelloHrss')), ");
+		param.add(permanent_address);
+		sql.append("HEX(AES_ENCRYPT(?, 'HelloHrss')), ");
+		param.add(home_address);
+		sql.append("HEX(AES_ENCRYPT(?, 'HelloHrss')), ");
+		param.add(tel);
+		sql.append("HEX(AES_ENCRYPT(?, 'HelloHrss')), ");
+		param.add(home_tel);
+
+		sql.append("?, ");
+		param.add(email);
+		sql.append("NULL, ");
+		sql.append("?, ");
+		param.add(profession_id);
+		sql.append("NULL, ");
+		sql.append("'1', ");
+		sql.append("?, ");
+		param.add(organization_id);
+		sql.append("?, ");
+		param.add(place);
+		sql.append("NULL, ");
+
+		sql.append("?, ");
+		param.add(new Date().getYear() + 1900);
+		sql.append("DEFAULT, ");
+
+		sql.append("? ");
+		param.add(new Date().getTime());
+		sql.append("	); ");
+		
+		int signal = Db.update(sql.toString(), param.toArray());
+
+		boolean bool = (signal == 1);
+		return bool;
+	}
+
+	@Override
+	public boolean hasRecord(long pid) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT count(*) ");
+		sql.append("FROM enroll ");
+		sql.append("WHERE pid=? ");
+		
+		long count = Db.queryLong(sql.toString(),pid);
+
+		boolean bool = (count == 1);
+		return bool;
+
+	}
+}

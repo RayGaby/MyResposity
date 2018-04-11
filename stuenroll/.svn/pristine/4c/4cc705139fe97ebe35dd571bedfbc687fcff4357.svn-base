@@ -1,0 +1,316 @@
+package cn.gov.hrss.ln.stuenroll.classinfo;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.activerecord.Record;
+
+import sun.util.calendar.BaseCalendar.Date;
+
+public class VisitDao implements I_VisitDao {
+
+	@Override
+	public Record queryVisitCount(Long classinfoId) {
+		
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT ");
+		sql.append("	COUNT(*) AS visit_count ");
+		sql.append("FROM ");
+		sql.append("	visit ");
+		sql.append("WHERE ");
+		sql.append("	classinfo_id = ? ; ");
+		
+		Record result = Db.findFirst(sql.toString(), classinfoId);
+		
+		return result;
+	}
+
+	@Override
+	public Record queryVisitSuccess(Long classinfoId) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT ");
+		sql.append("	COUNT(*) AS visit_success ");
+		sql.append("FROM ");
+		sql.append("	visit ");
+		sql.append("WHERE ");
+		sql.append("	classinfo_id = ?  ");
+		sql.append("AND state = 1;  ");
+		
+		Record result = Db.findFirst(sql.toString(), classinfoId);
+		
+		return result;
+	}
+
+	@Override
+	public Record queryUserId(String username) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT ");
+		sql.append("	id ");
+		sql.append("FROM ");
+		sql.append("	`user` ");
+		sql.append("WHERE ");
+		sql.append("username = ?; ");
+		
+		Record record = Db.findFirst(sql.toString(), username);
+		
+		return record;
+	}
+
+	@Override
+	public int addVisit(HashMap map) {
+		ArrayList param = new ArrayList();
+		Long stuId = (Long)map.get("stuId");
+		Long classinfoId = (Long)map.get("classinfoId");
+		Long userId = (Long) map.get("userId");
+		String datetime = (String) map.get("datetime");
+		
+		param.add(stuId);
+		param.add(userId);
+		param.add(classinfoId);
+		
+		
+		StringBuffer sql = new StringBuffer();
+		sql.append("INSERT INTO visit (");
+		sql.append("	id,");
+		sql.append("	stu_id,");
+		sql.append("	user_id,");
+		sql.append("	classinfo_id,");
+		sql.append("	state");
+		if(datetime != null){
+			sql.append("	,datetime");
+		}
+		sql.append(")");
+		sql.append("VALUES");
+		sql.append("	(");
+		sql.append("		NEXT");
+		sql.append("		VALUE");
+		sql.append("			FOR MYCATSEQ_GLOBAL,");
+		sql.append("			?,");
+		sql.append("			?,");
+		sql.append("			?,");
+		sql.append("			0");
+		if(datetime != null){
+			sql.append("	,? ");
+			param.add(datetime);
+		}
+		sql.append("	);");
+		
+		int i = Db.update(sql.toString(), param.toArray());
+		return i;
+	}
+
+	@Override
+	public int modifyVisit(HashMap map) {
+		ArrayList param = new ArrayList<>();
+		
+		// 根据学生id和用户id查找相关记录，修改状态
+		Long stuId = (Long) map.get("stuId");
+		Long userId = (Long) map.get("userId");
+		String datetime = (String) map.get("datetime");
+		
+		StringBuffer sql = new StringBuffer();
+		sql.append("UPDATE visit ");
+		sql.append("SET state = 1 ");
+		if(datetime != null){
+			sql.append(" ,datetime = ? ");
+			param.add(datetime);
+		}
+		sql.append("WHERE ");
+		sql.append("	stu_id = ? ");
+		sql.append("AND user_id = ?; ");
+		param.add(stuId);
+		param.add(userId);
+		
+		int i = Db.update(sql.toString(),param.toArray());
+		return i;
+	}
+
+	@Override
+	public Record searchStuId(Long stuId) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT ");
+		sql.append("	COUNT(*) AS count ");
+		sql.append("FROM ");
+		sql.append("	visit ");
+		sql.append("WHERE ");
+		sql.append("	stu_id = ? ");
+		
+		Record record = Db.findFirst(sql.toString(), stuId);
+		return record;
+	}
+	
+	public Record searchStuIdAboutTel(Long stuId) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT ");
+		sql.append("	COUNT(*) AS count ");
+		sql.append("FROM ");
+		sql.append("	tel_visit ");
+		sql.append("WHERE ");
+		sql.append("	id = ? ");
+		
+		Record record = Db.findFirst(sql.toString(), stuId);
+		return record;
+	}
+
+	@Override
+	public int addTelVisit(HashMap map) {
+		ArrayList param = new ArrayList();
+		
+		Long id = (Long)map.get("stuId");
+		String info = (String)map.get("info");
+		String global = (String)map.get("global");
+		String org_global = (String)map.get("org_global");
+		String org_study = (String)map.get("org_study");
+		String org_daily = (String)map.get("org_daily");
+		String satisfyDegree = (String)map.get("satisfyDegree");
+		String proSet = (String)map.get("proSet");
+		String proStudy = (String)map.get("proStudy");
+		String change = (String) map.get("change");
+		String getJob = (String)map.get("getJob");
+		String size = (String)map.get("size");
+		String type = (String)map.get("type");
+		String income = (String)map.get("income");
+		String fit = (String)map.get("fit");
+		String satisfy = (String)map.get("satisfy");
+		String way = (String)map.get("way");
+		String jobSatisfy = (String)map.get("jobSatisfy");
+		String advise = (String) map.get("advise");
+		String time = (String) map.get("time");
+		
+		param.add(id);
+		param.add(info);
+		param.add(global);
+		param.add(org_global);
+		
+		param.add(org_study);
+		param.add(org_daily);
+		param.add(satisfyDegree);
+		param.add(proSet);
+		param.add(proStudy);
+		param.add(change);
+		param.add(getJob);
+		param.add(size);
+		param.add(type);
+		param.add(income);
+		param.add(fit);
+		param.add(satisfy);
+		param.add(way);
+		param.add(jobSatisfy);
+		param.add(advise);
+		param.add(time);
+		
+		StringBuffer sql = new StringBuffer();
+		sql.append("INSERT INTO tel_visit ( ");
+		sql.append("	id, ");
+		sql.append("	info, ");
+		sql.append("	`global`, ");
+		sql.append("	org_global, ");
+		sql.append("	org_study, ");
+		sql.append("	org_daily, ");
+		sql.append("	satisfy_degree, ");
+		sql.append("	pro_set, ");
+		sql.append("	pro_study, ");
+		sql.append("	`change`, ");
+		sql.append("	get_job, ");
+		sql.append("	size, ");
+		sql.append("	type, ");
+		sql.append("	income, ");
+		
+		sql.append("	fit, ");
+		sql.append("	satisfy, ");
+		sql.append("	way, ");
+		
+		sql.append("	job_satisty, ");
+		sql.append("	advise, ");
+		
+		sql.append("	time ");
+		sql.append(") ");
+		sql.append("VALUES ");
+		sql.append("	( ");
+		sql.append("		?, ?, ?,?,?,?,?, ?, ?, ?, ?,  ?,?, ?, ?, ?, ?, ?, ?, ?");
+		sql.append("	) ");
+		
+		int i = Db.update(sql.toString(), param.toArray());
+		return i;
+	}
+
+	@Override
+	public int modifyStuId(HashMap map) {
+		ArrayList param = new ArrayList<>();
+		Long stuId = (Long)map.get("stuId");
+		Long userId = (Long) map.get("userId");
+		String datetime = (String) map.get("datetime");
+		param.add(userId);
+		StringBuffer sql = new StringBuffer();
+		
+		sql.append("UPDATE visit ");
+		sql.append("SET user_id = ? ");
+		if(datetime != null){
+			sql.append(" ,datetime = ? ");
+			param.add(datetime);
+		}
+		sql.append("WHERE ");
+		sql.append("	stu_id = ? ");
+		param.add(stuId);
+		
+		
+		int i = Db.update(sql.toString(), param.toArray());
+		
+		return i;
+	}
+
+	@Override
+	public int deleteVistById(Long[] id) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("DELETE ");
+		sql.append("FROM ");
+		sql.append("	visit ");
+		sql.append("WHERE ");
+		sql.append("	stu_id IN ( ");
+		for (int i = 0; i < id.length; i++) {
+			sql.append("?");
+			if (i != id.length - 1) {
+				sql.append(",");
+			}
+		}
+		sql.append(") ");
+		int i = Db.update(sql.toString(), id);
+		return i;
+	}
+
+	@Override
+	public int deleteTelVistById(Long[] id) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("DELETE ");
+		sql.append("FROM ");
+		sql.append("	tel_visit ");
+		sql.append("WHERE ");
+		sql.append("	id IN ( ");
+		for (int i = 0; i < id.length; i++) {
+			sql.append("?");
+			if (i != id.length - 1) {
+				sql.append(",");
+			}
+		}
+		sql.append(") ");
+		int i = Db.update(sql.toString(), id);
+		return i;
+	}
+
+	@Override
+	public Record searchVisitByStuId(Long stuId) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT ");
+		sql.append("	* ");
+		sql.append("FROM ");
+		sql.append("	tel_visit ");
+		sql.append("WHERE ");
+		sql.append("	id = ? ");
+		
+		Record record = Db.findFirst(sql.toString(), stuId);
+		return record;
+		
+	}
+
+}

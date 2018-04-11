@@ -1,0 +1,74 @@
+package cn.gov.hrss.ln.stuenroll.db.mariadb;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.activerecord.Record;
+
+import cn.gov.hrss.ln.stuenroll.db.I_FriendDao;
+
+public class FriendDao implements I_FriendDao{
+
+	@Override
+	public List<Record> searchFriend(HashMap map,long start,long length) {
+		ArrayList param = new ArrayList();
+		String username = (String) map.get("username");
+		param.add(username);
+		String friendname = (String) map.get("friendname");
+		
+		StringBuffer sql= new StringBuffer();
+		sql.append("SELECT ");
+		sql.append("	id, ");
+		sql.append("	friendname, ");
+		sql.append("	role, ");
+		sql.append("	organization ");
+		sql.append("FROM ");
+		sql.append("	friend ");
+		sql.append("WHERE ");
+		sql.append("	username = ? ");
+		if (friendname != null && friendname.length() > 0) {
+			sql.append(" AND friendname= ? ");
+			param.add(friendname);
+		}
+		sql.append("LIMIT ?, ?; ");
+		param.add(start);
+		param.add(length);
+		
+		List<Record> list = Db.find(sql.toString(), param.toArray());	
+		for (Record record : list) {
+			record.set("id", record.getLong("id").toString());			
+		}
+		return list;
+	}
+
+	@Override
+	public long searchFriendCount(String username) {
+		StringBuffer sql= new StringBuffer();
+		sql.append("SELECT ");
+		sql.append("	COUNT(*) ");
+		sql.append("FROM ");
+		sql.append("	friend ");
+		sql.append("WHERE ");
+		sql.append("	username = ?; ");
+		
+		long count = Db.queryLong(sql.toString(),username);
+
+		return count;
+	}
+
+	@Override
+	public int deleteById(Long id) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("DELETE ");
+		sql.append("FROM ");
+		sql.append("	friend ");
+		sql.append("WHERE ");
+		sql.append("	id=?; ");
+		
+		int i=Db.update(sql.toString(),id);
+		return i;
+	}
+
+}

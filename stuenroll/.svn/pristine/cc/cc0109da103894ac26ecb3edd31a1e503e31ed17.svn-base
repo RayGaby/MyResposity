@@ -1,0 +1,78 @@
+package cn.gov.hrss.ln.stuenroll.db;
+
+import com.jfinal.plugin.activerecord.Record;
+
+/**
+ * Archive表Dao接口
+ * 
+ * @author YangDi
+ *
+ */
+public interface I_ArchiveDao {
+	/**
+	 * 根据条件查询归档表相关数据总数
+	 * 
+	 * @param year
+	 * @param month
+	 * @param stateId
+	 * @param organizationId
+	 * @return
+	 */
+	public long searchCountByCondition(int year, int month, int stateId, long organizationId);
+
+	/**
+	 * 根据register_id查询个报名信息(for mobile) 2016年07月10日 15:11:36 caishuai
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public Record searchPersonalEnroll(long registerId, long pid);
+
+	/**
+	 * 根据register_id查询个人进度(for mobile) 2016年07月10日 15:40:32 caishuai
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public String searchPersonalState(long id);
+
+	/**
+	 * 是否存在某条记录
+	 * 
+	 * @param pid
+	 * @return
+	 */
+	public boolean hasRecord(String pid);
+
+	/**
+	 * 查询报名记录
+	 * 
+	 * @param pid
+	 * @return
+	 */
+	public Record searchRegisterRecord(String pid);
+
+	/**
+	 * 查询注册用户是否在enroll表中有注册信息
+	 * 
+	 * @param registerId
+	 * @return
+	 */
+	public boolean checkRegisterIdUnique(long registerId);
+
+	/**
+	 * 确认pid是否已经报名——redis
+	 * 
+	 * @param registerId
+	 * @return
+	 */
+	public boolean checkPidUnique(String pid);
+	/**
+	 * 查询当前机构某一专业的人数
+	 * 
+	 * @param professionId
+	 * @param organizationId
+	 * @return
+	 */
+	public long searchCountAtProfession(String profession,long organizationId);
+}

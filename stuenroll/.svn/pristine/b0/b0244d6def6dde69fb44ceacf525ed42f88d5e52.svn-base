@@ -1,0 +1,54 @@
+package cn.gov.hrss.ln.stuenroll.setting;
+
+/**
+ * 用户个人设置控制接口(mobile)
+ * 
+ * @author cs
+ *
+ */
+public interface I_SettingController {
+	/**
+	 * 手机用户登出
+	 */
+	public void logout();
+
+	/**
+	 * 设置个人头像
+	 */
+	public void setIcon();
+
+	/**
+	 * 获取个人头像
+	 */
+	public void getIcon();
+
+	/**
+	 * 获取个人信息(账号&&名字)
+	 */
+	public void getInfo();
+
+	/**
+	 * 获取个人详细信息
+	 */
+	public void getMoreInfo();
+
+	/**
+	 * 修改密码
+	 */
+	public void setPassword();
+
+	/**
+	 * 修改电话号码
+	 */
+	public void setTel();
+
+	/**
+	 * 修改Email
+	 */
+	public void setEmail();
+
+	/**
+	 * 修改昵称
+	 */
+	public void setNickname();
+}

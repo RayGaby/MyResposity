@@ -1,0 +1,301 @@
+$(function() {
+	//TODO 登录
+	//TODO 下拉菜单绑定
+	
+	//初始化出生日期
+	var BirthdayDate = get_BirthdayDate();
+	var value1 = document.getElementById("birthday").value;
+	document.getElementById("birthday").value = BirthdayDate;
+	//初始化毕业年届
+	get_GraduateYear();
+	//初始化毕业时间
+	var GraduateDate = get_GraduateDate();
+	var value3 = document.getElementById("graduateDate").value;
+	document.getElementById("graduateDate").value = GraduateDate;
+	//加载mui.js
+	mui.init();
+	/**
+	 * 提交报名信息接口
+	 */
+	var I_Register = function() {
+
+		}
+		/**
+		 * 获取报名信息单选项方法
+		 */
+	I_Register.prototype.searchSelectableEducation = function() {
+		throw "抽象方法";
+	}
+	I_Register.prototype.searchSelectableMajor = function() {
+		throw "抽象方法";
+	}
+	I_Register.prototype.searchSelectableHealthy = function() {
+		throw "抽象方法";
+	}
+	I_Register.prototype.searchSelectablePolitics = function() {
+		throw "抽象方法";
+	}
+	I_Register.prototype.searchSelectablePlace = function() {
+		throw "抽象方法";
+	}
+	I_Register.prototype.searchSelectableSpecialty = function() {
+		throw "抽象方法";
+	}
+	I_Register.prototype.searchSelectableOrgnization = function() {
+		throw "抽象方法";
+	}
+	I_Register.prototype.init = function() {
+		throw "抽象方法";
+	}
+
+	var Register = function() {
+
+	}
+
+	Register.prototype = new I_Register();
+	//查询可选项目
+	Register.prototype.searchSelectableEducation = function(json) {
+		$.ajax({
+			"url": "http://172.23.32.1/stuenroll/register/searchSelectableEducation",
+			"type": "post",
+			"dataType": "json",
+			"data": json,
+			//若不加，将导致不可控的赋值错误(我太懒233333，变量名起的一样QAQ，so你懂得_(:з」∠)_。。@404)
+			"async": false,
+			"success": function(json) {
+				var data = json.result;
+				var options = JSON.stringify(data);
+				//					alert(options); 
+				var arr = options.split("('");
+				var selectableOptions = arr[1];
+				arr = selectableOptions.split("')");
+				var offers = arr[0].split("','");
+				var education = $("#education");
+				var temp = "";
+				//					alert(offers[1]);
+				//					alert(offers.length);
+				for (var i = 0; i < offers.length; i++) {
+					temp += "<option value='" + offers[i] + "'>" + offers[i] + "</option>";
+					//						alert(temp);
+				}
+				education.append(temp);
+			},
+			"error": function() {
+				toastr.error("系统异常");
+			}
+		});
+	}
+	Register.prototype.searchSelectableMajor = function(json) {
+		$.ajax({
+			"url": "http://172.23.32.1/stuenroll/register/searchSelectableMajor",
+			"type": "post",
+			"dataType": "json",
+			"data": json,
+			"async": false,
+			"success": function(json) {
+				var data = json.result;
+				var options = JSON.stringify(data);
+				var arr = options.split("('");
+				var selectableOptions = arr[1];
+				arr = selectableOptions.split("')");
+				var offers = arr[0].split("','");
+				var graduateSpecialty = $("#graduateSpecialty");
+				var temp = "";
+				for (var i = 0; i < offers.length; i++) {
+					temp += "<option value='" + offers[i] + "'>" + offers[i] + "</option>";
+				}
+				graduateSpecialty.append(temp);
+			},
+			"error": function() {
+				toastr.error("系统异常");
+			}
+		});
+	}
+	Register.prototype.searchSelectableHealthy = function(json) {
+		$.ajax({
+			"url": "http://172.23.32.1/stuenroll/register/searchSelectableHealthy",
+			"type": "post",
+			"dataType": "json",
+			"data": json,
+			"async": false,
+			"success": function(json) {
+				var data = json.result;
+				var options = JSON.stringify(data);
+				var arr = options.split("('");
+				var selectableOptions = arr[1];
+				arr = selectableOptions.split("')");
+				var offers = arr[0].split("','");
+				var healthy = $("#healthy");
+				var temp = "";
+				for (var i = 0; i < offers.length; i++) {
+					temp += "<option value='" + offers[i] + "'>" + offers[i] + "</option>";
+				}
+				healthy.append(temp);
+			},
+			"error": function() {
+				toastr.error("系统异常");
+			}
+		});
+	}
+	Register.prototype.searchSelectablePolitics = function(json) {
+		$.ajax({
+			"url": "http://172.23.32.1/stuenroll/register/searchSelectablePolitics",
+			"type": "post",
+			"dataType": "json",
+			"data": json,
+			"async": false,
+			"success": function(json) {
+				var data = json.result;
+				var options = JSON.stringify(data);
+				var arr = options.split("('");
+				var selectableOptions = arr[1];
+				arr = selectableOptions.split("')");
+				var offers = arr[0].split("','");
+				var politics = $("#politics");
+				var temp = "";
+				for (var i = 0; i < offers.length; i++) {
+					temp += "<option value='" + offers[i] + "'>" + offers[i] + "</option>";
+				}
+				politics.append(temp);
+			},
+			"error": function() {
+				toastr.error("系统异常");
+			}
+		});
+	}
+	Register.prototype.searchSelectablePlace = function(json) {
+		$.ajax({
+			"url": "http://172.23.32.1/stuenroll/register/searchSelectablePlace",
+			"type": "post",
+			"dataType": "json",
+			"data": json,
+			"async": false,
+			"success": function(json) {
+				var data = json.result;
+				var options = JSON.stringify(data);
+				var arr = options.split("('");
+				var selectableOptions = arr[1];
+				arr = selectableOptions.split("')");
+				var offers = arr[0].split("','");
+				var place = $("#place");
+				var temp = "";
+				for (var i = 0; i < offers.length; i++) {
+					temp += "<option value='" + offers[i] + "'>" + offers[i] + "</option>";
+				}
+				place.append(temp);
+			},
+			"error": function() {
+				toastr.error("系统异常");
+			}
+		});
+	}
+	Register.prototype.searchSelectableSpecialty = function(json) {
+		$.ajax({
+			"url": "http://172.23.32.1/stuenroll/register/searchSelectableSpecialty",
+			"type": "post",
+			"dataType": "json",
+			"data": json,
+			"async": false,
+			"success": function(json) {
+				var data = json.result;
+				//					var options = JSON.stringify(data);
+				//					var arr = options.split("('");
+				//					var selectableOptions = arr[1];
+				//					arr = selectableOptions.split("')");
+				//					var offers = arr[0].split("','");
+				var specialty = $("#specialty");
+				var temp = "";
+				for (var i = 0; i < data.length; i++) {
+					var one = data[i];
+					//					浏览器调试 控制台（F12）报告
+					//					console.log(one.name);
+					temp += "<option value='" + one.id + "'>" + one.name + "</option>";
+				}
+				specialty.append(temp);
+			},
+			"error": function() {
+				toastr.error("系统异常");
+			}
+		});
+	}
+	Register.prototype.searchSelectableOrgnization = function(json) {
+			$.ajax({
+				"url": "http://172.23.32.1/stuenroll/register/searchSelectableOrgnization",
+				"type": "post",
+				"dataType": "json",
+				"data": json,
+				"async": true,
+				"success": function(json) {
+					var data = json.result;
+					var orgnization = $("#orgnization");
+					var temp = "";
+					for (var i = 0; i < data.length; i++) {
+						var one = data[i];
+						temp += "<option value='" + one.id + "'>" + one.name + "</option>";
+					}
+					orgnization.append(temp);
+				},
+				"error": function() {
+					toastr.error("系统异常");
+				}
+			});
+		}
+		//提交
+	Register.prototype.init = function() {
+
+		document.getElementById("registerBtn").addEventListener("tap", function() {
+			var bool = confirm("是否执行学员信息注册？");
+		});
+	}
+
+	function factory(key) {
+		if (key == "Register") {
+			return new Register();
+		}
+	}
+
+	var register = factory("Register");
+	register.searchSelectableEducation();
+	register.searchSelectableMajor();
+	register.searchSelectableHealthy();
+	register.searchSelectablePolitics();
+	register.searchSelectablePlace();
+	register.searchSelectableSpecialty();
+	register.searchSelectableOrgnization();
+
+	register.init();
+
+	// 监听基本信息输入是否正确
+	$(".mui-input-row .input").bind({
+		focus: function() {
+			if (this.checkValidity()) {
+				$(this).removeClass("error");
+			} else {
+				$(this).addClass("error");
+			}
+		}
+	});
+	$(".mui-input-row .input").bind("input propertychange", function() {
+		if (this.checkValidity()) {
+			$(this).removeClass("error");
+		} else {
+			$(this).addClass("error");
+		}
+	});
+	//监听身份证信息是否正确
+	$(".mui-input-row .pid_input").keyup(function() {
+		if (this.id != "pid" && this.checkValidity()) {
+			$(this).removeClass("error");
+		} else {
+			$(this).addClass("error");
+		}
+
+		if (this.id == "pid") {
+			if (checkPid($(this).val())) {
+				$(this).removeClass("error");
+			} else {
+				$(this).addClass("error");
+			}
+		}
+	});
+});

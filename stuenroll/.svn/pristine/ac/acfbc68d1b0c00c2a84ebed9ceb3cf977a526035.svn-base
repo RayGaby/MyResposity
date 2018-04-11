@@ -1,0 +1,87 @@
+package cn.gov.hrss.ln.stuenroll.register;
+
+import java.util.HashMap;
+import java.util.List;
+
+import com.jfinal.core.Controller;
+import com.jfinal.plugin.activerecord.Record;
+import com.jfinal.plugin.spring.Spring;
+/**
+ * 报名Controller
+ * @author Viva la Vida
+ *
+ */
+@Spring("registerController")
+public class RegisterController extends Controller implements I_RegisterController {
+	private I_RegisterService i_RegisterService;
+
+	@Override
+	public void searchSelectableEducation() {
+		List<Record> list = i_RegisterService.searchSelectableEducation();
+		renderJson("result", list);
+	}
+
+	@Override
+	public void searchSelectableMajor() {
+		List<Record> list = i_RegisterService.searchSelectableMajor();
+		renderJson("result", list);
+	}
+
+	@Override
+	public void searchSelectableHealthy() {
+		List<Record> list = i_RegisterService.searchSelectableHealthy();
+		renderJson("result", list);
+	}
+
+	@Override
+	public void searchSelectablePolitics() {
+		List<Record> list = i_RegisterService.searchSelectablePolitics();
+		renderJson("result", list);
+	}
+
+	@Override
+	public void searchSelectablePlace() {
+		List<Record> list = i_RegisterService.searchSelectablePlace();
+		renderJson("result", list);
+	}
+
+	// 查询机构和相应专业可选项
+	@Override
+	public void searchOrgnizationJoinInYearAtDropDown() {
+		int year = getParaToInt("year");
+		List<Record> list = i_RegisterService.searchOrgnizationJoinInYearAtDropDown(year);
+		renderJson("result", list);
+
+	}
+
+	@Override
+	public void searchOrgnizationJoinInYearWithProfessionAtDropDown() {
+		int year = getParaToInt("year");
+		Long professionId = getParaToLong("professionId");
+		List<Record> list = i_RegisterService.searchOrgnizationJoinInYearWithProfessionAtDropDown(year, professionId);
+		renderJson("result", list);
+	}
+
+	@Override
+	public void searchProfessionInYearAtDropDown() {
+		int year = getParaToInt("year");
+		List<Record> list = i_RegisterService.searchProfessionInYearAtDropDown(year);
+		renderJson("result", list);
+	}
+	// TODO: 提交报名
+	// 身份证号既要校验redis又要校验sql
+	// 消息中间件
+	// 防止A替B报名
+	// long id = getSessionAttr("id",i);
+	// List<Record> list =i_RegisterService.searchProfessionInYearAtDropDown(id);
+	// renderJson("result", list);
+
+	public I_RegisterService getI_RegisterService() {
+		return i_RegisterService;
+	}
+
+	public void setI_RegisterService(I_RegisterService i_RegisterService) {
+		this.i_RegisterService = i_RegisterService;
+	}
+
+}

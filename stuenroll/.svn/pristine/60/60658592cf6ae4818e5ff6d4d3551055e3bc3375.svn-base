@@ -1,0 +1,278 @@
+$(function(){
+	/**
+	 * 抽象的列表接口
+	 */
+	var I_List=function(){
+		
+	}
+	/**
+	 * 抽象方法
+	 */
+	I_List.prototype.searchFriend=function(json){
+		throw "抽象方法";
+	}
+	I_List.prototype.searchFriendCount = function() {
+		throw "抽象方法";
+	}
+	I_List.prototype.deleteById = function() {
+		throw "抽象方法";
+	}
+	/**
+	 * 列表类
+	 */
+	var List = function(){
+	
+	}
+	
+	List.prototype=new I_List();//继承父类
+	
+	List.prototype.searchFriend=function(json){
+		$.ajax({
+			"url" : "http://127.0.0.1/stuenroll/friend/searchFriend",
+			"type" : "post",
+			"dataType" : "json",
+			"data" : json,
+			"success" : function(json) {
+				
+				var data = json.result;
+				var item=$(".myfriends-container .list-container");
+				// 清空好友信息
+				item.find(".list-item").remove();
+				
+				var temp = "";
+				for (var i = 0; i < data.length; i++) {					
+					var one = data[i];
+					
+					temp += "<dt class='list-item' >";
+					temp += "<div class='photo-container'>";
+					temp += "<img src='../../img/photo.png' class='user-photo'/>";
+					temp += "<div class='small-circle circle-green'></div>";
+					temp += "</div>";
+					temp += "<div class='personal-info'>";
+					temp += "<dl class='info-container'>";
+					temp += "<dt class='myfriends-name'>"+one.friendname+"</dt>";
+					temp += "<dt class='myfriends-role'>"+one.role+"</dt>";
+					temp += "<dt class='myfriends-organization'>"+one.organization+"</dt>";
+					temp += "</dl>";
+					temp += "</div>";
+					temp += "<div class='action'>";
+					temp += "<img src='../../img/星.png' class='star'/>";
+					temp += "<img src='../../img/叉.png' class='furcation' id='"+one.id+"'/>";
+					temp += "</div>";
+					temp += "</dt>";	
+					
+				}
+				item.append(temp);
+				
+			},
+			"error" : function(){
+				toastr.error("系统异常");
+			}
+		});
+	}
+	List.prototype.searchFriendCount=function(){
+		$.ajax({
+			"url" : "http://127.0.0.1/stuenroll/friend/searchFriendCount",
+			"type" : "post",
+			"dataType" : "json",
+			"data" : null,
+			"success" : function(json) {
+				var count = json.result; // 总记录数				
+				var totalPages = (count % 10 == 0) ? count / 10 : Math.floor(count / 10) + 1;
+				//记录总页数
+				$("#totalPages").text(totalPages);
+			},
+			"error" : function(){
+				toastr.error("系统异常");
+			}
+		});
+	}
+	List.prototype.deleteById=function(){
+		// 弹出确认对话框
+		var bool = confirm("是否删除选中的记录？");
+		if (bool == false) {
+			return;
+		}
+		// 获得被选中的记录
+		var content = $(".list-container .list-item").find(".furcation");
+		var checkbox = content.find("*[name='id']:checked"); // 被选中的复选框
+
+		var id = [];
+		for (var i = 0; i < checkbox.length; i++) {
+			id.push($(checkbox[i]).val());
+		}
+
+		$.ajax({
+			"url" : "/stuenroll/enroll/deleteById",
+			"type" : "post",
+			"dataType" : "json",
+			"traditional" : true,	//发送数组JSON格式
+			"async":false,
+			"data" : {
+				"id" : id
+			},
+			"success" : function(json) {
+				toastr.success("删除了" + json.deleteRows + "条记录");
+			},
+			"error" : function() {
+				toastr.error("系统异常");
+			}
+		});
+	}
+	/**
+	 * 工厂方法
+	 * 
+	 * @param {Object} key
+	 */
+	function factory(key){
+		if(key=="List"){
+			return new List();
+		}
+	}
+	
+	var list = factory("List");
+	
+	list.searchFriend();
+	list.searchFriendCount();
+	
+	//点击上一页
+	$(".myfriends-bottom").find("*[name='prevBtn']").click(function() {
+		var temp = $(this).parents(".page-list").find("#currentPage");
+		var currentPage = temp.text();
+		currentPage = new Number(currentPage);
+		if (currentPage > 1) {
+			// TODO 根据隐藏的查询面板的设置条件查询数据
+			// 请求Ajax并更新数据
+			list.searchFriend({
+				"page" : currentPage - 1
+			});
+			temp.text(currentPage - 1); // 当前页数减去1页
+		}
+
+	});
+    //点击下一页
+	$(".myfriends-bottom").find("*[name='nextBtn']").click(function() {
+		
+		var temp = $(this).parents(".page-list").find("#currentPage");
+		var currentPage = temp.text();
+		
+		var totalPages = $(this).parents(".page-list").find("#totalPages").text();
+		
+		currentPage = new Number(currentPage);
+		totalPages = new Number(totalPages);
+		
+		if (currentPage < totalPages) {
+			
+			// TODO 根据隐藏的查询面板的设置条件查询数据
+			// 请求Ajax并更新数据
+			list.searchFriend({
+				"page" : currentPage + 1
+			});
+			temp.text(currentPage + 1); // 当前页数加上1页
+			
+		}
+		
+	});
+	//点击查询好友
+	var searchFlag=true;
+	$(".myfriends-container .title-mark").click(function(){
+		if (searchFlag==true) {
+			//显示查询好友面板
+			$("#search").val("");
+			$(".myfriends-list .list-container").addClass("list-container-hidden");
+			$(".myfriends-list .myfriends-search").removeClass("myfriends-search-hidden");
+			searchFlag=false;
+		} else{
+			//收起查询好友面板
+			$(".myfriends-list .myfriends-search").addClass("myfriends-search-hidden");
+			$(".myfriends-list .list-container").removeClass("list-container-hidden");
+			searchFlag=true;
+		}
+		
+	});
+	
+	//查找好友删除按钮
+	$(".myfriends-search .search-furcation").click(function(){
+		$("#search").val("");	
+	});
+
+	//查找好友查找按钮
+	$(".myfriends-search .magnifier").click(function(){
+		$(".myfriends-list .myfriends-search").addClass("myfriends-search-hidden");
+		$(".myfriends-list .list-container").removeClass("list-container-hidden");
+		searchFlag=true;
+		var friendname=$("#search").val();
+		list.searchFriend({friendname : friendname});
+		//$("#totalPages").text(1);
+		//TODO 判断是否有好友，若没有，则显示提示信息
+		if(true){
+			//alert("没有找到该好友!")
+			toastr.warning("没有找到该好友！");
+			list.searchFriend();
+			list.searchFriendCount();
+		}
+		
+	});
+	
+	
+	
+	
+	
+	
+	$(".list-container .list-item").click(function(){
+		alert(1)
+	});
+//	$(".list-container .list-item").click(function(){
+//		alert(1)
+//		$(".myfriends-container .list-item").removeClass("bgc-active");		
+//		$(this).addClass("bgc-active");
+//		$(".myfriends-container .action").addClass("action-hidden");
+//		var action=$(this).find(".action");
+//		$(action).removeClass("action-hidden");
+//	});
+	$(".chart-container").click(function(){
+		
+		$(".myfriends-container .list-item").removeClass("bgc-active");
+		$(".myfriends-container .action").addClass("action-hidden");
+	});
+	
+	$(".myfriends-container .star").click(function(){
+		
+		var itemCurrent=$(this).parents(".list-item");
+		var item=$(".myfriends-container .list-item");
+		//第一个好友信息
+		var firstname=$(item[0]).find(".myfriends-name").text();
+		var firstrole=$(item[0]).find(".myfriends-role").text();
+		var firstorganization=$(item[0]).find(".myfriends-organization").text();
+		//当前好友的信息
+		var namecurrent=itemCurrent.find(".myfriends-name").text();
+		var rolecurrent=itemCurrent.find(".myfriends-role").text();
+		var organizationcurrent=itemCurrent.find(".myfriends-organization").text();
+		
+//		itemCurrent.find(".myfriends-name").text(name);
+//		itemCurrent.find(".myfriends-role").text(role);
+//		itemCurrent.find(".myfriends-organization").text(organization);
+		
+		for(var i = 0;i <item.length;i++){
+			//当前正在遍历好友的信息
+			var name=$(item[i]).find(".myfriends-name").text();
+			var role=$(item[i]).find(".myfriends-role").text();
+			var organization=$(item[i]).find(".myfriends-organization").text();
+		
+			if(name==namecurrent){
+				
+				var temp=namecurrent;
+				var temp=rolecurrent;
+				var temp=organizationcurrent;
+				itemCurrent=item[i-1];
+				for(var j=i-2;j>=0;j--){
+					item[j+1]=item[j];
+				}
+				item[0]=temp;
+			}		
+		}
+	});
+	
+	
+	
+});

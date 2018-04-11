@@ -1,0 +1,516 @@
+body {
+  background-color: #e7e7e7;
+}
+.main-container {
+  margin: 0.9375rem;
+  width: 102.0625rem;
+}
+.main-container .left {
+  float: left;
+  background-color: #fff;
+  margin: 0;
+  padding: 0;
+  width: 60rem;
+  height: 109.375rem;
+}
+.main-container .left .registry {
+  margin-left: 3.125rem;
+  margin-right: 3.125rem;
+  position: relative;
+}
+.main-container .left .registry dl .form-title {
+  position: absolute;
+  left: 0;
+  top: 0.9375rem;
+  width: 53.125rem;
+  height: 2.25rem;
+  line-height: 2.25rem;
+  letter-spacing: 0.5rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+  font-family: "微软雅黑";
+}
+.main-container .left .registry dl .blue {
+  background-color: #3399ff;
+  width: 53.125rem;
+  height: 0.9375rem;
+  position: absolute;
+  top: 3.75rem;
+  left: 0;
+}
+.main-container .left .registry dl .gray {
+  background-color: #999999;
+  width: 53.125rem;
+  height: 0.375rem;
+  position: absolute;
+  top: 4.875rem;
+  left: 0;
+}
+.main-container .left .registry dl .b-blue {
+  background-color: #3399ff;
+  width: 53.125rem;
+  height: 0.375rem;
+  position: absolute;
+  top: 24.375rem;
+  left: 0;
+}
+.main-container .left .registry dl .detail {
+  widows: 53.125rem;
+  position: absolute;
+  top: 25.1875rem;
+  text-align: center;
+  left: 0;
+  margin: 0.9375rem 0 0.9375rem 0;
+  font-size: 1rem;
+  color: #999999;
+  padding-left: 7.5rem;
+}
+.main-container .left .registry dl .form {
+  margin-top: 0.9375rem;
+  padding-top: 4.375rem;
+}
+.main-container .left .registry dl .form .input {
+  letter-spacing: 0.0625rem;
+  font-size: 0.875rem;
+  font-weight: 400;
+  text-align: center;
+}
+.main-container .left .registry dl .form .label {
+  margin-top: 1.875rem;
+  float: left;
+  white-space: nowrap;
+  font-size: 0.875rem;
+  font-family: "微软雅黑";
+  font-weight: 400;
+  color: #333333;
+  text-align: left;
+  letter-spacing: 0.0625rem;
+  margin-right: 0.3125rem;
+}
+.main-container .left .registry dl .form .content {
+  float: left;
+  margin-top: 1.875rem;
+}
+.main-container .left .registry dl .form .content .info-left {
+  width: 20.3125rem;
+  margin-right: 2.3125rem;
+  text-align: center;
+  border-bottom: solid #797979 0.0625rem;
+  position: relative;
+  top: -0.1875rem;
+}
+.main-container .left .registry dl .form .content .info-right {
+  width: 20.3125rem;
+  margin-right: 0;
+  text-align: center;
+  border-bottom: solid #797979 0.0625rem;
+  position: relative;
+  top: -0.1875rem;
+}
+.main-container .left .registry dl .form .content .birth {
+  float: left;
+  width: 3.75rem;
+  margin-right: 0.5rem;
+  text-align: center;
+  border-bottom: solid #797979 0.0625rem;
+  position: relative;
+  top: -0.1875rem;
+}
+.main-container .left .registry dl .form .content .string {
+  float: left;
+  font-size: 0.875rem;
+  margin-right: 0.5rem;
+}
+.main-container .left .registry dl .form .content .name {
+  width: 14.0625rem;
+  margin-right: 1.875rem;
+  text-align: center;
+  border-bottom: solid #797979 0.0625rem;
+  position: relative;
+  top: -0.1875rem;
+}
+.main-container .left .registry dl .form .content .sex {
+  font-size: 14rem;
+  margin-right: 3.625rem;
+}
+.main-container .left .registry dl .form .content .input {
+  letter-spacing: 0.0625rem;
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+.main-container .left .index {
+  float: left;
+  position: absolute;
+  width: 3.125rem;
+  height: 3.125rem;
+  line-height: 3.125rem;
+  border-radius: 100%;
+  background-color: #3399ff;
+  margin-left: 0;
+  top: 11.25rem;
+  left: 0;
+  color: #e1ffff;
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-align: center;
+}
+.main-container .left .boundary1 {
+  float: left;
+  border-left: solid #797979 0.0625rem;
+  margin-left: 4.6875rem;
+  height: 26.25rem;
+}
+.main-container .left .boundary2 {
+  float: left;
+  border-left: solid #797979 0.0625rem;
+  margin-left: 4.6875rem;
+  height: 28.125rem;
+}
+.main-container .left .condition {
+  float: left;
+  margin-left: 1.875rem;
+}
+.main-container .left .condition .condition-list {
+  margin-top: 0.3125rem;
+}
+.main-container .left .condition .condition-list .condition-item {
+  margin-bottom: 0.625rem;
+  font-size: 0.875rem;
+}
+.main-container .left .condition .condition-list .condition-item .choose {
+  margin-right: 1.25rem;
+}
+.main-container .left .condition .condition-list .condition-item .text {
+  width: 42.8125rem;
+  height: 9.375rem;
+  background-color: #e7e7e7;
+  outline: none;
+  font-size: 1.75rem;
+  border: 0;
+}
+.main-container .left .stu-info {
+  margin-left: 3.125rem;
+  width: 53.125rem;
+  position: absolute;
+  top: 30.625rem;
+  overflow: hidden;
+}
+.main-container .left .stu-job {
+  margin-left: 3.125rem;
+  width: 53.125rem;
+  position: absolute;
+  top: 58.75rem;
+  overflow: hidden;
+}
+.main-container .left .button {
+  margin-left: 3.125rem;
+  width: 53.125rem;
+  position: absolute;
+  top: 87.8125rem;
+  overflow: hidden;
+}
+.main-container .left .button .page-btn {
+  display: block;
+  width: 7.5rem;
+  height: 2rem;
+  margin-top: 0.625rem;
+  margin-bottom: 1.5625rem;
+  background-color: #F4494E;
+  border: none;
+  color: #fff;
+  outline: none;
+  border-radius: 0.1875rem;
+  letter-spacing: 0.0625rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  float: left;
+}
+.main-container .left .button .page-btn:active {
+  background-color: #CD0C12;
+}
+.main-container .left #save {
+  margin-left: 16.875rem;
+}
+.main-container .left #return {
+  margin-left: 5rem;
+}
+.main-container .right {
+  float: left;
+  margin-left: 1.25rem;
+  padding: 0;
+}
+.main-container .right .record {
+  width: 40.625rem;
+  height: 15.125rem;
+  margin: 0;
+  padding: 0;
+}
+.main-container .right .record .record-top {
+  background-color: #4d4d65;
+  height: 6.625rem;
+}
+.main-container .right .record .record-top dl {
+  margin: 0;
+}
+.main-container .right .record .record-top dl .user-photo {
+  float: left;
+  width: 7.5rem;
+  height: 7.5rem;
+  border-radius: 100%;
+  position: relative;
+  top: 1.5625rem;
+  left: 1.5625rem;
+  border: solid 0.25rem #fff;
+}
+.main-container .right .record .record-top dl .name {
+  float: left;
+  color: #fff;
+  position: relative;
+  width: 7.5rem;
+  height: 2.25rem;
+  line-height: 2.25rem;
+  letter-spacing: 0.0625rem;
+  top: 2.5rem;
+  left: 1.5625rem;
+  margin-left: 1.25rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+.main-container .right .record .record-top dl .tel {
+  float: left;
+  color: #fff;
+  position: relative;
+  width: 18.75rem;
+  height: 3.5625rem;
+  line-height: 3.5625rem;
+  letter-spacing: 0.0625rem;
+  top: 1.875rem;
+  left: 1.5625rem;
+  margin-left: 2.5rem;
+  font-size: 3rem;
+  font-weight: 700;
+}
+.main-container .right .record .record-top dl .other {
+  float: left;
+  color: #fff;
+  position: relative;
+  top: 0.75rem;
+  width: 7.5rem;
+  height: 2.25rem;
+  line-height: 2.25rem;
+  letter-spacing: 0.0625rem;
+  left: 1.5625rem;
+  margin-left: 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+.main-container .right .record .record-down {
+  background-color: #fff;
+  height: 8.5rem;
+}
+.main-container .right .record .record-down dl {
+  height: inherit;
+  margin-top: 0;
+}
+.main-container .right .record .record-down dl .duration {
+  float: left;
+  position: relative;
+  top: 3.625rem;
+  left: -2.1875rem;
+  width: 3.125rem;
+  height: 1.25rem;
+  line-height: 1.25rem;
+  letter-spacing: 0.0625rem;
+  font-size: 0.875rem;
+}
+.main-container .right .record .record-down dl .time {
+  float: left;
+  position: relative;
+  top: 2.375rem;
+  left: -1.5625rem;
+  width: 12.6875rem;
+  height: 3.75rem;
+  line-height: 3.75rem;
+  letter-spacing: 0.0625rem;
+  font-size: 400;
+  font-family: "arial black";
+  font-size: 3.125rem;
+}
+.main-container .right .record .record-down dl .play {
+  position: relative;
+  top: 2.5rem;
+  left: 2.8125rem;
+  width: 9.25rem;
+  height: 3.125rem;
+  float: left;
+  background-color: #ff0066;
+  outline: none;
+  display: block;
+  border: none;
+  border-radius: 0.1875rem;
+  line-height: 3.125rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.0625rem;
+  font-family: "微软雅黑 bold";
+  color: #fff;
+  cursor: pointer;
+}
+.main-container .right .record .record-down dl .play:active {
+  background-color: #CD0C12;
+}
+.main-container .right .radio {
+  background-color: red;
+  width: 40.625rem;
+  height: 6.25rem;
+  margin-top: 1.25rem;
+}
+.main-container .right .test {
+  width: 40.625rem;
+  height: 17.375rem;
+  margin-top: 1.25rem;
+}
+.main-container .right .test .absent {
+  float: left;
+  background-color: white;
+  width: 20.3125rem;
+  height: 17.375rem;
+}
+.main-container .right .test .absent .attend {
+  margin: 0;
+  background-color: white;
+  width: 20.3125rem;
+  height: 17.375rem;
+}
+.main-container .right .test .grade {
+  float: left;
+  background-color: white;
+  width: 19rem;
+  height: 17.375rem;
+  margin-left: 1.25rem;
+}
+.main-container .right .test .grade .report {
+  margin: 0;
+  background-color: white;
+  width: 19rem;
+  height: 17.375rem;
+}
+.main-container .right .check-record {
+  background-color: white;
+  width: 40.625rem;
+  height: 25rem;
+  margin-top: 1.25rem;
+  padding: 0;
+  position: relative;
+}
+.main-container .right .check-record .date {
+  position: absolute;
+  top: 1.25rem;
+  width: 38.125rem;
+  height: 3.75rem;
+  margin-left: 1.25rem;
+  padding-top: 0.5rem;
+  border: solid 0.0625rem #e0e0e0;
+  border-bottom: hidden;
+  line-height: 3.125rem;
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 0.0625rem;
+  font-family: "微软雅黑 bold";
+  color: black;
+  padding-left: 3.125rem;
+}
+.main-container .right .check-record .date .year {
+  margin-right: 0.3125rem;
+}
+.main-container .right .check-record .date .arrowhead1 {
+  position: absolute;
+  right: 3.75rem;
+  font-size: 1.875rem;
+  width: 1.875rem;
+  top: 0.125rem;
+}
+.main-container .right .check-record .date .arrowhead2 {
+  position: absolute;
+  right: 0.9375rem;
+  font-size: 1.875rem;
+  top: 0.125rem;
+  width: 1.875rem;
+}
+.main-container .right .check-record .calendar {
+  width: 38.125rem;
+  margin-left: 1.25rem;
+  position: absolute;
+  top: 5rem;
+  clear: none;
+  float: none;
+  font-size: 0.875rem;
+  border: solid #e0e0e0 0.0625rem;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+.main-container .right .check-record .calendar tr {
+  height: 3.125rem;
+}
+.main-container .right .check-record .calendar td {
+  padding: 0;
+  margin: 0;
+  border: solid #e0e0e0 0.0625rem;
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
+  font-size: 0.875rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+}
+.main-container .right .check-record .calendar td:first-child {
+  background-color: #F0F0F0;
+}
+.main-container .right .check-record .calendar td:nth-child(7) {
+  background-color: #F0F0F0;
+}
+.main-container .right .check-record .calendar th {
+  padding: 0;
+  margin: 0;
+  border: solid #e0e0e0 0.0625rem;
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
+  text-align: center;
+}
+.main-container .right .check-record .calendar .disable {
+  color: #B9B9B9;
+}
+.main-container .right .check-record .calendar .uncome {
+  color: red;
+}
+.main-container .right .report-table {
+  background-color: white;
+  width: 40.625rem;
+  height: 21.25rem;
+  margin-top: 1.25rem;
+  padding: 0;
+  position: relative;
+}
+.main-container .right .report-table .drop {
+  margin-top: 0;
+  width: 38.125rem;
+  height: 3.125rem;
+  background-color: #02A0E9;
+  position: absolute;
+  top: 1.25rem;
+  left: 1.25rem;
+}
+.main-container .right .report-table .drop .dropdown {
+  margin-top: 0.625rem;
+  border: solid 0.0625rem #e0e0e0;
+  margin-left: 2.5rem;
+}
+.main-container .right .report-table .data-table {
+  margin-left: 1.25rem;
+  padding-top: 1.25rem;
+  width: 38.125rem;
+  position: absolute;
+  top: 4.375rem;
+}
+/*# sourceMappingURL=tel_visit.css.map */

@@ -1,0 +1,76 @@
+package cn.gov.hrss.ln.stuenroll.register;
+
+import java.util.HashMap;
+import java.util.List;
+
+import com.jfinal.plugin.activerecord.Record;
+import com.jfinal.core.Controller;
+import cn.gov.hrss.ln.stuenroll.db.I_RegisterDao;
+/**
+ * 报名 Service
+ * @author Viva la Vida
+ *
+ */
+public class RegisterService implements I_RegisterService{
+	private I_RegisterDao i_RegisterDao;
+	
+	@Override
+	public List<Record> searchSelectableEducation() {
+		List<Record> list = i_RegisterDao.searchSelectableEducation();
+		return list;
+	}
+
+	@Override
+	public List<Record> searchSelectableMajor() {
+		List<Record> list = i_RegisterDao.searchSelectableMajor();
+		return list;
+	}
+
+	@Override
+	public List<Record> searchSelectableHealthy() {
+		List<Record> list = i_RegisterDao.searchSelectableHealthy();
+		return list;
+	}
+
+	@Override
+	public List<Record> searchSelectablePolitics() {
+		List<Record> list = i_RegisterDao.searchSelectablePolitics();
+		return list;
+	}
+
+	@Override
+	public List<Record> searchSelectablePlace() {
+		List<Record> list = i_RegisterDao.searchSelectablePlace();
+		return list;
+	}
+	@Override
+	public List<Record> searchOrgnizationJoinInYearAtDropDown(int year) {
+		List<Record> list = i_RegisterDao.searchOrgnizationJoinInYearAtDropDown(year);
+		return list;
+	}
+	
+	@Override
+	public List<Record> searchOrgnizationJoinInYearWithProfessionAtDropDown(int year, long professionId) {
+		List<Record> list = i_RegisterDao.searchOrgnizationJoinInYearWithProfessionAtDropDown(year,professionId);
+		return list;
+	}
+	
+	@Override
+	public List<Record> searchProfessionInYearAtDropDown(int year) {
+		List<Record> list = i_RegisterDao.searchProfessionInYearAtDropDown(year);
+		return list;
+	}
+
+	@Override
+	public boolean registerSubmit(HashMap map) {
+		boolean bool=i_RegisterDao.registerSubmit(map);
+		return bool;
+	}
+	public I_RegisterDao getI_RegisterDao() {
+		return i_RegisterDao;
+	}
+
+	public void setI_RegisterDao(I_RegisterDao i_RegisterDao) {
+		this.i_RegisterDao = i_RegisterDao;
+	}
+}

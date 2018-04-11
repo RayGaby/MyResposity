@@ -1,0 +1,665 @@
+package cn.gov.hrss.ln.stuenroll.classinfo;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+
+import com.jfinal.core.Controller;
+import com.jfinal.kit.PathKit;
+import com.jfinal.plugin.activerecord.Record;
+import com.jfinal.plugin.spring.Spring;
+import com.jfinal.upload.UploadFile;
+
+import cn.gov.hrss.ln.stuenroll.excelUtil.WriteExcel;
+import cn.gov.hrss.ln.stuenroll.util.csv.ReadCsv;
+import cn.gov.hrss.ln.stuenroll.util.excel.ReadExcel;
+import cn.gov.hrss.ln.stuenroll.util.xml.ReadXml;
+import cn.gov.hrss.ln.stuenroll.util.xml.WriteXml;
+@Spring("visitController")
+public class VisitController extends Controller implements I_VisitController {
+	private I_VisitService i_VisitService;
+	private int rowsInPage;
+	
+	@RequiresPermissions({ "8_5" })
+	@Override
+	public void randomQuery() {
+		Long classinfoId = getParaToLong("classinfo");
+		Record record = null;
+		String username = getSessionAttr("username");
+		Long organizationId = null;
+		String organization = getSessionAttr("organization"); // HttpSession中的组织名称
+		// 如果不是就业网用户那么Java程序从HttpSession中提取机构ID，强制使用这个机构ID查询数据，所以用户只能看到自己机构的数据
+		if (organization.equals("辽宁省就业网")) {
+			
+			HashMap map = new HashMap();
+		
+			map.put("classinfoId", classinfoId);
+			map.put("username", username);
+			map.put("organizationId", organizationId);
+			
+			record = i_VisitService.randomQuery(map);
+		}
+		
+		renderJson("result",record);
+	}
+
+	@RequiresPermissions({ "8_5" })
+	@Override
+	public void save() {
+		Long stuId =(Long) getParaToLong("stuId");
+		String info = (String)getPara("info");
+		String global = (String)getPara("global");
+		String org_global = (String)getPara("org_global");
+		String org_study = (String)getPara("org_study");
+		String org_daily = (String)getPara("org_daily");
+		String satisfyDegree = (String)getPara("satisfyDegree");
+		String proSet = (String)getPara("proSet");
+		String proStudy = (String)getPara("proStudy");
+		String change = (String) getPara("change");
+		String getJob = (String)getPara("getJob");
+		String size = (String)getPara("size");
+		String type = (String)getPara("type");
+		String income = (String)getPara("income");
+		String fit = (String)getPara("fit");
+		String satisfy = (String)getPara("satisfy");
+		String way = (String)getPara("way");
+		String jobSatisfy = (String)getPara("jobSatisfy");
+		String advise = (String) getPara("advise");
+		String time = (String) getPara("time");
+		
+		String username = getSessionAttr("username");
+		
+		HashMap map = new HashMap();
+		map.put("stuId", stuId);
+		map.put("info", info);
+		map.put("global", global);
+		map.put("org_global", org_global);
+		map.put("org_study", org_study);
+		map.put("org_daily", org_daily);
+		map.put("satisfyDegree", satisfyDegree);
+		map.put("proSet", proSet);
+		map.put("proStudy", proStudy);
+		map.put("change", change);
+		map.put("getJob", getJob);
+		map.put("size", size);
+		map.put("type", type);
+		map.put("income", income);
+		map.put("fit", fit);
+		map.put("satisfy", satisfy);
+		map.put("way", way);
+		map.put("jobSatisfy", jobSatisfy);
+		map.put("advise", advise);
+		map.put("time", time);
+		map.put("username", username);
+		
+		int i = i_VisitService.save(map);
+		
+		renderJson("result",i);
+		
+	}
+
+	@Override
+	public void searchOraganizationAndClass() {
+		Long classinfoId = (Long) getParaToLong("classinfo");
+		Record record = null;
+		Long organizationId = null;
+		String organization = getSessionAttr("organization"); // HttpSession中的组织名称
+		// 如果不是就业网用户那么Java程序从HttpSession中提取机构ID，强制使用这个机构ID查询数据，所以用户只能看到自己机构的数据
+		if (organization.equals("辽宁省就业网")) {
+			HashMap map = new HashMap<>();
+			map.put("classinfoId", classinfoId);
+			map.put("organization", organizationId);
+
+			record = i_VisitService.searchOraganizationAndClass(map);
+			
+		}
+		
+		renderJson("result",record);
+		
+	}
+	
+	@RequiresPermissions({ "8_5" })
+	public void queryVisitList(){
+		Long classinfoId = (Long) getParaToLong("classinfo");
+		String stuName = (String) getPara("stuName");
+		String userName = (String) getPara("userName");
+		Date startTime = (Date) getParaToDate("startDate");
+		Date endTime = (Date) getParaToDate("endDate");
+		String satisfy = (String)getPara("satisfy");
+		Integer result = (Integer) getParaToInt("result");
+		
+		List<Record> list = null;
+		
+		Long organizationId = null;
+		String organization = getSessionAttr("organization"); // HttpSession中的组织名称
+		// 如果不是就业网用户那么Java程序从HttpSession中提取机构ID，强制使用这个机构ID查询数据，所以用户只能看到自己机构的数据
+		if (organization.equals("辽宁省就业网")) {
+			HashMap map = new HashMap<>();
+			map.put("classinfoId", classinfoId);
+			map.put("stuName", stuName);
+			map.put("userName", userName);
+			map.put("startTime", startTime);
+			map.put("endTime", endTime);
+			map.put("satisfy", satisfy);
+			map.put("organizationId", organizationId);
+			map.put("result", result);
+			
+			Long page = getParaToLong("page");
+			if(page == null){
+				page = 1L;
+			}
+			long start = (page - 1) * rowsInPage;
+			long length = rowsInPage;
+			
+			map.put("start", start);
+			map.put("length", length);
+			
+			list = i_VisitService.queryVisitList(map);
+		}
+		
+		renderJson("result",list);
+	}
+
+	@RequiresPermissions({ "8_5" })
+	@Override
+	public void queryVisitListCount() {
+		Long classinfoId = (Long) getParaToLong("classinfo");
+		String stuName = (String) getPara("stuName");
+		String userName = (String) getPara("userName");
+		Date startTime = (Date) getParaToDate("startDate");
+		Date endTime = (Date) getParaToDate("endDate");
+		String satisfy = (String)getPara("satisfy");
+		Integer result = (Integer) getParaToInt("result");
+		
+		Record list = null;
+		
+		Long organizationId = null;
+		String organization = getSessionAttr("organization"); // HttpSession中的组织名称
+		// 如果不是就业网用户那么Java程序从HttpSession中提取机构ID，强制使用这个机构ID查询数据，所以用户只能看到自己机构的数据
+		if (organization.equals("辽宁省就业网")) {
+			HashMap map = new HashMap<>();
+			map.put("classinfoId", classinfoId);
+			map.put("stuName", stuName);
+			map.put("userName", userName);
+			map.put("startTime", startTime);
+			map.put("endTime", endTime);
+			map.put("satisfy", satisfy);
+			map.put("result", result);
+			map.put("organizationId", organizationId);
+			
+			list = i_VisitService.queryVisitListCount(map);
+		}
+		
+		renderJson("result",list);
+	}
+
+	@Override
+	public void queryClassinfoCount() {
+		Long classinfoId = (Long) getParaToLong("classinfo");
+		
+		Record record = null;
+		
+		Long organizationId = null;
+		String organization = getSessionAttr("organization"); // HttpSession中的组织名称
+		// 如果不是就业网用户那么Java程序从HttpSession中提取机构ID，强制使用这个机构ID查询数据，所以用户只能看到自己机构的数据
+		if (organization.equals("辽宁省就业网")) {
+			HashMap map = new HashMap<>();
+			map.put("classinfoId", classinfoId);
+			map.put("organizationId", organizationId);
+			record = i_VisitService.queryClassinfoCount(map);
+		}
+		
+		
+		
+		renderJson("result",record);
+		
+	}
+
+	@RequiresPermissions({ "8_5" })
+	@Override
+	public void deleteVisitById() {
+		Long[] id = getParaValuesToLong("id");
+		
+		int i = i_VisitService.deleteVisitById(id);
+		
+		renderJson("deleteRows", i);
+		
+	}
+
+	@RequiresPermissions({ "8_5" })
+	@Override
+	public void searchVisitById() {
+		Long stuId = (Long) getParaToLong("stuId");
+		Long classinfoId = (Long) getParaToLong("classinfo");
+		
+		Record record = null;
+		
+		Long organizationId = null;
+		String organization = getSessionAttr("organization"); // HttpSession中的组织名称
+		// 如果不是就业网用户那么Java程序从HttpSession中提取机构ID，强制使用这个机构ID查询数据，所以用户只能看到自己机构的数据
+		if (organization.equals("辽宁省就业网")) {
+			HashMap map = new HashMap<>();
+			map.put("stuId", stuId);
+			map.put("classinfoId", classinfoId);
+			map.put("organizationId", organizationId);
+			
+			record = i_VisitService.searchStuVisit(map);
+		}
+		
+		
+		
+		renderJson("result",record);
+		
+	}
+	
+	@RequiresPermissions({ "8_6" })
+	@Override
+	public void exportExcel() {
+		/**
+		 * 先获取页面要进行导出的list
+		 */
+		Long classinfoId = (Long) getParaToLong("classinfo");
+		String stuName = (String) getPara("stuName");
+		String userName = (String) getPara("userName");
+		Date startTime = (Date) getParaToDate("startDate");
+		Date endTime = (Date) getParaToDate("endDate");
+		String satisfy = (String)getPara("satisfy");
+		Integer result = (Integer) getParaToInt("result");
+		Long organizationId = null;
+	    HashMap map = new HashMap();
+	    String organization = getSessionAttr("organization"); // HttpSession中的组织名称
+		// 如果不是就业网用户那么Java程序从HttpSession中提取机构ID，强制使用这个机构ID查询数据，所以用户只能看到自己机构的数据
+		if (organization.equals("辽宁省就业网") == false) {
+			return;
+			
+		}
+	    
+		map.put("classinfoId", classinfoId);
+		map.put("organizationId", organizationId);
+		map.put("stuName", stuName);
+		map.put("userName", userName);
+		map.put("startTime", startTime);
+		map.put("endTime", endTime);
+		map.put("satisfy", satisfy);
+		map.put("organizationId", organizationId);
+		map.put("result", result);
+		List<Record> list =  i_VisitService.queryVisitList(map);
+		//这是最终导出excel的list
+		List<Record> resultList = new ArrayList<Record>(); 
+		int index = 0;
+		for(Record record:list){
+			index = index+1;
+			String percentage = "0"; //默认percentage = 0
+			String vistiId = record.get("id");
+			String name = record.getStr("name");
+			String datetime = record.getStr("datetime");
+			String time = record.getStr("time");
+			String user = record.getStr("user");
+			String satisfyDegree = record.getStr("satisfy_degree");
+			String content = record.getStr("change");
+			//String date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(datetime);
+				
+			Record temp = new Record();
+			temp.set("序号", index)
+			.set("回访ID",vistiId)
+			.set("回访人", name)
+			.set("日期时间", datetime)
+			.set("时长", time)
+			.set("问询人", user)
+			.set("满意度", satisfyDegree)
+			.set("回访内容", content);
+			resultList.add(resultList.size(),temp);	
+		}
+		String filePath = PathKit.getWebRootPath()+"/visit.xls";
+		//System.out.println(PathKit.getWebRootPath());
+		File file = new File(filePath); //取临时文件
+		if(!file.exists()){
+			try {
+				file.createNewFile(); //如果临时文件不存在创建临时文件
+			}
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		try {
+			WriteExcel writer = new WriteExcel();
+			String title = "导出专业信息";
+			String[] headers = {"序号","回访ID","回访人","日期时间","时长","问询人","满意度","回访内容"};
+			OutputStream out = new FileOutputStream(filePath);
+			writer.exportExcel(title, headers, resultList, out);
+		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		//写完临时文件之后，开始启动浏览器下载
+		String fileName = file.getName();
+		//System.out.println(fileName);
+		HttpServletResponse response = this.getResponse();
+		//设置content-disposition响应头控制浏览器弹出保存框，若没有该行代码，浏览器会直接打开并且显示文件
+		//中文名要经过URLEncoder.encode编码，否则客户端能下载，但是文件名是乱码
+		try {
+			response.reset();//重置输出流
+			response.setHeader("content-disposition", "attachment;filename=classinfo-"+URLEncoder.encode(fileName,"UTF-8"));
+			response.setContentType("application/vnd.ms-excel");
+			OutputStream toClient = new BufferedOutputStream(response.getOutputStream()); 
+			
+			InputStream in = new BufferedInputStream(new FileInputStream(filePath)); //获取要下载的文件流
+			byte[] buffer = new byte[(int) file.length()];
+			in.read(buffer);
+			in.close();
+			toClient.write(buffer);
+			toClient.close();
+			file.delete();//删除临时文件
+			response.getOutputStream().close();
+		}
+		catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		catch (IOException e2) {
+			e2.printStackTrace();
+		}finally{
+			this.renderNull();
+		}
+		
+	}
+	@RequiresPermissions({ "8_6" })
+	@Override
+	public void exportXml() {
+		/**
+		 * 先获取页面要进行导出的list
+		 */
+		Long classinfoId = (Long) getParaToLong("classinfo");
+		String stuName = (String) getPara("stuName");
+		String userName = (String) getPara("userName");
+		Date startTime = (Date) getParaToDate("startDate");
+		Date endTime = (Date) getParaToDate("endDate");
+		String satisfy = (String)getPara("satisfy");
+		Integer result = (Integer) getParaToInt("result");
+		Long organizationId = null;
+	    HashMap map = new HashMap();
+	    String organization = getSessionAttr("organization"); // HttpSession中的组织名称
+		// 如果不是就业网用户那么Java程序从HttpSession中提取机构ID，强制使用这个机构ID查询数据，所以用户只能看到自己机构的数据
+		if (organization.equals("辽宁省就业网") == false) {
+			return;
+			
+		}
+	    
+		map.put("classinfoId", classinfoId);
+		map.put("organizationId", organizationId);
+		map.put("stuName", stuName);
+		map.put("userName", userName);
+		map.put("startTime", startTime);
+		map.put("endTime", endTime);
+		map.put("satisfy", satisfy);
+		map.put("organizationId", organizationId);
+		map.put("result", result);
+		List<Record> list =  i_VisitService.queryVisitList(map);
+		//这是最终导出excel的list
+		List<Record> resultList = new ArrayList<Record>(); 
+		int index = 0;
+		for(Record record:list){
+			index = index+1;
+			String percentage = "0"; //默认percentage = 0
+			String vistiId = record.get("id");
+			String name = record.getStr("name");
+			String datetime = record.getStr("datetime");
+			String time = record.getStr("time");
+			String user = record.getStr("user");
+			String satisfyDegree = record.getStr("satisfy_degree");
+			String content = record.getStr("change");
+			//String date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(datetime);
+				
+			Record temp = new Record();
+			temp.set("序号", index)
+			.set("回访ID",vistiId)
+			.set("回访人", name)
+			.set("日期时间", datetime)
+			.set("时长", time)
+			.set("问询人", user)
+			.set("满意度", satisfyDegree)
+			.set("回访内容", content);
+			resultList.add(resultList.size(),temp);	
+		}
+		String filePath = PathKit.getWebRootPath()+"/visit.xml";
+		//System.out.println(PathKit.getWebRootPath());
+		File file = new File(filePath); //取临时文件
+		if(!file.exists()){
+			try {
+				file.createNewFile(); //如果临时文件不存在创建临时文件
+			}
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		WriteXml writer = new WriteXml();
+		String[] headers = {"序号","回访ID","回访人","日期时间","时长","问询人","满意度","回访内容"};
+		writer.write( headers,filePath,resultList);
+		
+		//写完临时文件之后，开始启动浏览器下载
+		String fileName = file.getName();
+		//System.out.println(fileName);
+		HttpServletResponse response = this.getResponse();
+		//设置content-disposition响应头控制浏览器弹出保存框，若没有该行代码，浏览器会直接打开并且显示文件
+		//中文名要经过URLEncoder.encode编码，否则客户端能下载，但是文件名是乱码
+		try {
+			response.reset();//重置输出流
+			response.setHeader("content-disposition", "attachment;filename=classinfo-"+URLEncoder.encode(fileName,"UTF-8"));
+			response.setContentType("application/vnd.ms-excel");
+			OutputStream toClient = new BufferedOutputStream(response.getOutputStream()); 
+			
+			InputStream in = new BufferedInputStream(new FileInputStream(filePath)); //获取要下载的文件流
+			byte[] buffer = new byte[(int) file.length()];
+			in.read(buffer);
+			in.close();
+			toClient.write(buffer);
+			toClient.close();
+			file.delete();//删除临时文件
+			response.getOutputStream().close();
+		}
+		catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		catch (IOException e2) {
+			e2.printStackTrace();
+		}finally{
+			this.renderNull();
+		}
+		
+	}
+
+	@RequiresPermissions({ "8_6" })
+	@Override
+	public void exportCvs() {
+		/**
+		 * 先获取页面要进行导出的list
+		 */
+		Long classinfoId = (Long) getParaToLong("classinfo");
+		String stuName = (String) getPara("stuName");
+		String userName = (String) getPara("userName");
+		Date startTime = (Date) getParaToDate("startDate");
+		Date endTime = (Date) getParaToDate("endDate");
+		String satisfy = (String)getPara("satisfy");
+		Integer result = (Integer) getParaToInt("result");
+		Long organizationId = null;
+	    HashMap map = new HashMap();
+	    String organization = getSessionAttr("organization"); // HttpSession中的组织名称
+		// 如果不是就业网用户那么Java程序从HttpSession中提取机构ID，强制使用这个机构ID查询数据，所以用户只能看到自己机构的数据
+		if (organization.equals("辽宁省就业网") == false) {
+			return;
+			
+		}
+	    
+		map.put("classinfoId", classinfoId);
+		map.put("organizationId", organizationId);
+		map.put("stuName", stuName);
+		map.put("userName", userName);
+		map.put("startTime", startTime);
+		map.put("endTime", endTime);
+		map.put("satisfy", satisfy);
+		map.put("organizationId", organizationId);
+		map.put("result", result);
+		List<Record> list =  i_VisitService.queryVisitList(map);
+		//这是最终导出excel的list
+		List<Record> resultList = new ArrayList<Record>(); 
+		int index = 0;
+		for(Record record:list){
+			index = index+1;
+			String percentage = "0"; //默认percentage = 0
+			String vistiId = record.get("id");
+			String name = record.getStr("name");
+			String datetime = record.getStr("datetime");
+			String time = record.getStr("time");
+			String user = record.getStr("user");
+			String satisfyDegree = record.getStr("satisfy_degree");
+			String content = record.getStr("change");
+			//String date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(datetime);
+				
+			Record temp = new Record();
+			temp.set("序号", index)
+			.set("回访ID",vistiId)
+			.set("回访人", name)
+			.set("日期时间", datetime)
+			.set("时长", time)
+			.set("问询人", user)
+			.set("满意度", satisfyDegree)
+			.set("回访内容", content);
+			resultList.add(resultList.size(),temp);	
+		}
+		String filePath = PathKit.getWebRootPath()+"/visit.cvs";
+		//System.out.println(PathKit.getWebRootPath());
+		File file = new File(filePath); //取临时文件
+		if(!file.exists()){
+			try {
+				file.createNewFile(); //如果临时文件不存在创建临时文件
+			}
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		WriteXml writer = new WriteXml();
+		String[] headers = {"序号","回访ID","回访人","日期时间","时长","问询人","满意度","回访内容"};
+		writer.write( headers,filePath,resultList);
+		
+		//写完临时文件之后，开始启动浏览器下载
+		String fileName = file.getName();
+		//System.out.println(fileName);
+		HttpServletResponse response = this.getResponse();
+		//设置content-disposition响应头控制浏览器弹出保存框，若没有该行代码，浏览器会直接打开并且显示文件
+		//中文名要经过URLEncoder.encode编码，否则客户端能下载，但是文件名是乱码
+		try {
+			response.reset();//重置输出流
+			response.setHeader("content-disposition", "attachment;filename=classinfo-"+URLEncoder.encode(fileName,"UTF-8"));
+			response.setContentType("application/vnd.ms-excel");
+			OutputStream toClient = new BufferedOutputStream(response.getOutputStream()); 
+			
+			InputStream in = new BufferedInputStream(new FileInputStream(filePath)); //获取要下载的文件流
+			byte[] buffer = new byte[(int) file.length()];
+			in.read(buffer);
+			in.close();
+			toClient.write(buffer);
+			toClient.close();
+			file.delete();//删除临时文件
+			response.getOutputStream().close();
+		}
+		catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		catch (IOException e2) {
+			e2.printStackTrace();
+		}finally{
+			this.renderNull();
+		}
+		
+	}
+
+	public I_VisitService getI_VisitService() {
+		return i_VisitService;
+	}
+
+	public void setI_VisitService(I_VisitService i_VisitService) {
+		this.i_VisitService = i_VisitService;
+	}
+
+	public int getRowsInPage() {
+		return rowsInPage;
+	}
+
+	public void setRowsInPage(int rowsInPage) {
+		this.rowsInPage = rowsInPage;
+	}
+
+	/**
+	 * 上传文件到服务器，解析文件，执行sql存入数据库，不要忘了删除服务器上的文件
+	 * @throws ParseException 
+	 */
+	
+	@RequiresPermissions({ "8_5" })
+	public void importFile() throws ParseException {
+		int count = -2;
+		Long classinfoId = getParaToLong("classinfoId");
+		Long organizationId = null;
+		String organization = getSessionAttr("organization"); // HttpSession中的组织名称
+		// 如果不是就业网用户那么Java程序从HttpSession中提取机构ID，强制使用这个机构ID查询数据，所以用户只能看到自己机构的数据
+		if (organization.equals("辽宁省就业网") == false) {
+			count = -1;
+			renderJson("result",count);
+			return;
+		}
+		
+		HashMap map = new HashMap();
+		
+		map.put("organizationId", organizationId);
+		map.put("classinfoId", classinfoId);
+		UploadFile _file = this.getFile("file");
+		File file = _file.getFile(); //获得文件
+		String fileName = file.getName();//获得文件名
+		String extension = fileName.substring(fileName.lastIndexOf("."));
+		List<Record> list = new ArrayList<Record>();
+		if(extension.equals(".xml")){
+			try {
+				list = ReadXml.read(file);
+				count = i_VisitService.importFile(list,map);
+				file.delete();
+				renderJson("result",count);
+			}
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		else{
+			file.delete();
+			renderJson("result",count);
+		} 
+		
+	}
+	
+	
+
+}

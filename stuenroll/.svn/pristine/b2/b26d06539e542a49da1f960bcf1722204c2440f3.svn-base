@@ -1,0 +1,19 @@
+package cn.gov.hrss.ln.stuenroll.userinfo;
+
+import java.util.HashMap;
+import java.util.List;
+
+import com.jfinal.plugin.activerecord.Record;
+
+public interface I_UserInfoService {
+	/**
+	 * 查询用户信息记录
+	 * @param map
+	 * @param start
+	 * @param length
+	 * @return
+	 */
+	public List<Record> searchUserInfo(HashMap map, long start, long length);
+	
+	public int deleteUserInfo(Long[] id);
+}

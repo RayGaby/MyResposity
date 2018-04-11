@@ -1,0 +1,93 @@
+package cn.gov.hrss.ln.stuenroll.rolepermission;
+
+import java.util.HashMap;
+import java.util.List;
+
+import com.jfinal.core.Controller;
+import com.jfinal.plugin.activerecord.Record;
+import com.jfinal.plugin.spring.Spring;
+
+@Spring("rolePermissionController")
+public class RolePermissionController extends Controller implements I_RolePermissionController {
+	private I_RolePermissionService i_RolePermissionService;
+	private int rowsInPage;
+	
+	@Override
+	public void searchRolePermission() {
+//		String name = getPara("name");
+//		HashMap map = new HashMap();
+//		
+//		map.put("name", name);
+
+		Long page = getParaToLong("page");
+		if (page == null) {
+			page = 1L;
+		}
+		long start = (page - 1) * rowsInPage;
+		long length = rowsInPage;
+
+		List<Record> list = i_RolePermissionService.searchRolePermission(start, length);
+		renderJson("result", list);
+	}
+
+	@Override
+	public void insertRolePermission() {
+		String name =getPara("name");
+		HashMap map=new HashMap();
+		map.put("name", name);
+		int i=i_RolePermissionService.insertRolePermission(map);
+		renderJson("insert",i);
+		
+	}
+	
+	@Override
+	public void deleteRoleById() {
+		Long[] id = getParaValuesToLong("id");
+		int i = i_RolePermissionService.deleteRoleById(id);
+		renderJson("deleteRows", i);
+
+	}
+	@Override
+	public void searchRolePermissionCount() {
+		String name=getPara("name");
+		HashMap map=new HashMap();
+		map.put("name", name);
+		Long count=i_RolePermissionService.searchRolePermissionCount(map);
+		renderJson("result",count);
+		
+	}
+//	@Override
+//	public void searchPermissionAmount() {
+//		List<Record> list1 = i_RolePermissionService.searchPermissionAmount();
+//		renderJson("result1", list1);
+//		for (Record record : list1) {
+//			record.getLong("permissionamount");
+//			System.out.println(record.getLong("permissionamount"));
+//		}
+//		
+//	}
+
+	
+	
+	
+	public I_RolePermissionService getI_RolePermissionService() {
+		return i_RolePermissionService;
+	}
+
+	public void setI_RolePermissionService(I_RolePermissionService i_RolePermissionService) {
+		this.i_RolePermissionService = i_RolePermissionService;
+	}
+
+	public int getRowsInPage() {
+		return rowsInPage;
+	}
+
+	public void setRowsInPage(int rowsInPage) {
+		this.rowsInPage = rowsInPage;
+	}
+
+
+
+
+
+}

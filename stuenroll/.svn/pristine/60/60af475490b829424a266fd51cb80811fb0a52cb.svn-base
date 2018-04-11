@@ -1,0 +1,29 @@
+[main]
+myRealm=cn.gov.hrss.ln.stuenroll.permission.ShiroRealm
+securityManager.realm = $myRealm
+#µÇÂ½½çÃæ
+authc.loginUrl=/backyard/login.html
+
+[urls]
+/frontyard/** = anon
+/css/** = anon
+/js/** = anon
+/img/** =anon
+/backyard/login.html = anon
+/backyard/login.css = anon
+/backyard/login.js = anon
+/user/login = anon
+/user/checkRecoverPersonalInfo = anon
+/user/checkAccountInfo = anon
+/user/checkQuestionInfo = anon
+/user/recoverPassword = anon
+/font/** = anon
+/register/searchSelectableEducation = anon
+/register/searchSelectableMajor = anon
+/register/searchSelectableHealthy = anon
+/register/searchSelectablePolitics = anon
+/register/searchSelectablePlace = anon
+/register/searchOrgnizationJoinInYearAtDropDown = anon
+/register/searchOrgnizationJoinInYearWithProfessionAtDropDown = anon
+/register/searchProfessionInYearAtDropDown = anon
+/** = authc

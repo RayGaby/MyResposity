@@ -1,0 +1,40 @@
+package cn.gov.hrss.ln.stuenroll.enroll;
+
+import java.util.HashMap;
+import java.util.List;
+
+import com.jfinal.plugin.activerecord.Record;
+
+/**
+ * 报名管理业务接口
+ * 
+ * @author YangDi
+ *
+ */
+public interface I_EnrollService {
+	/**
+	 * 查询报名记录
+	 * 
+	 * @param map
+	 * @param start
+	 * @param length
+	 * @return
+	 */
+	public List<Record> searchEnroll(HashMap map, long start, long length);
+
+	/**
+	 * 查询记录总数
+	 * 
+	 * @param map
+	 * @return
+	 */
+	public long searchEnrollCount(HashMap map);
+
+	/**
+	 * 根据ID删除数据
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public int deleteById(Long[] id);
+}

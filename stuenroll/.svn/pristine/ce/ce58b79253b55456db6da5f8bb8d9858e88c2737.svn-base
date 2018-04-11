@@ -1,0 +1,24 @@
+package cn.gov.hrss.ln.stuenroll.report;
+
+/**
+ * Report模块网络类(for mobile)
+ * 
+ * @author cs
+ *
+ */
+public interface I_ReportController {
+	/**
+	 * 根据register_id查询个报名信息(for mobile) 2016年07月01日 15:29:53
+	 */
+	public void searchPersonalEnroll();
+
+	/**
+	 * 根据register_id查询个人进度(for mobile) 2016年07月04日 15:40:32
+	 */
+	public void searchPersonalState();
+
+	/**
+	 * 获取当前registerId下的动态消息
+	 */
+	public void getNewsfeed();
+}

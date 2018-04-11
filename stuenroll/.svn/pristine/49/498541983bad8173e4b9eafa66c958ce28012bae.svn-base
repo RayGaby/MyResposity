@@ -1,0 +1,335 @@
+body {
+    background-color: #e7e7e7;
+}
+.main-container {
+    height: 1400/16rem;
+    padding: 15/16rem;
+    display: -moz-box;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    .update-color {
+        color: #E86167;
+    }
+    .info-content {
+        overflow: hidden;
+        height: inherit;
+        padding-right: 15/16rem;
+        flex-grow: 1;
+        min-width: 1310/16rem;
+        .info-list {
+            overflow: hidden;
+            .info-item {
+                height: 350/16rem;
+                overflow: hidden;
+                &:nth-child(1) {
+                    background-color: #fff;
+                    .title {
+                        height: 120/16rem;
+                        padding-left: 60/16rem;
+                        padding-top: 35/16rem;
+                        .first-title {
+                            float: left;
+                            background-color: black;
+                            color: #fff;
+                            font-weight: 600;
+                            font-size: 26/16rem;
+                            height: 45/16rem;
+                            width: 150/16rem;
+                            padding-left: 20/16rem;
+                            line-height: 45/16rem;
+                        }
+                        .next-title {
+                            float: left;
+                            font-size: 20/16rem;
+                            font-weight: 400;
+                            padding-left: 20/16rem;
+                            line-height: 27/16rem;
+                            border-bottom: solid 5/16rem black;
+                        }
+                    }
+                    .input-content {
+                        position: relative;
+                        .input-flag {
+                            .sign {
+                                position: absolute;
+                                width: 60/16rem;
+                                height: 35/16rem;
+                                border: solid 4/16rem #297ACC;
+                                background-color: #3398FD;
+                                border-radius: 30%;
+                                border-top-right-radius: 100%;
+                                border-bottom-right-radius: 100%;
+                                color: #fff;
+                                text-align: center;
+                                line-height: 28/16rem;
+                                font-size: 15/16rem;
+                                left: 120/16rem;
+                            }
+                            .desc {
+                                position: absolute;
+                                left: 200/16rem;
+                                font-size: 20/16rem;
+                                letter-spacing: 1/16rem;
+                                text-align: center;
+                                width: inherit;
+                            }
+                        }
+                        .input-list {
+                            position: absolute;
+                            padding-left: 400/16rem;
+                            .input-item {
+                                padding-top: 10/16rem;
+                                padding-bottom: 10/16rem;
+                                label {
+                                    width: 75/16rem;
+                                    font-size: 14/16rem;
+                                    letter-spacing: 1/16rem;
+                                    display: inline-block;
+                                }
+                                .input {
+                                    width: 300/16rem;
+                                    height: 40/16rem;
+                                    outline: none;
+                                    border-radius: 3/16rem;
+                                    border: solid 1/16rem #e0e0e0;
+                                    color: #333;
+                                    font-size: 14/16rem;
+                                    letter-spacing: 1/16rem;
+                                    padding-left: 15/16rem;
+                                    padding-right: 15/16rem;
+                                }
+                            }
+                        }
+                        .input-photo {
+                            background-color: #E0E0E0;
+                            left: 1000/16rem;
+                            position: absolute;
+                            width: 180/16rem;
+                            height: 180/16rem;
+                            .selectFile {
+                                width: 180/16rem;
+                                height: 180/16rem;
+                                overflow: hidden;
+                                border-radius: 5/16rem;
+                                .file {
+                                    width: 200/16rem;
+                                }
+                                .preView {
+                                    width: 200/16rem;
+                                    height: 200/16rem;
+                                }
+                            }
+                            .saveFile-button {
+                                margin-top: 10/16rem;
+                                padding-left: 52/16rem;
+                                .save-btn {
+                                    width: 80/16rem;
+                                    height: 25/16rem;
+                                    border-radius: 2/16rem;
+                                    border: none;
+                                    font-weight: bold;
+                                    letter-spacing: 1/16rem;
+                                    font-size: 10/16rem;
+                                    outline: none;
+                                    cursor: pointer;
+                                    color: white;
+                                    background-color: #02A0E9;
+                                }
+                            }
+                        }
+                    }
+                }
+                &:nth-child(2) {
+                    background-color: #ECF0F1;
+                    .input-content {
+                        position: relative;
+                        .input-flag {
+                            padding-top: 30/16rem;
+                            .sign {
+                                position: absolute;
+                                width: 60/16rem;
+                                height: 35/16rem;
+                                border: solid 4/16rem #297ACC;
+                                background-color: #3398FD;
+                                border-radius: 30%;
+                                border-top-right-radius: 100%;
+                                border-bottom-right-radius: 100%;
+                                color: #fff;
+                                text-align: center;
+                                line-height: 28/16rem;
+                                font-size: 15/16rem;
+                                left: 120/16rem;
+                            }
+                            .desc {
+                                position: absolute;
+                                padding-left: 200/16rem;
+                                font-size: 20/16rem;
+                                letter-spacing: 1/16rem;
+                                text-align: center;
+                                width: inherit;
+                            }
+                        }
+                        .input-list {
+                            position: absolute;
+                            padding-left: 400/16rem;
+                            .input-item {
+                                padding-bottom: 20/16rem;
+                                label {
+                                    width: 75/16rem;
+                                    font-size: 14/16rem;
+                                    letter-spacing: 1/16rem;
+                                    display: inline-block;
+                                }
+                                .input {
+                                    width: 300/16rem;
+                                    height: 40/16rem;
+                                    outline: none;
+                                    border-radius: 3/16rem;
+                                    border: solid 1/16rem #e0e0e0;
+                                    color: #333;
+                                    font-size: 14/16rem;
+                                    letter-spacing: 1/16rem;
+                                    padding-left: 15/16rem;
+                                    padding-right: 15/16rem;
+                                }
+                            }
+                        }
+                    }
+                }
+                &:nth-child(3) {
+                    background-color: #fff;
+                    .input-content {
+                        position: relative;
+                        .input-flag {
+                            padding-top: 30/16rem;
+                            .sign {
+                                position: absolute;
+                                width: 60/16rem;
+                                height: 35/16rem;
+                                border: solid 4/16rem #297ACC;
+                                background-color: #3398FD;
+                                border-radius: 30%;
+                                border-top-right-radius: 100%;
+                                border-bottom-right-radius: 100%;
+                                color: #fff;
+                                text-align: center;
+                                line-height: 28/16rem;
+                                font-size: 15/16rem;
+                                left: 120/16rem;
+                            }
+                            .desc {
+                                position: absolute;
+                                padding-left: 200/16rem;
+                                font-size: 20/16rem;
+                                letter-spacing: 1/16rem;
+                                text-align: center;
+                                width: inherit;
+                            }
+                        }
+                        .input-list {
+                            position: absolute;
+                            padding-left: 400/16rem;
+                            .input-item {
+                                padding-bottom: 25/16rem;
+                                label {
+                                    width: 75/16rem;
+                                    font-size: 14/16rem;
+                                    letter-spacing: 1/16rem;
+                                    display: inline-block;
+                                }
+                                .input {
+                                    width: 300/16rem;
+                                    height: 40/16rem;
+                                    outline: none;
+                                    border-radius: 3/16rem;
+                                    border: solid 1/16rem #e0e0e0;
+                                    color: #333;
+                                    font-size: 14/16rem;
+                                    letter-spacing: 1/16rem;
+                                    padding-left: 15/16rem;
+                                    padding-right: 15/16rem;
+                                }
+                                .btn {
+                                    width: 135/16rem;
+                                    height: 30/16rem;
+                                    border-radius: 3/16rem;
+                                    border: none;
+                                    font-weight: bold;
+                                    letter-spacing: 1/16rem;
+                                    font-size: 14/16rem;
+                                    outline: none;
+                                    cursor: pointer;
+                                }
+                                .green {
+                                    color: #fff;
+                                    background-color: #0EC093;
+                                    &:active {
+                                        background-color: #10D8A5;
+                                    }
+                                }
+                                .red {
+                                    color: #fff;
+                                    background-color: #E86167;
+                                    &:active {
+                                        background-color: #EB777C;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                &:nth-child(4) {
+                    background-color: #ECF0F1;
+                    .last-title {
+                        width: 200/16rem;
+                        color: #666666;
+                        //margin-right: 0;
+                        padding-left: 42/16rem;
+                        float: left;
+                    }
+                    .text {
+                        float: left;
+                        color: #666666;
+                        .first-text {
+                            float: left;
+                            height: 240/16rem;
+                            width: 400/16rem;
+                        }
+                        .line {
+                            float: left;
+                            width: 1/16rem;
+                            height: 180/16rem;
+                            background-color: #666666;
+                            margin-left: 90/16rem;
+                        }
+                        .second-text {
+                            float: left;
+                            margin-left: 90/16rem;
+                            height: 240/16rem;
+                            width: 400/16rem;
+                        }
+                        .sub-title {
+                            font-size: 14/16rem;
+                        }
+                        .desc {
+                            font-size: 14/16rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .friend-list {
+        flex-grow: 0;
+        flex-shrink: 0;
+        height: inherit;
+        width: 400/16rem;
+        background-color: #fff;
+        margin-top: 15/16rem;
+    }
+    .error {
+        color: red !important;
+    }
+}    

@@ -1,0 +1,70 @@
+package cn.gov.hrss.ln.stuenroll.report;
+
+import java.util.List;
+
+import com.jfinal.core.Controller;
+import com.jfinal.plugin.activerecord.Page;
+import com.jfinal.plugin.activerecord.Record;
+import com.jfinal.plugin.spring.Spring;
+
+@Spring("reportController")
+public class ReportController extends Controller implements I_ReportController {
+
+	private I_ReportService i_ReportService;
+
+	@Override
+	public void searchPersonalEnroll() {
+
+		long id = getParaToLong("RegisterId");
+		// id = getSessionAttr("RegisterId");
+		Record record = i_ReportService.searchPersonalEnroll(id);
+		renderJson("result", record);
+	}
+
+	@Override
+	public void searchPersonalState() {
+		long id = getParaToLong("RegisterId");
+
+		// id = getSessionAttr("RegisterId");
+
+		Record record = i_ReportService.searchPersonalState(id);
+		renderJson("result", record);
+
+	}
+
+	public I_ReportService getI_ReportService() {
+		return i_ReportService;
+	}
+
+	public void setI_ReportService(I_ReportService i_ReportService) {
+		this.i_ReportService = i_ReportService;
+	}
+
+	@Override
+	public void getNewsfeed() {
+		long id = getParaToLong("RegisterId");
+		int currentPage=getParaToInt("currentPage");
+		// id = getSessionAttr("RegisterId");
+		Page<Record> page = i_ReportService.getNewsfeed(id, currentPage);
+		renderJson("result", page);
+
+	}
+
+	@Override
+	public void delNewsfeed() {
+		// TODO 测试用
+		int count =i_ReportService.delNewsfeed();
+		renderJson("result",count);
+	}
+
+	@Override
+	public void addNewsfeed() {
+		// TODO 测试用\
+		
+		String name=getPara("name");
+		String content=getPara("content");
+		int count =i_ReportService.addNewsfeed(name, content);
+		renderJson("result",count);
+	}
+
+}

@@ -1,0 +1,90 @@
+
+package cn.gov.hrss.ln.stuenroll.db.mongo;
+
+import java.util.ArrayList;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
+
+import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.activerecord.Page;
+import com.jfinal.plugin.activerecord.Record;
+import com.jfinal.plugin.redis.Cache;
+import com.jfinal.plugin.redis.Redis;
+
+import cn.gov.hrss.ln.stuenroll.db.I_NewsfeedMongoDao;
+import cn.gov.hrss.ln.stuenroll.plugin.MongoKit;
+import jodd.util.Base64;
+
+/**
+ * 动态消息Dao实现类
+ * 
+ * @author cs
+ *
+ */
+public class NewsfeedDao implements I_NewsfeedMongoDao {
+
+	@Override
+	public Page<Record> getNewsfeed(long registerId, int currentPage) {
+
+		StringBuffer sql = new StringBuffer();
+		String abbreviation = new String();
+		Page<Record> page = new Page<>(null, 0, 0, 0, 0);
+		String organizationId = new String();
+		Cache cache = Redis.use("EnrollCache");
+		List rsmap = new ArrayList<>();
+		List temp = new ArrayList<>();
+		rsmap = null;
+		Set<String> keys = cache.keys("*");
+		for (String key : keys) {
+			temp = cache.hmget(key, "RegisterId");
+			if (temp != null && temp.get(0).equals(registerId + "")) {
+				rsmap = cache.hmget(key, "organizationId");
+				break;
+			}
+		}
+		if (rsmap != null) {
+			organizationId = (String) rsmap.get(0);
+		}
+		else {
+			sql.append("SELECT ");
+			sql.append("	organization_id ");
+			sql.append("FROM enroll ");
+			sql.append("WHERE register_id=?; ");
+			Long oid = Db.queryLong(sql.toString(), registerId);
+			if (oid == null) {
+				sql = new StringBuffer();
+				sql.append("SELECT ");
+				sql.append("	organization_id ");
+				sql.append("FROM archive ");
+				sql.append("WHERE register_id=?; ");
+				oid = Db.queryLong(sql.toString(), registerId);
+			}
+			organizationId = oid + "";
+		}
+
+		sql = new StringBuffer();
+		sql.append("SELECT ");
+		sql.append("	abbreviation ");
+		sql.append("FROM ");
+		sql.append("	organization ");
+		sql.append("WHERE ");
+		sql.append("	id = ? ");
+		abbreviation = Db.queryStr(sql.toString(), organizationId);
+		if (abbreviation == null) {
+			return page;
+		}
+		else {
+			HashMap filter = new HashMap();
+			filter.put("abbreviation", abbreviation + "&&就业网");
+			HashMap sort = new HashMap();
+			sort.put("savedate", null);
+			page = MongoKit.paginateFilterIn("newsfeed", currentPage, 10, filter, null, sort);
+
+			return page;
+
+		}
+
+	}
+}

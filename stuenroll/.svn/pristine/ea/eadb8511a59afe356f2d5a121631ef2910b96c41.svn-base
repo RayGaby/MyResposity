@@ -1,0 +1,22 @@
+package cn.gov.hrss.ln.stuenroll.rolepermission;
+
+import java.util.HashMap;
+import java.util.List;
+
+import com.jfinal.plugin.activerecord.Record;
+
+public interface I_RolePermissionService {
+	/**
+	 * 查询角色权限信息
+	 * @param map
+	 * @param start
+	 * @param length
+	 * @return
+	 */
+	public List<Record> searchRolePermission(HashMap map, long start, long length);
+	/**
+	 * 根据id删除数据
+	 * @param id
+	 */
+	public int deleteRoleById(Long[] id);
+}

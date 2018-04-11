@@ -1,0 +1,61 @@
+package cn.gov.hrss.ln.stuenroll.rolepermission;
+
+import java.util.HashMap;
+import java.util.List;
+
+import com.jfinal.core.Controller;
+import com.jfinal.plugin.activerecord.Record;
+import com.jfinal.plugin.spring.Spring;
+
+@Spring("rolePermissionController")
+public class RolePermissionController extends Controller implements I_RolePermissionController {
+	private I_RolePermissionService i_RolePermissionService;
+	private int rowsInPage;
+
+	@Override
+	public void searchRolePermission() {
+		String name = getPara("name");
+		// Long roleaccount = getParaToLong("roleaccount");
+		// Long useraccount = getParaToLong("useraccount");
+
+		HashMap map = new HashMap();
+		map.put("name", name);
+		// map.put("roleaccount", roleaccount);
+		// map.put("useraccount", useraccount);
+
+		Long page = getParaToLong("page");
+		if (page == null) {
+			page = 1L;
+		}
+		long start = (page - 1) * rowsInPage;
+		long length = rowsInPage;
+
+		List<Record> list = i_RolePermissionService.searchRolePermission(map, start, length);
+		renderJson("result", list);
+	}
+
+	@Override
+	public void deleteRoleById() {
+		Long[] id = getParaValuesToLong("id");
+		int i = i_RolePermissionService.deleteRoleById(id);
+		renderJson("deleteRows", i);
+
+	}
+
+	public I_RolePermissionService getI_RolePermissionService() {
+		return i_RolePermissionService;
+	}
+
+	public void setI_RolePermissionService(I_RolePermissionService i_RolePermissionService) {
+		this.i_RolePermissionService = i_RolePermissionService;
+	}
+
+	public int getRowsInPage() {
+		return rowsInPage;
+	}
+
+	public void setRowsInPage(int rowsInPage) {
+		this.rowsInPage = rowsInPage;
+	}
+
+}

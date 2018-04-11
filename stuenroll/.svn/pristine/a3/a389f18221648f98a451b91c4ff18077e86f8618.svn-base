@@ -1,0 +1,120 @@
+body {
+  background-color: #e7e7e7;
+}
+.main-container {
+  height: 78.125rem;
+  padding: 0.9375rem;
+}
+.main-container .chart-container {
+  height: inherit;
+  width: 70%;
+  float: left;
+  padding-right: 0.9375rem;
+}
+.main-container .chart-container .annual-statistics {
+  background-color: #fff;
+  height: 41.9375rem;
+  margin-bottom: 0.9375rem;
+  overflow: hidden;
+}
+.main-container .chart-container .annual-statistics .title {
+  color: #555;
+  font-size: 1.125rem;
+  font-weight: 500;
+  letter-spacing: 0.0625rem;
+  margin-left: 1.25rem;
+  margin-top: 1.375rem;
+  margin-bottom: 1.375rem;
+}
+.main-container .chart-container .annual-statistics .step-list {
+  margin: 0 0 0 1.25rem;
+  padding: 0;
+  height: 2.25rem;
+}
+.main-container .chart-container .annual-statistics .step-list .step-item {
+  float: left;
+  text-align: center;
+  color: #fff;
+  padding-left: 1.875rem;
+  padding-right: 1.875rem;
+  height: 1.875rem;
+  font-size: 0.875rem;
+  letter-spacing: 0.0625rem;
+  line-height: 1.875rem;
+}
+.main-container .chart-container .annual-statistics .step-list .step-item:nth-child(1) {
+  background-color: #2AB0DB;
+  border-top-left-radius: 1.125rem;
+  border-bottom-left-radius: 1.125rem;
+}
+.main-container .chart-container .annual-statistics .step-list .step-item:nth-child(2) {
+  background-color: #40B8DF;
+}
+.main-container .chart-container .annual-statistics .step-list .step-item:nth-child(3) {
+  background-color: #56C0E3;
+}
+.main-container .chart-container .annual-statistics .step-list .step-item:nth-child(4) {
+  background-color: #6CC8E7;
+}
+.main-container .chart-container .annual-statistics .step-list .step-item:nth-child(5) {
+  background-color: #82D0EB;
+}
+.main-container .chart-container .annual-statistics .step-list .step-item:nth-child(6) {
+  background-color: #98D8EF;
+}
+.main-container .chart-container .annual-statistics .step-list .step-active {
+  height: 2.25rem;
+  line-height: 2.25rem;
+  margin-top: -0.1875rem;
+}
+.main-container .chart-container .annual-statistics .statistics {
+  margin-left: 1.25rem;
+  margin-right: 1.25rem;
+  margin-top: 1.25rem;
+  height: 33.125rem;
+}
+.main-container .chart-container .organiztion-statistics .statistics-4 {
+  display: -moz-box;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  margin: 0 0 0.9375rem;
+  padding: 0;
+}
+.main-container .chart-container .organiztion-statistics .statistics-4 dt {
+  margin-right: 0.9375rem;
+  background-color: #fff;
+  height: 21.875rem;
+  flex-grow: 1;
+}
+.main-container .chart-container .organiztion-statistics .statistics-4 dt:last-child {
+  margin-right: 0;
+}
+.main-container .chart-container .organiztion-statistics .statistics-2 {
+  display: -moz-box;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+.main-container .chart-container .organiztion-statistics .statistics-2 dt {
+  background-color: #fff;
+  height: 23.75rem;
+}
+.main-container .chart-container .organiztion-statistics .statistics-2 dt:first-child {
+  flex-grow: 2;
+  margin-right: 0.9375rem;
+}
+.main-container .chart-container .organiztion-statistics .statistics-2 dt:last-child {
+  flex-grow: 1;
+}
+.main-container .info-container {
+  height: inherit;
+  width: 30%;
+  background-color: #fff;
+  float: left;
+}
+/*# sourceMappingURL=welcome.css.map */

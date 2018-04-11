@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="../../css/base.css" />
+		<link rel="stylesheet" type="text/css" href="../../js/plugin/toastr.css" />
+		<link rel="stylesheet" type="text/css" href="../../font/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="../../js/plugin/dropdown.css"/>
+		<link rel="stylesheet" type="text/css" href="tel_visit.css" />
+		
+	</head>
+	<body>
+		<div class="main-container">
+			<div class="left">
+				<div class="registry">
+					<dl>
+						<dt class="form-title" data-id="">电话回访学员登记表</dt>
+						<dt class="blue"></dt>
+						<dt class="gray"></dt>
+						<div class="form">
+							<dl class="">
+								<dt class="label">姓名：</dt>
+								<dt class="content">
+									<div class="name">
+										<span class="input">余罪</span>
+									</div>
+								</dt>
+								<dt class="content">
+									<div class="input sex">
+										<input type="radio" name="sex" value="男" />男
+										<input type="radio" name="sex" value="女" />女
+									</div>
+									
+								</dt>
+								<dt class="label">出生年月：</dt>
+								<dt class="content">
+									<div class="birth">
+										<span class="input" name="year">2016</span>
+									</div>
+									<div class="string">
+										年
+									</div>
+									<div class="birth">
+										<span class="input" name="month">6</span>
+									</div>
+									<div class="string">
+										月
+									</div>
+									<div class="birth">
+										<span class="input" name="date">7</span>
+									</div>
+									<div class="string">
+										日
+									</div>
+								</dt>
+								<dt class="label">身份证号：</dt>
+								<dt class="content">
+									<div class="info-left">
+										<span class="input" name="pid">1234567890987</span>
+									</div>
+								</dt>
+								<dt class="label">电子信箱：</dt>
+								<dt class="content">
+									<div class="info-right">
+										<span class="input" name="email">admin@hrss.com</span>
+									</div>
+								</dt>
+								<dt class="label">联系电话：</dt>
+								<dt class="content">
+									<div class="info-left">
+										<span class="input" name="tel">123456789098</span>
+									</div>
+								</dt>
+								<dt class="label">现居住地：</dt>
+								<dt class="content">
+									<div class="info-right">
+										<span class="input" name="resident">大连市</span>
+									</div>
+								</dt>
+								<dt class="label">家庭地址：</dt>
+								<dt class="content">
+									<div class="info-left">
+										<span class="input" name="address">大连市</span>
+									</div>
+								</dt>
+								<dt class="label">户籍地址：</dt>
+								<dt class="content">
+									<div class="info-right">
+										<span class="input" name="permanent">大连市</span>
+									</div>
+								</dt>
+								<dt class="label">毕业院校：</dt>
+								<dt class="content">
+									<div class="info-left">
+										<span class="input" name="school">东北大学</span>
+									</div>
+								</dt>
+								<dt class="label">所学专业：</dt>
+								<dt class="content">
+									<div class="info-right">
+										<span class="input" name="profession">软件工程</span>
+									</div>
+								</dt>
+								
+							</dl>
+						</div>
+						<dt class="b-blue"></dt>
+						<dt class="detail">{下面的内容为人工填写，请认真询问学员相关问题，核实学生基本信息和学习情况}</dt>
+					</dl>
+				</div>
+				<div class="stu-info">
+					<div class="index">1</div>
+					<div class="boundary1"></div>
+					<div class="condition">
+						<dl class="condition-list">
+							<dt class="condition-item">
+								<span class="choose">学生资料是否真实？</span>
+								<input type="checkbox" name="info" class="" value="是" /><span class="choose">是</span>
+								<input type="checkbox" name="info" id="" value="否" /><span class="choose">否</span>
+							</dt>
+							<dt class="condition-item">
+								<span class="choose">学生对转换培训总体评价？</span>
+								<input type="checkbox" name="global" class="" value="10" /><span class="choose">很满意</span>
+								<input type="checkbox" name="global" id="" value="8" /><span class="choose">满意</span>
+								<input type="checkbox" name="global" class="" value="6" /><span class="choose">一般</span>
+								<input type="checkbox" name="global" id="" value="4" /><span class="choose">不满意</span>
+							</dt>
+							<dt class="condition-item">
+								<span class="choose">学生对转换培训机构总体评价？</span>
+								<input type="checkbox" name="organization" class="" value="10" /><span class="choose">很满意</span>
+								<input type="checkbox" name="organization" id="" value="8" /><span class="choose">满意</span>
+								<input type="checkbox" name="organization" class="" value="6" /><span class="choose">一般</span>
+								<input type="checkbox" name="organization" id="" value="4" /><span class="choose">不满意</span>
+							</dt>
+							<dt class="condition-item">
+								<span class="choose">学生对转换培训机构教学评价？</span>
+								<input type="checkbox" name="study" class="" value="10" /><span class="choose">很满意</span>
+								<input type="checkbox" name="study" id="" value="8" /><span class="choose">满意</span>
+								<input type="checkbox" name="study" class="" value="6" /><span class="choose">一般</span>
+								<input type="checkbox" name="study" id="" value="4" /><span class="choose">不满意</span>
+							</dt>
+							<dt class="condition-item">
+								<span class="choose">学生对转换培训机构日常管理评价？</span>
+								<input type="checkbox" name="daily" class="" value="10" /><span class="choose">很满意</span>
+								<input type="checkbox" name="daily" id="" value="8" /><span class="choose">满意</span>
+								<input type="checkbox" name="daily" class="" value="6" /><span class="choose">一般</span>
+								<input type="checkbox" name="daily" id="" value="4" /><span class="choose">不满意</span>
+							</dt>
+							<dt class="condition-item">
+								<span class="choose">学生认为该专业设置的是否合理？</span>
+								<input type="checkbox" name="proSet" class="" value="合理" /><span class="choose">合理</span>
+								<input type="checkbox" name="proSet" id="" value="不合理" /><span class="choose">不合理</span>
+							</dt>
+							<dt class="condition-item">
+								<span class="choose">学生认为该专业学习周期是否合理？</span>
+								<input type="checkbox" name="cycle" class="" value="合理" /><span class="choose">合理</span>
+								<input type="checkbox" name="cycle" id="" value="不合理" /><span class="choose">不合理</span>
+							</dt>
+							<dt class="condition-item">
+								<span class="choose">学生认为转换培训应该做出什么样的改变？</span>
+							</dt>
+							<dt class="condition-item">
+								<textarea name="change" class="text"></textarea>
+							</dt>
+						</dl>
+					</div>
+				</div>
+				<div class="stu-job">
+					<div class="index">2</div>
+					<div class="boundary2"></div>
+					<div class="condition">
+						<dl class="condition-list">
+							<dt class="condition-item">
+								<span class="choose">学生是否就业？</span>
+								<input type="checkbox" name="job" class="" value="是" /><span class="choose">是</span>
+								<input type="checkbox" name="job" id="" value="否" /><span class="choose">否</span>
+							</dt>
+							<dt class="condition-item">
+								<span class="choose">所在公司规模？</span>
+								<input type="checkbox" name="size" class="" value="50人以下" /><span class="choose">50人以下</span>
+								<input type="checkbox" name="size" id="" value="50-200人" /><span class="choose">50-200人</span>
+								<input type="checkbox" name="size" class="" value="200-500人" /><span class="choose">200-500人</span>
+								<input type="checkbox" name="size" id="" value="500人以上" /><span class="choose">500人以上</span>
+							</dt>
+							<dt class="condition-item">
+								<span class="choose">所在公司性质？</span>
+								<input type="checkbox" name="type" class="" value="政府部门" /><span class="choose">政府部门</span>
+								<input type="checkbox" name="type" id="" value="国有企业" /><span class="choose">国有企业</span>
+								<input type="checkbox" name="type" class="" value="民营企业" /><span class="choose">民营企业</span>
+								<input type="checkbox" name="type" id="" value="外企" /><span class="choose">外企</span>
+							</dt>
+							<dt class="condition-item">
+								<span class="choose">收入水平？</span>
+								<input type="checkbox" name="income" class="" value="3000元以下" /><span class="choose">3000元以下</span>
+								<input type="checkbox" name="income" id="" value="3000-5000元" /><span class="choose">3000-5000元</span>
+								<input type="checkbox" name="income" class="" value="5000-8000元" /><span class="choose">5000-8000元</span>
+								<input type="checkbox" name="income" id="" value="8000元以上" /><span class="choose">8000元以上</span>
+							</dt>
+							<dt class="condition-item">
+								<span class="choose">从事工作是否与培训专业对口？</span>
+								<input type="checkbox" name="fit" class="" value="是" /><span class="choose">是</span>
+								<input type="checkbox" name="fit" id="" value="否" /><span class="choose">否</span>
+							</dt>
+							<dt class="condition-item">
+								<span class="choose">工作是否满意？</span>
+								<input type="checkbox" name="satisfy" class="" value="是" /><span class="choose">是</span>
+								<input type="checkbox" name="satisfy" id="" value="否" /><span class="choose">否</span>
+							</dt>
+							<dt class="condition-item">
+								<span class="choose">就业方式？</span>
+								<input type="checkbox" name="way" class="radio" value="自主就业" /><span class="choose">自主就业</span>
+								<input type="checkbox" name="way" class="radio" value="推荐就业" /><span class="choose">推荐就业</span>
+							</dt>
+							<dt class="condition-item">
+								<span class="choose">就业是否满意？</span>
+								<input type="checkbox" name="jobSatisfy" class="radio" value="是" /><span class="choose">是</span>
+								<input type="checkbox" name="jobSatisfy" class="radio" value="否" /><span class="choose">否</span>
+							</dt>
+							<dt class="condition-item">
+								<span class="choose">对就业工作的建议？</span>
+							</dt>
+							<dt class="condition-item">
+								<textarea name="text" class="text"></textarea>
+							</dt>
+						</dl>
+					</div>
+				</div>
+				<div class="button">
+					<input type="button" class="page-btn" id="save" value="保存" />
+					<input type="button" class="page-btn" id="return" value="返回" />
+				</div>
+			</div>
+			<div class="right">
+				<div class="record">
+					<div class="record-top">
+						<dl>
+							<img src="../../img/head.png" class="user-photo"/>
+							<dt class="name">
+								<span id="name">金正恩</span>
+							</dt>
+							<dt class="tel"><span id="tel">13356786871</dt>
+							<dt class="other"><span id="sex">男</span>，<span id="age">26</span>岁</dt>
+						</dl>
+					</div>
+					<div class="record-down">
+						<dl>
+							<dt class="duration">时长：</dt>
+							<dt class="time">
+								<span id="time">00:00:00</span>
+							</dt>
+							<input type="button" class="play" value="拨打" />
+							
+						</dl>
+						
+					</div>
+				</div>
+				<div class="radio">
+					<img src="../../img/1111.jpg">
+				</div>
+				
+				<div class="test">
+					<div class="absent">
+						<div class="attend">
+					
+						</div>
+					</div>
+					
+					<div class="grade">
+						<div class="report">
+					
+						</div>
+					</div>
+					
+				</div>
+				
+				
+				<div class="check-record">
+					<div class="date">
+						<span class="year">2016</span>年<span class="year">8</span>月
+						<span class="arrowhead1"><</span>
+						<span class="arrowhead2">></span>
+					</div>
+					<table class="calendar">
+						<tr>
+							<th>日</th>
+							<th>一</th>
+							<th>二</th>
+							<th>三</th>
+							<th>四</th>
+							<th>五</th>
+							<th>六</th>
+						</tr>
+						<tr>
+							<td class="disable">29</td>
+							<td class="disable">30</td>
+							<td class="disable">31</td>
+							<td>1</td>
+							<td>2</td>
+							<td>3</td>
+							<td>4</td>
+						</tr>
+						<tr>
+							<td>5</td>
+							<td>6</td>
+							<td>7</td>
+							<td>8</td>
+							<td>9</td>
+							<td>10</td>
+							<td>11</td>
+						</tr>
+						<tr>
+							<td>12</td>
+							<td>13</td>
+							<td>14</td>
+							<td>15</td>
+							<td>16</td>
+							<td>17</td>
+							<td>18</td>
+						</tr>
+						<tr>
+							<td>19</td>
+							<td>20</td>
+							<td>21</td>
+							<td>22</td>
+							<td class="uncome">23</td>
+							<td>24</td>
+							<td>25</td>
+						</tr>
+						<tr>
+							<td>26</td>
+							<td>27</td>
+							<td>28</td>
+							<td>29</td>
+							<td>30</td>
+							<td>31</td>
+							<td class="disable">1</td>
+						</tr>
+					</table>
+				</div>
+				<div class="report-table">
+					<div class="drop">
+						<div class="dropdown" >
+							<span class="value">2015-2016学年第二学期</span>
+							<i class="iconfont arrowhead">&#xe610;</i>
+							<dl class="dropdown-list">
+								<dt class="dropdown-item">2015-2016学年第二学期</dt>
+								<dt class="dropdown-item">2015-2016学年第一学期</dt>
+								<dt class="dropdown-item">2014-2015学年第二学期</dt>
+								<dt class="dropdown-item">2014-2015学年第一学期</dt>
+							</dl>
+						</div>
+					</div>
+					
+					<table class="data-table">
+						<tr>
+							<th>课程名</th>
+							<th>课程性质</th>
+							<th>总评</th>
+							<th>期中</th>
+							<th>期末</th>
+							<th>平时</th>
+							<th>排名</th>
+						</tr>
+						<tr>
+							<td>软件工程</td>
+							<td>专业基础课</td>
+							<td>88</td>
+							<td>88</td>
+							<td>66</td>
+							<td>77</td>
+							<td>30</td>
+						</tr>
+						<tr>
+							<td>数据结构</td>
+							<td>专业基础课</td>
+							<td>88</td>
+							<td>88</td>
+							<td>66</td>
+							<td>77</td>
+							<td>30</td>
+						</tr>
+						<tr>
+							<td>数据库</td>
+							<td>专业基础课</td>
+							<td>20</td>
+							<td>88</td>
+							<td>66</td>
+							<td>77</td>
+							<td>40</td>
+						</tr>
+						<tr>
+							<td>分布式</td>
+							<td>专业任选课</td>
+							<td>88</td>
+							<td>88</td>
+							<td>66</td>
+							<td>77</td>
+							<td>90</td>
+						</tr>
+						<tr>
+							<td>大数据</td>
+							<td>专业任选课</td>
+							<td>88</td>
+							<td>88</td>
+							<td>66</td>
+							<td>77</td>
+							<td>90</td>
+						</tr>
+						<tr>
+							<td>绳结技术</td>
+							<td>人文选修课</td>
+							<td>88</td>
+							<td>88</td>
+							<td>66</td>
+							<td>77</td>
+							<td></td>
+						</tr>
+						
+					</table>
+				</div>
+			</div>
+		</div>
+		
+		<script src="../../js/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/plugin/dropdown.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/pid.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/plugin/toastr.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/echarts/echarts.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/permission.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/tab.js" type="text/javascript" charset="utf-8"></script>
+		<script src="analysisSrc.js" type="text/javascript" charset="utf-8"></script>
+		<script src="tel_visit.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+</html>

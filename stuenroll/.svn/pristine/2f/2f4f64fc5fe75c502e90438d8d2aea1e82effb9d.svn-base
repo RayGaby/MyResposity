@@ -1,0 +1,169 @@
+$(function() {
+	/**
+	 * 角色权限管理抽象接口
+	 */
+	var I_RolePermission = function() {
+
+	}
+
+	I_RolePermission.prototype.searchRolePermission = function(json) {
+		throw "抽象方法";
+	}
+
+	I_RolePermission.prototype.deleteRoleById = function() {
+		throw "抽象方法";
+	}
+
+	var RolePermission = function() {
+
+	}
+
+	RolePermission.prototype = new I_RolePermission();
+
+	RolePermission.prototype.searchRolePermission = function(json) {
+
+		$.ajax({
+			
+			"url" : "/stuenroll/rolepermission/searchRolePermission",
+			"type" : "post",
+			"dataType" : "json",
+			"data" : json,
+			"success" : function(json) {
+
+				var data = json.result;
+
+				var table = $(".tab-container .data-table");
+				// 清空表格数据
+				table.find("tr:gt(0)").remove();
+				// 获得当前页数
+				var currentPage = $(".tab-container #currentPage").text();
+				// 当前页数的行号起始数字
+				var start = (currentPage - 1) * 35;
+
+				var temp = "";
+				for (var i = 0; i < data.length; i++) {
+
+					var one = data[i];
+					// console.log(one.name);
+					temp += "<tr>";
+					temp += "<td><input type='checkbox' name='id' value='" + one.id + "' /></td>"
+					temp += "<td>" + (start + i + 1) + "</td>";
+					temp += "<td>" + one.name + "</td>";
+					temp += "</tr>";
+
+				}
+				table.append(temp);
+			},
+			"error" : function() {
+				toast.error("系统异常");
+			}
+		});
+
+	}
+
+	RolePermission.prototype.deleteRoleById = function() {
+		// 弹出确认对话框
+		var bool = confirm("是否删除选中的记录");
+		if (bool == false) {
+			return;
+		}
+		// 获得被选中的记录
+		var content = $(".tab-container .tab-content");
+		// 被选中的复选框
+		var checkbox = content.find("*[name='id']:checked");
+		
+		var id = [];
+		for (var i = 0; i < checkbox.length; i++) {
+			id.push($(checkbox[i]).val());
+		}
+		$.ajax({
+			
+			"url" : "/stuenroll/rolepermission/deleteRoleById",
+			"type" : "post",
+			"dataType" : "json",
+			"traditional" : true,	//发送数组JSON格式
+			"async":false,
+			"data" : {
+				"id" : id
+			},
+			"success" : function(json) {
+				toastr.success("删除了" + json.deleteRows + "条记录");
+			},
+			"error" : function() {
+				toastr.error("系统异常");
+			}
+		});
+
+	}
+	/**
+	 * 添加修改角色权限接口
+	 */
+	var I_UpdatePermission = function() {
+
+	}
+
+	/**
+	 * 显示角色添加面板抽象方法
+	 */
+	I_UpdatePermission.prototype.show = function() {
+		throw "抽象方法";
+	}
+
+	/**
+	 * 隐藏角色添加面板抽象方法
+	 */
+	I_UpdatePermission.prototype.hide = function() {
+		throw "抽象方法";
+	}
+
+	var UpdatePermission = function() {
+
+	}
+
+	UpdatePermission.prototype = new I_UpdatePermission();
+
+	UpdatePermission.prototype.show = function() {
+		$(".main-container .update-container").fadeIn();
+	}
+	UpdatePermission.prototype.hide = function() {
+		$(".main-container .update-container").fadeOut();
+	}
+
+	function factory(key) {
+		if (key == "RolePermission") {
+			return new RolePermission();
+		}
+		else if (key == "UpdatePermission") {
+			return new UpdatePermission();
+		}
+	}
+
+	var rolePermission = factory("RolePermission");
+	var updatePermission = factory("UpdatePermission");
+
+	rolePermission.searchRolePermission();
+	var flag = 0;
+	$("#add").click(function() {
+
+		if (flag == 0) {
+			updatePermission.show();
+			flag = 1;
+		}
+		else if (flag == 1) {
+			updatePermission.hide();
+			flag = 0;
+		}
+
+	});
+
+	 var element = $(".tab-container .tab-content");
+
+	element.find("*[name='delete']").click(function() {
+		// 先删除
+		rolePermission.deleteRoleById();
+		// 再查询
+		
+
+	});
+
+});

@@ -1,0 +1,124 @@
+package cn.gov.hrss.ln.stuenroll.friend;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+
+import com.jfinal.core.Controller;
+import com.jfinal.plugin.activerecord.Record;
+import com.jfinal.plugin.spring.Spring;
+
+@Spring("friendController")
+public class FriendController extends Controller implements I_FriendController {
+	private I_FriendService i_FriendService;
+	private int rowsInPage;
+
+	@Override
+	public void searchFriend() {
+		String username = getSessionAttr("username");
+		String friendname = getPara("friendname");
+
+		// 总页数
+		Long page = getParaToLong("page");
+		if (page == null) {
+			page = 1L;
+		}
+		
+		HashMap map=new HashMap();
+
+		map.put("username", username);
+		map.put("friendname", friendname);
+		
+		long start = (page - 1) * rowsInPage;
+		long length = rowsInPage;
+
+		List<Record> list = i_FriendService.searchFriend(map,start,length);
+		renderJson("result", list);
+	}
+
+	@Override
+	public void searchFriendCount() {
+		String username = getSessionAttr("username");
+		long count = i_FriendService.searchFriendCount(username);
+		renderJson("result", count);
+
+	}
+	//加权限
+	@Override
+	public void deleteById() {
+		Long id=getParaToLong("id");
+		int i=i_FriendService.deleteById(id);
+		renderJson("deleteRows",i);
+		
+	}
+	@Override
+	public void searchProfessionWithOrganization() {
+		HashMap map =new HashMap();
+		ArrayList<Long> param=new ArrayList<Long>();
+		ArrayList<String> param1=new ArrayList<String>();
+		String organization = getSessionAttr("organization");
+		long organizationId = getSessionAttr("organizationId");
+		List<Record> list=i_FriendService.searchProfessionWithOrganization(organizationId);
+
+		if(organization.equals("辽宁省就业网")){
+			organizationId=-1;
+		}
+		
+		//查询当前机构某一专业的人数
+		for (Record record : list) {
+			long count=i_FriendService.statisticsAtProfession(record.getStr("name"), organizationId);
+			param.add(count);
+			param1.add(record.getStr("name"));
+		}
+		map.put("专业", param1);
+		map.put("人数", param);
+		renderJson("result",map);
+	}
+	
+	@Override
+	public void friendTop() {
+		Long id=getParaToLong("id");
+		String username=getSessionAttr("username");
+		boolean bool=i_FriendService.friendTop(id,username);
+		renderJson("result",bool);
+	}
+
+	@Override
+	public void searchFriendFromUser() {
+		String username=getPara("username");
+		Record record=i_FriendService.searchFriendFromUser(username);
+		if (record==null) {
+			//record={role:"机构普通用户", organization:"大连中软卓越计算机培训中心", username:"test1"};
+			System.out.println("1");
+		}
+		System.out.println(record);
+		renderJson("result",record);
+	}
+	@Override
+	public void addFriend() {
+		String username=getSessionAttr("username");
+		String friendname=getPara("friendname");
+		String role=getPara("role");
+		String organization=getPara("organization");
+		boolean bool=i_FriendService.addFriend(username, friendname, role, organization);
+		renderJson("result",bool);
+		
+	}
+	public I_FriendService getI_FriendService() {
+		return i_FriendService;
+	}
+
+	public void setI_FriendService(I_FriendService i_FriendService) {
+		this.i_FriendService = i_FriendService;
+	}
+
+	public int getRowsInPage() {
+		return rowsInPage;
+	}
+
+	public void setRowsInPage(int rowsInPage) {
+		this.rowsInPage = rowsInPage;
+	}
+
+}

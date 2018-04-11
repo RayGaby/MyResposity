@@ -1,0 +1,29 @@
+package cn.gov.hrss.ln.stuenroll.db.mariadb;
+
+import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.activerecord.Record;
+
+import cn.gov.hrss.ln.stuenroll.db.I_OrganizationDao;
+
+public class OrganizationDao implements I_OrganizationDao {
+
+	@Override
+	public Record search(long id) {
+		StringBuffer _builder = new StringBuffer();
+		_builder.append("	SELECT ");
+		_builder.append("	`name`, ");
+		_builder.append("	abbreviation, ");
+		_builder.append("	address, ");
+		_builder.append("	tel, ");
+		_builder.append("	liaison, ");
+		_builder.append("	liaison_tel ");
+		_builder.append("	FROM ");
+		_builder.append("	organization ");
+		_builder.append("	WHERE ");
+		_builder.append("	id = ?; ");
+
+		Record record = Db.findFirst(_builder.toString(), id);
+		return record;
+	}
+
+}

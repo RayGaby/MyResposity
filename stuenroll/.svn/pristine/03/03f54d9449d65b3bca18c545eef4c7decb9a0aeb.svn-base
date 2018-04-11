@@ -1,0 +1,277 @@
+body{
+    background-color: #e7e7e7;
+}
+
+.main-container{
+    background-color: #fff;
+    margin: 15/16rem;
+    padding: 15/16rem;
+    .tab-list{
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #EBEEF7;
+        .tab-item{
+            float: left;
+            height: 36/16rem;
+            line-height: 36/16rem;
+            text-align: center;
+            padding-left: 20/16rem;
+            padding-right: 20/16rem;
+            letter-spacing: 1/16rem;
+            font-size: 14/16rem;
+            cursor: pointer;
+        }
+        .tab-active{
+            color: #fff;
+            background-color: #02A0E9;
+        }
+    }
+    .tab-container{
+        overflow: hidden;
+        .tab-content{
+            display: none;
+            .operation-list{
+                margin: 0;
+                padding: 0;
+                height: 48/16rem;
+                .operation-item{
+                    float: left;
+                    height: 48/16rem;
+                    line-height: 48/16rem;
+                    text-align: center;
+                    letter-spacing: 1/16rem;
+                    padding-left: 10/16rem;
+                    padding-right: 10/16rem;
+                    font-size: 14/16rem;
+                    cursor: pointer;  
+                    display: none;  
+                }
+            }
+            .check-table{
+                display: none;
+                background-color: rgba(240,240,240,1);
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 280/16rem;
+                position: absolute;
+                border-radius: 3/16rem;
+                border: solid #e0e0e0 1/16rem;
+                .table-title{
+                    position: relative;
+                    left: 47/16rem;
+                    top: 10/16rem;
+                    white-space: nowrap;
+                    font-weight: bold;
+                    font-size: 15/16rem;
+                    width:1469/16rem;
+                    border-bottom: #ccc dashed 1/16rem;
+                }
+                .table-info{
+                    text-align: left;
+                    font-size: 14/16rem;
+                    position: relative;
+                    .check-info{
+                        .info-title{
+                            position: relative;
+                            overflow: hidden;
+                            font-weight: bold;
+                            left: 47/16rem;
+                            top: 20/16rem;
+                        }
+                        .check-item{
+                            position: relative;
+                            top:-4/16rem;
+                            left: 128/16rem;
+                            margin: 0 auto 25/16rem 40/16rem;
+                            label{
+                                width:100/16rem;
+                                letter-spacing: 1/16rem;
+                            }
+                            .input{
+                                width: 200/16rem;
+                                height: 32/16rem;
+                                outline: none;
+                                border-radius: 3/16rem;
+                                border: solid 1/16rem #e0e0e0;
+                                font-size: 14/16rem;
+                                padding-left: 6/16rem;
+                                padding-right: 6/16rem;
+                                margin-right: 30/16rem;
+                            }
+                            .btn{
+                                width: 120/16rem;
+                                height: 32/16rem;
+                                background-color: #F4494E;
+                                border: none;
+                                color: #fff;
+                                outline: none;
+                                border-radius: 3/16rem;
+                                letter-spacing: 1/16rem;
+                                font-size: 14/16rem;
+                                font-weight: bold;
+                                cursor: pointer;
+                            }
+                            #searchBtn{
+                                margin-left: -30/16rem;
+                            }
+                            .year{
+                                margin-left: 30/16rem;
+                            }
+                            .education{
+                                margin-left:60/16rem;
+                            }
+                            .organization{
+                                margin-left:30/16rem
+                            }
+                            .profession{
+                                margin-left: -30/16rem;
+                            }
+                            .classInfo{
+                                margin-left: 30/16rem;
+                            }
+                        }
+                    }
+                }
+            }
+            .add-table{
+                display:none;
+                background-color: rgba(240,240,240,1);
+                height: 500/16rem;
+                width: 100%;
+                position: absolute;
+                border: solid #e0e0e0 1/16rem;
+                border-radius: 3/16rem ;
+                .table-title{
+                    position: relative;
+                    left: 47/16rem;
+                    top: 25/16rem;
+                    padding-bottom: 10/16rem;
+                    white-space: nowrap;
+                    font-weight: bold;
+                    font-size: 15/16rem;
+                    border-bottom: #ccc dashed 1/16rem;
+                    width: 1469/16rem;
+                }
+                .table-info{
+                    font-size: 14/16rem;
+                    position: relative;
+                    .check-info{
+                        padding:0 auto 0 auto;
+                        .info-title{
+                            position: relative;
+                            overflow: hidden;
+                            font-weight: bold;
+                            top: 28/16rem;
+                            left: 47/16rem;
+                        }
+                        .check-item{
+                            position: relative;
+                            top: 4/16rem;
+                            left: 128/16rem;
+                            margin: 0 auto 25/16rem 30/16rem;
+                            label{
+                                width: 100/16rem;
+                                letter-spacing: 1/16rem;
+                            }
+                            .input{
+                                width: 200/16rem;
+                                height: 32/16rem;
+                                outline: none;
+                                border-radius: 3/16rem;
+                                border: solid 1/16rem #e0e0e0;
+                                font-size: 13/16rem;
+                                padding-left: 10/16rem;
+                                padding-right: 15/16rem;
+                                margin-right: 30/16rem;
+                            }
+                            .btn{
+                                width: 120/16rem;
+                                height: 32/16rem;
+                                background-color: #F4494E;
+                                color: white;
+                                border: none;
+                                border-radius: 3/16rem;
+                                letter-spacing: 1/16rem;
+                                font-size: 14/16rem;
+                                font-weight: bolder;
+                                cursor: pointer;
+                            }
+                            .name{
+                                margin-left: 30/16rem;
+                            }
+                            .sex{
+                                margin-left: 30/16rem;
+                            }
+                            .race{
+                                margin-left: 60/16rem;
+                            }
+                            .birthday{
+                                margin-left: 30/16rem;
+                            }
+                            .place{
+                                margin-left: 30/16rem;
+                            }
+                            .health{
+                                margin-left: 30/16rem;
+                            }
+                            .year{
+                                margin-left: 60/16rem;
+                            }
+                            .education{
+                                margin-left: 60/16rem;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .content-active{
+            display: block;
+        }
+        .page-list{
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #EBEEF7;
+            margin-top: 15/16rem;
+            .page-item{
+                height: 40/16rem;
+                font-size: 14/16rem;
+                line-height: 40/16rem;
+            }
+            .page-info{
+                float: left;
+                margin-left: 15/16rem;
+                span{
+                    margin-left: 5/16rem;
+                    margin-right: 5/16rem;
+                }
+            }
+            .page-operation{
+                float: right;
+                margin-right: 10/16rem;
+                a{
+                    cursor: pointer;
+                    padding-left: 5/16rem;
+                    padding-right: 5/16rem;
+                    &:hover{
+                        color: #ff6700;
+                    }
+                }
+                .page-active{
+                    color: red;
+                    font-weight: 600;
+                }
+                .page-disable{
+                    color: #B9B9B9;
+                    cursor: default;
+                    &:hover{
+                        color: #B9B9B9;
+                    }
+                }
+            }
+        }
+    }
+}

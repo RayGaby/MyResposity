@@ -1,0 +1,38 @@
+package cn.gov.hrss.ln.stuenroll.db;
+
+import com.jfinal.plugin.activerecord.Record;
+
+/**
+ * Archive表Dao接口
+ * 
+ * @author YangDi
+ *
+ */
+public interface I_ArchiveDao {
+	/**
+	 * 根据条件查询归档表相关数据总数
+	 * 
+	 * @param year
+	 * @param month
+	 * @param stateId
+	 * @param organizationId
+	 * @return
+	 */
+	public long searchCountByCondition(int year, int month, int stateId, long organizationId);
+
+	/**
+	 * 根据register_id查询个报名信息(for mobile) 2016年07月10日 15:11:36 caishuai
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public Record searchPersonalEnroll(long registerId,long pid);
+	
+	/**
+	 * 根据register_id查询个人进度(for mobile) 2016年07月10日 15:40:32 caishuai
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public String searchPersonalState(long id);
+}

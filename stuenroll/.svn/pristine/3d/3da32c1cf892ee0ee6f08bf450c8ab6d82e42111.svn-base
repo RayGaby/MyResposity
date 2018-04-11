@@ -1,0 +1,334 @@
+package cn.gov.hrss.ln.stuenroll.db.mariadb;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.activerecord.Record;
+
+import cn.gov.hrss.ln.stuenroll.db.I_EnrollDao;
+
+/**
+ * Enroll表Dao类
+ * 
+ * @author YangDi
+ *
+ */
+public class EnrollDao implements I_EnrollDao {
+
+	@Override
+	public long searchCountByCondition(int year, int month, int stateId, long organizationId) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT ");
+		sql.append("	COUNT(*) ");
+		sql.append("FROM ");
+		sql.append("	enroll ");
+		sql.append("WHERE ");
+		sql.append("	YEAR (create_time) = ? ");
+		sql.append("AND MONTH (create_time) = ? ");
+		sql.append("AND state_id = ? ");
+		if (organizationId != -1) {
+			sql.append("AND organization_id = ? ");
+			long count = Db.queryLong(sql.toString(), year, month, stateId, organizationId);
+			return count;
+		}
+		else {
+			long count = Db.queryLong(sql.toString(), year, month, stateId);
+			return count;
+		}
+
+	}
+
+	@Override
+	public List<Record> searchEnroll(HashMap map, long start, long length) {
+		ArrayList param = new ArrayList();
+		String name = (String) map.get("name");
+		String pid = (String) map.get("pid");
+		Integer year = (Integer) map.get("year");
+		String sex = (String) map.get("sex");
+		String education = (String) map.get("education");
+		Long organizationId = (Long) map.get("organizationId");
+		Long professionId = (Long) map.get("professionId");
+		Long classinfoId = (Long) map.get("classinfoId");
+		Long stateId = (Long) map.get("stateId");
+
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT ");
+		sql.append("	e.id, ");
+		sql.append("	e.`name`, ");
+		sql.append("	e.pid, ");
+		sql.append("	AES_DECRYPT(UNHEX(e.tel), 'HelloHrss') AS tel, ");
+		sql.append("	IFNULL(o.`name`,'') AS organization, ");
+		sql.append("	IFNULL(p.`name`,'') AS profession, ");
+		sql.append("	IFNULL(c.`name`,'') AS classinfo, ");
+		sql.append("	e.`year`, ");
+		sql.append("	ss.`name` AS state ");
+		sql.append("FROM ");
+		sql.append("	enroll e ");
+		sql.append("LEFT JOIN organization o ON e.organization_id = o.id ");
+		sql.append("LEFT JOIN profession p ON e.profession_id = p.id ");
+		sql.append("LEFT JOIN classinfo c ON e.classinfo_id = c.id ");
+		sql.append("LEFT JOIN student_state ss ON e.state_id = ss.id ");
+		sql.append("WHERE ");
+		sql.append("	1 = 1 ");
+		if (name != null && name.length() > 0) {
+			sql.append(" AND e.name = ? ");
+			param.add(name);
+		}
+		if (pid != null && pid.length() > 0) {
+			sql.append(" AND e.pid = ? ");
+			param.add(pid);
+		}
+		if (year != null) {
+			sql.append(" AND e.year = ? ");
+			param.add(year);
+		}
+		if (sex != null && sex.length() > 0) {
+			sql.append(" AND e.sex = ? ");
+			param.add(sex);
+		}
+		if (education != null && education.length() > 0) {
+			sql.append(" AND e.education = ? ");
+			param.add(education);
+		}
+		if (organizationId != null) {
+			sql.append(" AND e.organization_id = ? ");
+			param.add(organizationId);
+		}
+		if (professionId != null) {
+			sql.append(" AND e.profession_id = ? ");
+			param.add(professionId);
+		}
+		if (classinfoId != null) {
+			sql.append(" AND e.classinfo_id = ? ");
+			param.add(classinfoId);
+		}
+		if (stateId != null) {
+			sql.append(" AND e.state_id = ? ");
+			param.add(stateId);
+		}
+		sql.append("ORDER BY e.id ");
+		sql.append("LIMIT ?, ? ");
+		param.add(start);
+		param.add(length);
+
+		List<Record> list = Db.find(sql.toString(), param.toArray());
+		for (Record record : list) {
+			byte[] tel = record.getBytes("tel");
+			record.set("tel", new String(tel));
+			record.set("id", record.getLong("id").toString());
+		}
+		return list;
+
+	}
+
+	@Override
+	public long searchEnrollCount(HashMap map) {
+		ArrayList param = new ArrayList();
+		String name = (String) map.get("name");
+		String pid = (String) map.get("pid");
+		Integer year = (Integer) map.get("year");
+		String sex = (String) map.get("sex");
+		String education = (String) map.get("education");
+		Long organizationId = (Long) map.get("organizationId");
+		Long professionId = (Long) map.get("professionId");
+		Long classinfoId = (Long) map.get("classinfoId");
+		Long stateId = (Long) map.get("stateId");
+
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT ");
+		sql.append("	COUNT(*) ");
+		sql.append("FROM ");
+		sql.append("	enroll e ");
+		sql.append("LEFT JOIN organization o ON e.organization_id = o.id ");
+		sql.append("LEFT JOIN profession p ON e.profession_id = p.id ");
+		sql.append("LEFT JOIN classinfo c ON e.classinfo_id = c.id ");
+		sql.append("LEFT JOIN student_state ss ON e.state_id = ss.id ");
+		sql.append("WHERE ");
+		sql.append("	1 = 1 ");
+		if (name != null && name.length() > 0) {
+			sql.append(" AND e.name = ? ");
+			param.add(name);
+		}
+		if (pid != null && pid.length() > 0) {
+			sql.append(" AND e.pid = ? ");
+			param.add(pid);
+		}
+		if (year != null) {
+			sql.append(" AND e.year = ? ");
+			param.add(year);
+		}
+		if (sex != null && sex.length() > 0) {
+			sql.append(" AND e.sex = ? ");
+			param.add(sex);
+		}
+		if (education != null && education.length() > 0) {
+			sql.append(" AND e.education = ? ");
+			param.add(education);
+		}
+		if (organizationId != null) {
+			sql.append(" AND e.organization_id = ? ");
+			param.add(organizationId);
+		}
+		if (professionId != null) {
+			sql.append(" AND e.profession_id = ? ");
+			param.add(professionId);
+		}
+		if (classinfoId != null) {
+			sql.append(" AND e.classinfo_id = ? ");
+			param.add(classinfoId);
+		}
+		if (stateId != null) {
+			sql.append(" AND e.state_id = ? ");
+			param.add(stateId);
+		}
+
+		long count = Db.queryLong(sql.toString(), param.toArray());
+		return count;
+	}
+
+	@Override
+	public int deleteById(Long[] id) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("DELETE ");
+		sql.append("FROM ");
+		sql.append("	enroll ");
+		sql.append("WHERE ");
+		sql.append("	id IN ( ");
+		for (int i = 0; i < id.length; i++) {
+			sql.append("?");
+			if (i != id.length - 1) {
+				sql.append(",");
+			}
+		}
+		sql.append(") ");
+		int i = Db.update(sql.toString(), id);
+		return i;
+	}
+
+	@Override
+	public Record searchPersonalEnroll(long registerId, long pid) {
+		// 获取enroll个人详细信息(mobile)
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT ");
+		sql.append("	e.id,e.`name`,e.sex,e.pid,e.birthday, ");
+		sql.append("	e.nation,e.politics,e.healthy, ");
+		sql.append("	e.graduate_school,e.graduate_year,e.graduate_date, ");
+		sql.append("	e.major,e.education,e.wechat,e.remark, ");
+		sql.append("	AES_DECRYPT(UNHEX(e.resident_address),'HelloHrss') AS resident_address, ");
+		sql.append("	AES_DECRYPT(UNHEX(e.permanent_address),'HelloHrss') AS permanent_address, ");
+		sql.append("	AES_DECRYPT(UNHEX(e.home_address),'HelloHrss') AS home_address, ");
+		sql.append("	AES_DECRYPT(UNHEX(e.tel), 'HelloHrss') AS tel ,e.email, ");
+		sql.append("	AES_DECRYPT(UNHEX(e.home_tel),'HelloHrss') AS home_tel, ");
+		sql.append("	p.`name` AS profession,o.`name` AS organization,e.place, ");
+		sql.append("	o.abbreviation AS abbreviation,o.liaison AS liaison, o.liaison_tel AS liaison_tel ");
+		sql.append("FROM enroll e ");
+		sql.append("JOIN profession p ON e.profession_id = p.id ");
+		sql.append("JOIN organization o ON e.organization_id = o.id ");
+
+		Record record = null;
+		if (registerId != 0 && pid == 0) {
+			sql.append("WHERE e.register_id=?; ");
+			record = Db.findFirst(sql.toString(), registerId);
+		}
+		if (pid != 0 && registerId == 0) {
+			sql.append("WHERE e.pid=?; ");
+			record = Db.findFirst(sql.toString(), pid);
+		}
+
+		if (record != null) {
+			Map<String, Object> map = record.getColumns();
+			for (String key : map.keySet()) {
+				if (map.get(key) == null) {
+					record.set(key, "");
+				}
+			}
+			byte[] temp = record.getBytes("resident_address");
+			record.set("resident_address", new String(temp));
+			temp = record.getBytes("permanent_address");
+			record.set("permanent_address", new String(temp));
+			temp = record.getBytes("home_address");
+			record.set("home_address", new String(temp));
+			temp = record.getBytes("tel");
+			record.set("tel", new String(temp));
+			temp = record.getBytes("home_tel");
+			record.set("home_tel", new String(temp));
+			map = record.getColumns();
+			for (String key : map.keySet()) {
+				record.set(key, map.get(key).toString());
+			}
+		}
+		return record;
+	}
+
+	@Override
+	public String searchPersonalState(long id) {
+		// 获取个人当前状态信息(mobile)
+		StringBuffer sql = new StringBuffer();
+
+		sql.append("SELECT ");
+		sql.append("	ss.`name` ");
+		sql.append("FROM student_state ss ");
+		sql.append("JOIN enroll e ON e.state_id=ss.id  ");
+		sql.append("WHERE e.register_id=?; ");
+
+		String state = Db.queryStr(sql.toString(), id);
+		return state;
+	}
+
+	@Override
+	public boolean hasRecord(String pid) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT count(*) ");
+		sql.append("FROM enroll ");
+		sql.append("WHERE pid=? ");
+		
+		long count = Db.queryLong(sql.toString(),pid);
+
+		boolean bool = (count == 1);
+		return bool;
+	}
+
+	@Override
+	public Record searchRegisterRecord(String pid) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT ");
+		sql.append("	a.`name`, ");
+		sql.append("	a.sex, ");
+		sql.append("	a.nation, ");
+		sql.append("	a.pid, ");
+		sql.append("	a.graduate_school, ");
+//		sql.append("	a.graduate_year, ");
+		sql.append("	CAST(a.graduate_year AS CHAR) AS graduate_year, ");
+		sql.append("	CAST(DATE_FORMAT(a.graduate_date,'%Y-%m-%d') AS CHAR) AS graduate_date, ");
+		sql.append("	a.education, ");
+		sql.append("	a.major, ");
+		sql.append("	a.healthy, ");
+		sql.append("	a.politics, ");
+		sql.append("	CAST(DATE_FORMAT(a.birthday,'%Y-%m-%d') AS CHAR) AS birthday, ");
+		sql.append("	CAST(AES_DECRYPT(UNHEX(a.resident_address),'HelloHrss') AS CHAR) AS resident_address, ");
+		sql.append("	CAST(AES_DECRYPT(UNHEX(a.permanent_address),'HelloHrss') AS CHAR) AS permanent_address, ");
+		sql.append("	CAST(AES_DECRYPT(UNHEX(a.home_address),'HelloHrss') AS CHAR) AS home_address, ");
+		sql.append("	CAST(AES_DECRYPT(UNHEX(a.tel),'HelloHrss') AS CHAR) AS tel, ");
+		sql.append("	CAST(AES_DECRYPT(UNHEX(a.home_tel),'HelloHrss') AS CHAR) AS home_tel, ");
+		sql.append("	a.email, ");
+		sql.append("	CAST(AES_DECRYPT(UNHEX(a.wechat),'HelloHrss') AS CHAR) AS wechat, ");
+		sql.append("	CAST(IFNULL(a.remark,'') AS CHAR) AS remark, ");
+		sql.append("	o.`name` AS organization, ");
+		sql.append("	o.abbreviation, ");
+		sql.append("	o.liaison, ");
+		sql.append("	o.liaison_tel, ");
+		sql.append("	p.`name` AS profession ");
+		sql.append("FROM ");
+		sql.append("	enroll AS a ");
+		sql.append("JOIN organization AS o ON a.organization_id = o.id ");
+		sql.append("JOIN profession AS p ON a.profession_id = p.id ");
+		sql.append("WHERE ");
+		sql.append("	a.pid = ?; ");
+
+		Record record = Db.findFirst(sql.toString(),pid);
+		return record;
+	}
+}

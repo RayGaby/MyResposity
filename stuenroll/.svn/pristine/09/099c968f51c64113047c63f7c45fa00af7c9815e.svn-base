@@ -1,0 +1,74 @@
+package cn.gov.hrss.ln.stuenroll.friend;
+
+import java.util.HashMap;
+import java.util.List;
+
+import com.jfinal.aop.Before;
+import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.activerecord.Record;
+import com.jfinal.plugin.activerecord.tx.Tx;
+
+import cn.gov.hrss.ln.stuenroll.db.I_ArchiveDao;
+import cn.gov.hrss.ln.stuenroll.db.I_EnrollDao;
+import cn.gov.hrss.ln.stuenroll.db.I_FriendDao;
+import cn.gov.hrss.ln.stuenroll.db.I_ProfessionDao;
+
+public class FriendService implements I_FriendService{
+	private I_FriendDao i_FriendDao;
+	private I_ProfessionDao i_ProfessionDao;
+	private I_EnrollDao i_EnrollDao;
+	private I_ArchiveDao i_ArchiveDao;
+	
+	@Override
+	public List<Record> searchFriend(HashMap map, long start, long length) {
+		List<Record> list=i_FriendDao.searchFriend(map,start,length);
+		return list;
+	}
+	@Override
+	public long searchFriendCount(String username) {
+		long count = i_FriendDao.searchFriendCount(username);
+		return count;
+	}
+	@Before(Tx.class)
+	@Override
+	public int deleteById(Long id) {
+		int i = i_FriendDao.deleteById(id);
+		return i;
+	}
+	@Override
+	public List<Record> searchProfessionWithOrganization(String organization) {
+		List<Record> list=i_ProfessionDao.searchProfessionWithOrganization(organization);
+		return list;
+	}
+	@Override
+	public long statisticsAtProfession(String professionId, long organizationId) {
+		long count1=i_EnrollDao.searchCountAtProfession(professionId, organizationId);
+		//long count2=i_ArchiveDao.searchCountAtProfession(professionId, organizationId);
+		return count1;
+		//return count1+count2;
+	}
+	public I_FriendDao getI_FriendDao() {
+		return i_FriendDao;
+	}
+	public void setI_FriendDao(I_FriendDao i_FriendDao) {
+		this.i_FriendDao = i_FriendDao;
+	}
+	public I_ProfessionDao getI_ProfessionDao() {
+		return i_ProfessionDao;
+	}
+	public void setI_ProfessionDao(I_ProfessionDao i_ProfessionDao) {
+		this.i_ProfessionDao = i_ProfessionDao;
+	}
+	public I_EnrollDao getI_EnrollDao() {
+		return i_EnrollDao;
+	}
+	public void setI_EnrollDao(I_EnrollDao i_EnrollDao) {
+		this.i_EnrollDao = i_EnrollDao;
+	}
+	public I_ArchiveDao getI_ArchiveDao() {
+		return i_ArchiveDao;
+	}
+	public void setI_ArchiveDao(I_ArchiveDao i_ArchiveDao) {
+		this.i_ArchiveDao = i_ArchiveDao;
+	}
+}

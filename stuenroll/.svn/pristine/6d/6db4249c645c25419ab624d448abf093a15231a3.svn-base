@@ -1,0 +1,258 @@
+$(function() {
+	if (!checkPermission([ "1_1" ])) {
+		return;
+	}
+
+	var I_User = function() {
+
+	}
+
+	/**
+	 * 获取注册新用户单选项方法
+	 */
+	I_User.prototype.searchSelectableRole = function() {
+		throw "抽象方法";
+	}
+	I_User.prototype.searchSelectableOrganization = function() {
+		throw "抽象方法";
+	}
+	I_User.prototype.insertUserInfo = function(json) {
+		throw "抽象方法";
+	}
+
+	var User = function() {
+
+	}
+
+	var photo_id;
+	var sexval;
+	var blockval;
+	var organizationval;
+	var roleval;
+	var blockval;
+	User.prototype = new I_User();
+
+	User.prototype.insertUserInfo = function(json) {
+		username = $("#username").val();
+		password = $("#password").val();
+		name = $("#name").val();
+		pid = $("#pid").val();
+		tel = $("#tel").val();
+		email = $("#email").val();
+		job = $("#position").val();
+		// alert(job)
+		// alert(username)
+		// alert(password)
+		$.ajax({
+			"url" : "/stuenroll/userinfo/insertUserInfo",
+			"type" : "post",
+			"async" : false,
+			"traditional" : true,
+			"dataType" : "json",
+			"data" : {
+				"username" : username,
+				"password" : password,
+				"name" : name,
+				"sex" : sexval,
+				"pid" : pid,
+				"tel" : tel,
+				"email" : email,
+				"job" : job,
+				"organization" : organizationval,
+				"role" : roleval,
+				"block" : blockval,
+				"photo_id" : photo_id
+			},
+			"success" : function(json) {
+				// alert(2)
+				var num = json.insert;
+				toastr.success("添加了" + num + "条记录");
+			},
+			"error" : function() {
+				toastr.error("系统异常");
+			}
+
+		});
+
+	}
+
+	User.prototype.searchSelectableRole = function() {
+		$.ajax({
+			"url" : "/stuenroll/userinfo/searchSelectableRole",
+			"type" : "post",
+			"async" : true,
+			"dataType" : "json",
+			"data" : null,
+			"success" : function(json) {
+				var data = json.result;
+				var role = $("#role");
+				var temp = "";
+				for (var i = 0; i < data.length; i++) {
+					var one = data[i];
+					console.log(one.name);
+					temp += "<li class='dropdown-item' >" + one.name + "</li>";
+				}
+				role.find(".dropdown-list").append(temp);
+				DropDown.init(role); // 初始化下拉菜单
+				// 取出角色下拉菜单的值
+				$("#role").find(".dropdown-item").click(function() {
+					roleval = $(this).parents(".dropdown").find(".value").text();
+					// alert(roleval)
+				});
+			},
+			"error" : function() {
+				toastr.error("系统异常");
+			}
+		});
+	}
+
+	User.prototype.searchSelectableOrganization = function() {
+		// alert(123)
+		$.ajax({
+			"url" : "/stuenroll/userinfo/searchOrganizationJoinInYearAtDropDown",
+			"type" : "post",
+			"dataType" : "json",
+			"data" : {
+				"year" : new Date().getFullYear()
+			},
+			"success" : function(json) {
+				var data = json.result;
+				var organization = $("#organization");
+				console.log(organization);
+				var temp = "";
+				for (var i = 0; i < data.length; i++) {
+					var one = data[i];
+					console.log(one.name);
+					console.log(one.id);
+					temp += "<li class='dropdown-item' data-id='" + one.id + "'>" + one.name + "</li>";
+				}
+				organization.find(".dropdown-list").append(temp);
+				console.log(organization.find(".dropdown-list"))
+				DropDown.init(organization); // 初始化下拉菜单
+				// 取出培训机构下拉菜单的值
+				$("#organization").find(".dropdown-item").click(function() {
+					organizationval = $(this).parents(".dropdown").find(".value").text();
+					// alert(organizationval)
+				});
+			},
+			"error" : function() {
+				toastr.error("系统异常");
+			}
+		});
+	}
+
+	function factory(key) {
+		if (key == "User") {
+			return new User();
+		}
+	}
+
+	var user = factory("User");
+	user.searchSelectableRole();
+	user.searchSelectableOrganization();
+
+	DropDown.initAll();
+	// 取出性别下拉菜单的值
+	$("#sex").find(".dropdown-item").click(function() {
+		sexval = $(this).parents(".dropdown").find(".value").text();
+		// alert(sexval)
+	});
+
+	// 取出用户状态下拉菜单的值
+	$("#block").find(".dropdown-item").click(function() {
+		blockval = $(this).parents(".dropdown").find(".value").text();
+		// alert(blockval)
+	});
+	// 输入项键盘弹起事件
+	$(".main-container .input").keyup(function() {
+		if (this.id != "pid" && this.checkValidity()) {
+			$(this).removeClass("error");
+		}
+		else {
+			$(this).addClass("error");
+		}
+		if (this.id == "pid") {
+			if (checkPid($(this).val())) {
+				$(this).removeClass("error");
+			}
+			else {
+				$(this).addClass("error");
+			}
+		}
+	});
+
+	// 上传控件
+	var $uploadImageForm = $("#uploadImageForm");
+	$uploadImageForm.find(".preView").click(function(event) {
+		$uploadImageForm.find(".file").click();
+		event.stopPropagation();
+	});
+	$uploadImageForm.on("change", handler = function() {
+		var temp_filename = $uploadImageForm.find(".file").val();
+		var _ext = temp_filename.split(".").slice(-1)[0].toLowerCase();
+		if ([ 'png', 'bmp', 'jpg', 'gif' ].indexOf(_ext) == -1) {
+			console.log("不支持的图片格式" + _ext);
+			return;
+		}
+		var reader = new FileReader();
+		reader.readAsDataURL($uploadImageForm.find(".file")[0].files[0]);
+		reader.onload = function(e) {
+			$uploadImageForm.find(".preView").attr("src", this.result);
+		}
+
+	});
+	$("#image").click(function() {
+		// ajax上传表单
+		$.ajax({
+			"type" : "post",
+			"url" : "/stuenroll/userinfo/save",
+			"async" : true,
+			"data" : new FormData($("#uploadImageForm")[0]),
+			"cache" : false,
+			"contentType" : false,
+			"processData" : false,
+			"success" : function(json) {
+				photo_id = json.result;
+				toastr.success("上传头像成功");
+			},
+			"error" : function() {
+				toastr.warning("上传头像失败");
+			}
+		});
+	});
+
+	// 点击注册事件
+	var passwordval;
+	var repasswordval;
+
+	$("#registernow").click(function() {
+		// alert(1)
+		var bool = true;
+		var data = $(".main-container .input");
+		data.each(function(i, one) {
+			// console.log(data);
+			bool = bool && one.checkValidity(); // 检查正则表达式
+		});
+		var temp = $("main-container .dropdown").find(".value");
+		// console.log(temp);
+		for (var i = 0; i < temp.length; i++) {
+			bool = bool && ($(temp[i]).text() != "- 选择 -");
+		}
+		if (!bool) {
+			toastr.warning("请检查输入信息是否完善！");
+			return;
+		}
+		passwordval = $("#password").val();
+		repasswordval = $("#rePassword").val();
+		if (repasswordval == passwordval) {
+			// alert(1)
+			user.insertUserInfo();
+			$(".main-container .input").val("");
+			$(".main-container .value").text("- 选择 -");
+			window.location.href = "list.html";
+		}
+		else {
+			toastr.warning("请检查重复密码是否一致！");
+		}
+	});
+});

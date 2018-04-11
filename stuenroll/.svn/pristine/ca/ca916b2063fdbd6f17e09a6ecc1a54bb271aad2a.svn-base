@@ -1,0 +1,81 @@
+package cn.gov.hrss.ln.stuenroll.db;
+
+import java.util.HashMap;
+import java.util.List;
+
+import com.jfinal.plugin.activerecord.Record;
+
+/**
+ * Enroll表Dao接口
+ * 
+ * @author YangDi
+ *
+ */
+public interface I_EnrollDao {
+	/**
+	 * 根据条件查询报名表相关数据总数
+	 * 
+	 * @param year
+	 * @param month
+	 * @param stateId
+	 * @param organizationId
+	 * @return
+	 */
+	public long searchCountByCondition(int year, int month, int stateId, long organizationId);
+
+	/**
+	 * 查询报名记录
+	 * 
+	 * @param map
+	 * @param start
+	 * @param length
+	 * @return
+	 */
+	public List<Record> searchEnroll(HashMap map, long start, long length);
+
+	/**
+	 * 查询记录总数
+	 * 
+	 * @param map
+	 * @return
+	 */
+	public long searchEnrollCount(HashMap map);
+
+	/**
+	 * 根据ID删除数据
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public int deleteById(Long[] id);
+
+	/**
+	 * 根据register_id查询个报名信息(for mobile) 2016年07月01日 15:11:36
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public Record searchPersonalEnroll(long registerId,long pid);
+
+	/**
+	 * 根据register_id查询个人进度(for mobile) 2016年07月04日 15:40:32
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public String searchPersonalState(long id);
+	/**
+	 * 是否存在某条记录
+	 * 
+	 * @param pid
+	 * @return
+	 */
+	public boolean hasRecord(String pid);
+	/**
+	 * 查询报名记录
+	 * 
+	 * @param pid
+	 * @return
+	 */
+	public Record searchRegisterRecord(String pid);
+}

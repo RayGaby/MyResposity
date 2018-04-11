@@ -1,0 +1,1052 @@
+/**
+	 * classinfo接口
+	 */
+	var I_Classinfo = function(){
+		
+	}
+	
+	I_Classinfo.prototype.showMenu = function($scope,event){
+		throw "抽象方法";
+	}
+	I_Classinfo.prototype.hideMenu = function(){
+		throw "抽象方法";
+	}
+	I_Classinfo.prototype.init = function(){
+		throw "抽象方法";
+	}
+	I_Classinfo.prototype.searchClassinfo = function(json){
+		throw "抽象方法";
+	}
+	I_Classinfo.prototype.searchClassinfoCount = function(json) {
+		throw "抽象方法";
+	}
+	I_Classinfo.prototype.dropDownClassId = function(json){
+		throw "抽象方法";
+	}
+	I_Classinfo.prototype.dropDownClassYear = function(json){
+		throw "抽象方法";
+	}
+	I_Classinfo.prototype.dropDownOrganization = function(json){
+		throw "抽象方法";
+	}
+	I_Classinfo.prototype.dropDownProfession = function(json){
+		throw "抽象方法";
+	}
+	//添加
+	I_Classinfo.prototype.addClassinfo = function(json){
+		throw "抽象方法";
+	}
+	I_Classinfo.prototype.dropDownOrganizationAboutAdd = function(json){
+		throw "抽象方法";
+	}
+	I_Classinfo.prototype.dropDownProfessionAboutAdd = function(json){
+		throw "抽象方法";
+	}
+	I_Classinfo.prototype.modifyClassinfo = function(json){
+		throw "抽象方法";
+	}
+	I_Classinfo.prototype.deleteById = function(){
+		throw "抽象方法";
+	}
+	I_Classinfo.prototype.dropDownOranizationAboutModify = function(){
+		throw "抽象方法";
+	}
+	I_Classinfo.prototype.dropDownProfessionAboutModify = function(){
+		throw "抽象方法";
+	}
+	//归档
+	I_Classinfo.prototype.archiveClassinfo = function(){
+		throw "抽象方法"
+	}
+
+	//查看班级中学生的名单
+	I_Classinfo.prototype.searchStudent = function(json){
+		throw "抽象方法"
+	}
+	
+	I_Classinfo.prototype.searchStudentCount = function(count){
+		throw "抽象方法"
+	}
+	
+	//电话回访列表
+	I_Classinfo.prototype.searchTelVisit = function(count){
+		throw "抽象方法"
+	}
+	
+	//查询班级人数
+	I_Classinfo.prototype.queryClassinfoCount= function(count){
+		throw "抽象方法"
+	}
+	
+	//查询此用户的机构
+	I_Classinfo.prototype.organization= function(count){
+		throw "抽象方法"
+	}
+	//根据id查找学生姓名
+	I_Classinfo.prototype.searchStuName= function(json){
+		throw "抽象方法"
+	}
+	
+	var Classinfo = function(){
+		
+	}
+	
+	Classinfo.prototype = new I_Classinfo();
+	
+	Classinfo.prototype.showMenu = function($scope,event){
+		var $obj = $(event.target).find(".menu");
+		$(".menu").fadeOut();
+		$obj.parent().siblings().removeClass("item-active");//取消所有选项
+		$obj.parent().addClass("item-active");
+		$obj.fadeIn();
+		event.stopPropagation();
+	}
+	Classinfo.prototype.hideMenu = function(){
+		var obj = $(".menu");
+		obj.fadeOut();
+		obj.parent().removeClass("item-active");//取消所有选项
+		DropDown.closeDropDown();
+	}
+
+	Classinfo.prototype.init= function(){
+		//Menu之外任意位置点击鼠标，Menu消失
+		var obj = this;
+		$(document).click(function() {
+			obj.hideMenu();
+		});
+
+		//Menu内部点击鼠标阻止Menu消失
+		$(".menu").click(function(event) {
+			event.stopPropagation();
+		});
+	}
+	Classinfo.prototype.searchClassinfo = function(json){
+		$.ajax({
+			"url" : "/stuenroll/classinfo/queryCountByCondition",
+			"type" : "post",
+			"dataType" : "json",
+			"data" : json,
+			"async":false,
+			"success" : function(json){
+				var data = json.result;
+				
+				var table = $(".tab-container .tab-content .data-table");
+				//清空表格数据
+				table.find("tr:gt(0)").remove();
+				
+				//获得当前页数
+				var currentPage = $(".tab-container .content-active *[name='currentPage']").text();
+				//转化为数字类型
+
+				currentPage = new Number(currentPage);
+				//当前页数的行号起始数字
+				var start = (currentPage -1 ) * 35;
+				var temp = "";
+				for(var i = 0; i < data.length; i++){
+					var one = data[i];
+					//alert(one);
+					var employ_rate = 0;
+					//console.log(one.name);
+					temp += "<tr>";
+					temp += "<td><input type='checkbox' name='id' id='id' value='"+one.id+"' /></td>";
+					temp += "<td>" + (start + i + 1) + "</td>";
+					temp += "<td name='name'>" + one.name + "</td>";
+					temp += "<td name='organization'>" + one.organization + "</td>";
+					temp += "<td name='profession'>" + one.profession +"</td>";
+					temp += "<td name='year'>" + one.year + "</td>";
+					temp += "<td name='stu_count' class='click'>" + one.stu_count + "</td>";
+					temp += "<td name='state'>" + one.state + "</td>";
+					temp += "<td>" + one.employ_count + "</td>";
+					if(one.stu_count == 0){
+						temp += "<td>" + 0 + "%" + "</td>";
+					}
+					else{
+						var rate = one.employ_count / one.stu_count;
+						temp += "<td>" + (Math.round(rate*10000)/100).toFixed(0) +'%' + "</td>";
+					}
+					temp += "</tr>";
+				}
+				table.append(temp);
+				stuCount();
+				close();
+				stuPage();
+			},
+			"error" : function(){
+				toastr.error("系统异常");
+			}
+			
+		});
+	}
+	Classinfo.prototype.searchClassinfoCount = function(json){
+		$.ajax({
+			"url" : "/stuenroll/classinfo/queryCountAboutList",
+			"type" : "post",
+			"dataType" : "json",
+			"data" : json,
+			"async":false,
+			"success" : function(json){
+				var count = json.result;//总记录数
+				var content = $(".tab-container .tab-content");
+				content.find("*[name='totalRows']").text(count);
+				
+				var totalPages = (count % 35 == 0) ? count / 35 : Math.floor(count/35) + 1;
+				content.find("*[name='totalPages']").text(totalPages);
+			},
+			"error": function(){
+				toastr.error("系统异常");
+			}
+		}); 
+	}
+	Classinfo.prototype.dropDownClassId = function(json){
+		$.ajax({
+			"url" : "/stuenroll/classinfo/dropDownAboutClassId",
+			"type" : "post" ,
+			"dataType" : "json",
+			"async" : false,
+			"data" : json,
+			"success" : function(json){
+				$(".content-active #searchMenu").find("*[name='class-id']").find(".dropdown-list").empty();
+				//$("#unsearchMenu").find("*[name='class-id']").find(".dropdown-list").empty();
+				//$("#arsearchMenu").find("*[name='class-id']").find(".dropdown-list").empty();
+				var data = json.result;
+				//alert(data.length)
+				var temp = "";
+				for(var i = 0 ; i< data.length; i++){
+					var one = data[i];
+					var dt = "<dt class='dropdown-item' data-id=" + one.id + " >" + one.name +"</dt>";
+					 temp += dt;
+				}
+				$(".content-active #searchMenu").find("*[name='class-id']").find(".dropdown-list").append(temp);
+				//$("#unsearchMenu").find("*[name='class-id']").find(".dropdown-list").append(temp);
+				//$("#arsearchMenu").find("*[name='class-id']").find(".dropdown-list").append(temp);
+				//DropDown.initAll();//防止点击后出现重复的下拉
+				DropDown.initOther($(".content-active #searchMenu *[name='class-id']"),function(){
+					//$("#searchMenu *[name='class-id'] .value").text("- 选择 -");
+					$(".content-active #searchMenu *[name='class-id']").find(".dropdown-list").empty();
+					var profession = $(".content-active #searchMenu").find("*[name='profession']").find(".dropdown-item-active").data("id");
+					var year = $(".content-active #searchMenu").find("*[name='year']").find(".dropdown-item-active").data("id");
+					var organization= $(".content-active #searchMenu").find("*[name='organization']").find(".dropdown-item-active").data("id");
+					var word = $(".tab-list .tab-active").data("index");
+					if(word == "班级列表"){
+						classinfo.dropDownClassId({
+							"organization" : organization,
+							"profession" : profession,
+							"year" : year
+						});
+					}
+					else if(word == "电话回访"){
+						classinfo.dropDownClassId({
+							"organization" : organization,
+							"profession" : profession,
+							"year" : year
+						});
+					}
+					else{
+						classinfo.dropDownClassId({
+							"state" : word,
+							"organization" : organization,
+							"profession" : profession,
+							"year" : year
+						});
+					}
+				});
+				/*
+				DropDown.initOther($("#unsearchMenu *[name='class-id']"),function(){
+					//$("#searchMenu *[name='class-id'] .value").text("- 选择 -");
+					$("#unsearchMenu *[name='class-id']").find(".dropdown-list").empty();
+					var profession = $("#unsearchMenu").find("*[name='profession']").find(".dropdown-item-active").data("id");
+					var year = $("#unsearchMenu").find("*[name='year']").find(".dropdown-item-active").data("id");
+					var organization= $("#unsearchMenu").find("*[name='organization']").find(".dropdown-item-active").data("id");
+					classinfo.dropDownClassId({
+						"state" : "未归档",
+						"organization" : organization,
+						"profession" : profession,
+						"year" : year
+					});
+				});
+				DropDown.initOther($("#arsearchMenu *[name='class-id']"),function(){
+					//$("#searchMenu *[name='class-id'] .value").text("- 选择 -");
+					$("#arsearchMenu *[name='class-id']").find(".dropdown-list").empty();
+					var profession = $("#arsearchMenu").find("*[name='profession']").find(".dropdown-item-active").data("id");
+					var year = $("#arsearchMenu").find("*[name='year']").find(".dropdown-item-active").data("id");
+					var organization= $("#arsearchMenu").find("*[name='organization']").find(".dropdown-item-active").data("id");
+					classinfo.dropDownClassId({
+						"state" : "已归档",
+						"organization" : organization,
+						"profession" : profession,
+						"year" : year
+					});
+				});*/
+				
+			},
+			"error" : function(){
+				toastr.error("系统异常");
+			}
+		});
+	}
+	
+	Classinfo.prototype.dropDownClassYear = function(json){
+		$.ajax({
+			"url" : "/stuenroll/classinfo/dropDownAboutClassYear",
+			"type" : "post" ,
+			"dataType" : "json",
+			"async" : false,
+			"data" : json,
+			"success" : function(json){
+				$(".content-active #searchMenu").find("*[name='year']").find(".dropdown-list").empty();
+				var data = json.result;
+				//alert(data.length)
+				var temp = "";
+				for(var i = 0 ; i< data.length; i++){
+					var one = data[i];
+					var dt = "<dt class='dropdown-item' data-id=" + one.year + " >" + one.year +"</dt>";
+					 temp += dt;
+				}
+				$(".content-active #searchMenu").find("*[name='year']").find(".dropdown-list").append(temp);
+				
+				//DropDown.initAll();
+				DropDown.initOther($(".content-active #searchMenu *[name='year']"),function(){
+					//$("#searchMenu *[name='year'] .value").text("- 选择 -");
+					$(".content-active #searchMenu *[name='year']").find(".dropdown-list").empty();
+					var profession = $(".content-active #searchMenu").find("*[name='profession']").find(".dropdown-item-active").data("id");
+					var classInfo = $(".content-active #searchMenu").find("*[name='class-id']").find(".dropdown-item-active").data("id");
+					var organization= $(".content-active #searchMenu").find("*[name='organization']").find(".dropdown-item-active").data("id");
+					var word = $(".tab-list .tab-active").data("index");
+					if(word == "班级列表"){
+						classinfo.dropDownClassYear({
+							"organization" : organization,
+							"profession" : profession,
+							"classinfo" : classInfo
+						});
+					}
+					else if(word == "电话回访"){
+						classinfo.dropDownClassYear({
+							"organization" : organization,
+							"profession" : profession,
+							"classinfo" : classInfo
+						});
+					}
+					else{
+						classinfo.dropDownClassYear({
+							"state" : word,
+							"organization" : organization,
+							"profession" : profession,
+							"classinfo" : classInfo
+						});
+					}
+				});
+				
+			},
+			"error" : function(){
+				toastr.error("系统异常");
+			}
+		});
+	}
+	
+	Classinfo.prototype.dropDownOrganization = function(json){
+		$.ajax({
+			"url" : "/stuenroll/classinfo/dropDownAboutOrganization",
+			"type" : "post" ,
+			"dataType" : "json",
+			"async" : false,
+			"data" : json,
+			"success" : function(json){
+				$(".content-active #searchMenu").find("*[name='organization']").find(".dropdown-list").empty();
+				
+				var data = json.result;
+				//alert(data.length)
+				var temp = "";
+				for(var i = 0 ; i< data.length; i++){
+					var one = data[i];
+					var dt = "<dt class='dropdown-item' data-id=" + one.id + " >" + one.abbreviation +"</dt>";
+					 temp += dt;
+				}
+				$(".content-active #searchMenu").find("*[name='organization']").find(".dropdown-list").append(temp);
+				
+				//DropDown.initAll();
+				DropDown.initOther($(".content-active #searchMenu *[name='organization']"),function(){
+					//$("#searchMenu *[name='organization'] .value").text("- 选择 -");
+					$(".content-active #searchMenu *[name='organization']").find(".dropdown-list").empty();
+					var profession = $(".content-active #searchMenu").find("*[name='profession']").find(".dropdown-item-active").data("id");
+					
+					var year = $(".content-active #searchMenu").find("*[name='year']").find(".dropdown-item-active").data("id");
+					var classInfo= $(".content-active #searchMenu").find("*[name='class-id']").find(".dropdown-item-active").data("id");
+					var word = $(".tab-list .tab-active").data("index");
+					if(word == "班级列表"){
+						classinfo.dropDownOrganization({
+							"year" : year,
+							"profession" : profession,
+							"classinfo" : classInfo
+						});
+					}
+					else if(word == "电话回访"){
+						classinfo.dropDownOrganization({
+							"year" : year,
+							"profession" : profession,
+							"classinfo" : classInfo
+						});
+					}
+					else{
+						classinfo.dropDownOrganization({
+							"state" : word,
+							"year" : year,
+							"profession" : profession,
+							"classinfo" : classInfo
+						});
+					}
+				});
+				
+			},
+			"error" : function(){
+				toastr.error("系统异常");
+			}
+		});
+	}
+	
+	Classinfo.prototype.dropDownProfession = function(json){
+		
+		$.ajax({
+			"url" : "/stuenroll/classinfo/dropDownAboutProfession",
+			"type" : "post" ,
+			"dataType" : "json",
+			"async" : false,
+			"data" : json,
+			"success" : function(json){
+				
+				$(".content-active #searchMenu").find("*[name='profession']").find(".dropdown-list").empty();
+				
+				var data = json.result;
+				//alert(data.length)
+				var temp = "";
+				for(var i = 0 ; i< data.length; i++){
+					var one = data[i];
+					var dt = "<dt class='dropdown-item' data-id=" + one.id + " >" + one.name +"</dt>";
+					 temp += dt;
+				}
+				$(".content-active #searchMenu *[name='profession']").find(".dropdown-list").append(temp);
+				
+				//DropDown.initAll();
+				
+				DropDown.initOther($(".content-active #searchMenu *[name='profession']"),function(){
+					//$(".value").text("- 选择 -");
+					$(".content-active #searchMenu *[name='profession']").find(".dropdown-list").empty();
+					var classInfo = $(".content-active #searchMenu").find("*[name='class-id']").find(".dropdown-item-active").data("id");
+					var year = $(".content-active #searchMenu").find("*[name='year']").find(".dropdown-item-active").data("id");
+					var organization= $(".content-active #searchMenu").find("*[name='organization']").find(".dropdown-item-active").data("id");
+
+					var word = $(".tab-list .tab-active").data("index");
+					if(word == "班级列表"){
+						classinfo.dropDownProfession({
+							"organization" : organization,
+							"classinfo" : classInfo,
+							"year" : year
+						});
+					}
+					else if(word == "电话回访"){
+						classinfo.dropDownProfession({
+							"organization" : organization,
+							"classinfo" : classInfo,
+							"year" : year
+						});
+					}
+					else{
+						classinfo.dropDownProfession({
+							"state" : word,
+							"organization" : organization,
+							"classinfo" : classInfo,
+							"year" : year
+						});
+					}
+					
+				});
+				
+			},
+			"error" : function(){
+				toastr.error("系统异常");
+			}
+		});
+	}
+	
+	//添加
+	Classinfo.prototype.addClassinfo = function(json){
+		$.ajax({
+			"url" : "/stuenroll/classinfo/addClassinfo",
+			"type" : "post",
+			"dataType" : "json",
+			"async" : false,
+			"data" : json,
+			"success" : function(json){
+				if(json.result == 0){
+					toastr.warning("该班级姓名已经存在,请重新添加");
+					$("#addMenu").find("*[name='class-id']").val("");
+				}
+				else if(json.result == -1){
+					toastr.warning("只有就业网用户可以添加班级");
+					classinfo.hideMenu();
+				}
+				else{
+					classinfo.hideMenu();
+					toastr.success("添加成功");
+				}
+				
+				
+			},
+			"error" : function(){
+				toastr.error("添加失败")
+			}
+		});
+	}
+	
+	//添加中的机构下拉
+	Classinfo.prototype.dropDownOrganizationAboutAdd = function(json){
+		$.ajax({
+			"url" : "/stuenroll/classinfo/dropDownOrganizationAboutAdd",
+			"type" : "post",
+			"dataType" : "json",
+			"data" : json,
+			"success" : function(json){
+				var data = json.result;
+				//alert(data.length)
+				var temp = "";
+				for(var i = 0 ; i< data.length; i++){
+					var one = data[i];
+					var dt = "<dt class='dropdown-item' data-id=" + one.id + " >" + one.abbreviation +"</dt>";
+					 temp += dt;
+				}
+				$("#addMenu *[name='organization']").find(".dropdown-list").append(temp);
+				$("#modifyMenu *[name='organization']").find(".dropdown-list").append(temp);
+				//DropDown.initAll();
+				DropDown.initOther($("#addMenu *[name='organization']"),function(){
+					//$(".value").text("- 选择 -");
+					$("#addMenu *[name='organization']").find(".dropdown-list").empty();
+					var classInfo = $("#addMenu").find("*[name='class-id']").val();
+					//alert(classInfo)
+					var year = $("#addMenu").find("*[name='year']").val();
+					//alert(year)
+					//console.log(classInfo)
+					if(year != "" && classInfo != ""){
+						var profession= $("#addMenu").find("*[name='profession']").find(".dropdown-item-active").data("id");
+						classinfo.dropDownOrganizationAboutAdd({
+							"year" : year,
+							"profession" : profession
+						});
+					}
+					else{
+						toastr.warning("请填写班级编号和年届");
+					}
+				});
+				DropDown.initOther($("#modifyMenu *[name='organization']"),function(){
+					alert("aaaa")
+					$("#modifyMenu *[name='organization']").find(".dropdown-list").empty();
+					var classInfo = $("#modifyMenu").find("*[name='class-id']").val();
+					//alert(classInfo)
+					var year = $("#modifyMenu").find("*[name='year']").val();
+					//alert(year)
+					//console.log(classInfo)
+					if(year != "" && classInfo != ""){
+						var profession= $("#modifyMenu").find("*[name='profession']").find(".dropdown-item-active").data("id");
+						classinfo.dropDownOrganizationAboutAdd({
+							"year" : year,
+							"profession" : profession
+						});
+					}
+					else{
+						toastr.warning("请填写班级编号和年届");
+					}
+				});
+			},
+			"error" : function(){
+				toastr.error("系统异常");
+			}
+			
+		});
+	}
+	
+	
+	//添加中的专业下拉
+	Classinfo.prototype.dropDownProfessionAboutAdd = function(json){
+		$.ajax({
+			"url" : "/stuenroll/classinfo/dropDownProfessionAboutAdd",
+			"type" : "post",
+			"dataType" : "json",
+			"data" : json,
+			"success" : function(json){
+				var data = json.result;
+				var temp = "";
+				if( data != null){
+					for(var i = 0 ; i< data.length; i++){
+						var one = data[i];
+						var dt = "<dt class='dropdown-item' data-id=" + one.id + " >" + one.name +"</dt>";
+						temp += dt;
+					}
+					$("#addMenu *[name='profession']").find(".dropdown-list").append(temp);
+					$("#modifyMenu *[name='profession']").find(".dropdown-list").append(temp);
+				}
+				
+				//DropDown.initAll();
+		
+				DropDown.initOther($("#addMenu *[name='profession']"),function(){
+					//$(".value").text("- 选择 -");
+					$("#addMenu *[name='profession']").find(".dropdown-list").empty();
+					var classInfo = $("#addMenu").find("*[name='class-id']").val();
+					var year = $("#addMenu").find("*[name='year']").val();
+					
+					if(year != "" && classInfo != ""){
+						var organization= $("#addMenu").find("*[name='organization']").find(".dropdown-item-active").data("id");
+						classinfo.dropDownProfessionAboutAdd({
+							"year" : year,
+							"organization" : organization
+						});
+					}
+					else{
+						toastr.warning("请填写班级编号和年届");
+					}
+				});
+				DropDown.initOther($("#modifyMenu *[name='profession']"),function(){
+					//$(".value").text("- 选择 -");
+					$("#modifyMenu *[name='profession']").find(".dropdown-list").empty();
+					var classInfo = $("#modifyMenu").find("*[name='class-id']").val();
+					var year = $("#modifyMenu").find("*[name='year']").val();
+					
+					if(year != "" && classInfo != ""){
+						var organization= $("#modifyMenu").find("*[name='organization']").find(".dropdown-item-active").data("id");
+						classinfo.dropDownProfessionAboutAdd({
+							"year" : year,
+							"organization" : organization
+						});
+					}
+					else{
+						toastr.warning("请填写班级编号和年届");
+					}
+				});
+			},
+			"error" : function(){
+				toastr.error("系统异常");
+			}
+			
+		});
+		
+	}
+	
+	//修改班级
+	Classinfo.prototype.modifyClassinfo = function(json){
+		
+		$.ajax({
+			"url" : "/stuenroll/classinfo/modifyClassinfo",
+			"type" : "post",
+			"dataType" : "json",
+			"traditional" : true,
+			"async" : false,
+			"data" :json,
+			"success" : function(json){
+				if(json.result == 0){
+					toastr.warning("该班级姓名已经存在，请重新修改");
+					$("#modifyMenu").find("*[name='class-id']").val("");
+				}
+				else if(json.result == -1){
+					toastr.warning("只有就业网用户可以修改班级");
+					classinfo.hideMenu();
+				}
+				else{
+					classinfo.hideMenu();
+					toastr.success("修改成功");
+				}
+				
+			},
+			"error" : function(){
+				toastr.error("系统异常")
+			}
+		});
+	}
+	
+	//点击修改时机构的下拉
+	Classinfo.prototype.dropDownOranizationAboutModify = function(json){
+		$.ajax({
+			"url" : "/stuenroll/classinfo/dropDownAboutOrganization",
+			"type" : "post" ,
+			"dataType" : "json",
+			"data" : json,
+			"success" : function(json){
+				var content = $("#modifyMenu").find("*[name='organization']").find(".dropdown-list")
+				//content.empty();
+				var data = json.result;
+
+			    var one = data[0];
+				var temp = "<dt class='dropdown-item' data-id=" + one.id + " >" + one.abbreviation +"</dt>";
+				
+				content.append(temp);
+				
+				content.find("*[data-id='"+ one.id +"']").addClass("dropdown-item-active");
+				content.parent().find(".value").text(one.abbreviation);
+				//DropDown.initAll();
+				DropDown.initOther($("#modityMenu *[name='organization']"),function(){
+					alert("organization")
+				});
+			},
+			"error" : function(){
+				toastr.error("系统异常");
+			}
+		});
+	}
+	
+	//点击修改时专业的下拉
+	Classinfo.prototype.dropDownProfessionAboutModify = function(json){
+		
+		$.ajax({
+			"url" : "/stuenroll/classinfo/dropDownAboutProfession",
+			"type" : "post" ,
+			"dataType" : "json",
+			"data" : json,
+			"success" : function(json){
+				var content = $("#modifyMenu").find("*[name='profession']").find(".dropdown-list")
+				//content.empty();
+				var data = json.result;
+				//alert(data.length)
+				
+				var one = data[0];
+				var temp = "<dt class='dropdown-item' data-id=" + one.id + " >" + one.name +"</dt>";
+				
+				content.append(temp);
+				
+				content.find("*[data-id="+ one.id +"]").addClass("dropdown-item-active");
+				content.parent().find(".value").text(one.name);
+				
+				DropDown.initOther($("#modifyMenu *[name='profession']"),function(){
+					alert("profession")
+					$("#modifyMenu *[name='profession']").find(".dropdown-list").empty();
+					var classInfo = $("#modifyMenu").find("*[name='class-id']").val();
+					//alert(classInfo)
+					var year = $("#modifyMenu").find("*[name='year']").val();
+					//alert(year)
+					//console.log(classInfo)
+					if(year != "" && classInfo != ""){
+						var organization= $("#modifyMenu").find("*[name='organization']").find(".dropdown-item-active").data("id");
+						classinfo.dropDownProfessionAboutAdd({
+							"year" : year,
+							"organization" : organization
+						});
+					}
+					else{
+						toastr.warning("请填写班级编号和年届");
+					}
+				});
+			},
+			"error" : function(){
+				toastr.error("系统异常");
+			}
+		});
+	}
+	
+	Classinfo.prototype.deleteById = function(){
+		//获取被选中的记录
+		var content = $(".tab-container .tab-content[data-index='班级列表']");
+		var checkbox = content.find("*[name='id']:checked");//被选中的复选框
+		
+		if(checkbox.length == 0){
+			toastr.warning("请选中需要删除的班级");
+		}
+		else{
+			
+			var id = [];//定义数组
+			for(var i = 0; i < checkbox.length; i++){
+			
+				var stu_count = checkbox.parents("tr").find("*[name=stu_count]").text();
+				if(stu_count != 0){
+					toastr.warning("记录关联学生人数，不能删除");
+					return;
+				}
+			}
+			var bool = confirm("是否删除选中的记录？");
+			if(bool == false){
+				return;
+			}
+			
+			for(var i = 0; i < checkbox.length; i++){
+				id.push($(checkbox[i]).val());
+			}
+			$.ajax({
+				"url" : "/stuenroll/classinfo/deleteById",
+				"type" : "post",
+				"dataType" : "json",
+				"traditional" : true,
+				"async" : false,
+				"data" : {
+					"id" : id
+				},
+				"success" : function(json){
+					if(json.deleteRows == -1){
+						toastr.warning("只有就业网用户可以删除班级");
+						classinfo.hideMenu();
+					}
+					else{
+						toastr.success("删除了" + json.deleteRows + "条记录");
+					}
+					
+				},
+				"error" : function(){
+					toastr.error("系统异常");
+				}
+			});
+		}
+
+	}
+	
+	//班级归档
+	Classinfo.prototype.archiveClassinfo = function(){
+		//获取被选中的记录
+		var content = $(".tab-container .content-active");
+		var checkbox = content.find("*[name='id']:checked");//被选中的复选框
+		
+		if(checkbox.length == 0){
+			toastr.warning("请选择需要归档的班级");
+			return;
+		}
+		
+		else{
+			var id = [];//定义数组
+			for(var i = 0; i < checkbox.length; i++){
+			
+				var stu_count = $(checkbox[i]).parents("tr").find("*[name='state']").text();
+				if(stu_count == "已归档"){
+					toastr.warning("已选记录中有班级已归档，不能归档");
+					return;
+				}
+			}
+			var bool = confirm("是否归档选中的记录？");
+			if(bool == false){
+				return;
+			}
+			
+			var id = [];//定义数组
+			for(var i = 0; i < checkbox.length; i++){
+			
+				var stu_count = $(checkbox[i]).parents("tr").find("*[name='state']").text();
+				if(stu_count == "已归档"){
+					toastr.warning("已选记录中有班级已归档，不能归档");
+					return;
+				}
+			}
+			for(var i = 0; i < checkbox.length; i++){
+				id.push($(checkbox[i]).val());
+			}
+			$.ajax({
+				"url" : "/stuenroll/classinfo/classArchive",
+				"type" : "post",
+				"dataType" : "json",
+				"traditional" : true,
+				"async" : false,
+				"data" : {
+					"id" : id
+				},
+				"success" : function(json){
+					var result = json.archive;
+					if(result == -1){
+						toastr.warning("只有就业网用户可以班级归档");
+						classinfo.hideMenu();
+					}
+					else{
+						toastr.success("归档了" + result + "条记录");
+					}
+					
+				},
+				"error" : function(){
+					toastr.error("系统异常");
+				}
+			});
+		}
+		
+		
+	}
+	
+	//查看班级中的学生名单
+	Classinfo.prototype.searchStudent = function(json){
+		$.ajax({
+			"url" : "/stuenroll/classinfo/searchStudentAboutClassinfo",
+			"type" : "post",
+			"dataType" : "json",
+			"data" : json,
+			"success" : function(json){
+				var data = json.result;
+				
+				var table = $(".tab-container .tab-content .stu-table");
+				
+				table.find("tr:gt(0)").remove();
+				
+				//获得当前页数
+				var currentPage = $(".tab-container .content-active span[name='stu-currentPage']").text();
+				//转化为数字类型
+
+				currentPage = new Number(currentPage);
+				//当前页数的行号起始数字
+				var start = (currentPage -1 ) * 10;
+				var temp = "";
+				
+				for(var i = 0; i < data.length; i++){
+					var one = data[i];
+
+					temp += "<tr>";
+					temp += "<td>" + (start + i + 1) + "</td>";
+					temp += "<td>" + one.name + "</td>";
+					temp += "<td>" + one.sex + "</td>";
+					temp += "<td>" + one.tel +"</td>";
+					temp += "<td>" + one.pid + "</td>";
+					temp += "<td>" + one.state + "</td>";
+					
+					temp += "</tr>";
+				}
+				table.append(temp);
+			},
+		    "error" : function(){
+				toastr.error("系统异常");
+			}
+			
+		});
+	}
+	
+	Classinfo.prototype.searchStudentCount = function(count){
+		var content = $(".content-active .stu-menu .stu-page-list")
+	
+		var totalPages = (count % 10 == 0) ? count / 10 : Math.floor(count/10) + 1;
+		content.find("*[name='stu-totalPages']").text(totalPages);
+	}
+	
+	Classinfo.prototype.searchTelVisit = function(json){
+		$.ajax({
+			"url" : "/stuenroll/classinfo/queryTelVisit",
+			"type" : "post",
+			"dataType" : "json",
+			"data" : json,
+			"async":false,
+			"success" : function(json){
+				var data = json.result;
+				
+				var table = $(".tab-container .tab-content .data-table");
+				//清空表格数据
+				table.find("tr:gt(0)").remove();
+				
+				//获得当前页数
+				var currentPage = $(".tab-container .content-active *[name='currentPage']").text();
+				//转化为数字类型
+
+				currentPage = new Number(currentPage);
+				//当前页数的行号起始数字
+				var start = (currentPage -1 ) * 35;
+				var temp = "";
+				for(var i = 0; i < data.length; i++){
+					var one = data[i];
+					//alert(one);
+					var employ_rate = 0;
+					//console.log(one.name);
+					temp += "<tr>";
+					temp += "<td name='id' data-id='"+one.id+"'>" + (start + i + 1) + "</td>";
+					temp += "<td>" + one.name + "</td>";
+					temp += "<td>" + one.organization + "</td>";
+					temp += "<td>" + one.profession +"</td>";
+					temp += "<td>" + one.year + "</td>";
+					temp += "<td name='count'>" + one.visit_count + "</td>";
+					if(one.stu_count == 0){
+						temp += "<td name='visit'>" + 0 + "</td>";
+					}
+					else{
+						var rate = one.visit_count / one.stu_count;
+						temp += "<td name='visit'>" + (Math.round(rate*10000)/100).toFixed(0) +'%' + "</td>";
+					}
+					if(one.visit_count == 0){
+						temp += "<td>" + 0 + "</td>";
+					}
+					else{
+						var rate = one.visit_success / one.visit_count;
+						temp += "<td>" + (Math.round(rate*10000)/100).toFixed(0) +'%' + "</td>";
+					}
+					temp += "<td class='detail'>[ 详细 ]</td>";
+					temp += "<td class='operation'>[ 电话回访 ]</td>";
+					temp += "</tr>";	
+				}
+				table.append(temp);
+				tel();
+			},
+			"error" : function(){
+				toastr.error("系统异常");
+			}
+			
+		});
+	}
+	
+	Classinfo.prototype.queryClassinfoCount = function(data,rate){
+		$.ajax({
+			"url" : "/stuenroll/visit/queryClassinfoCount",
+			"type" : "post",
+			"dataType" : "json",
+			"data" : {
+				"classinfo" : data
+			},
+			"success" : function(json){
+				var count = json.result;
+				
+				if(count.student_count == 0){
+					toastr.warning("该班级没有学生");
+				}
+				else{
+					if(rate == "100%" || rate == "100.00%"){
+						toastr.warning("该班级的所有学生都已经回访");
+					}
+					else{
+						var classinfoId = data;
+						
+						var classInfo =$(".tab-content[data-index='电话回访'] .menu-btn[value='查询']").data("name");
+						var year = $(".tab-content[data-index='电话回访'] .menu-btn[value='查询']").data("year");
+						var organization= $(".tab-content[data-index='电话回访'] .menu-btn[value='查询']").data("organization");
+						var profession= $(".tab-content[data-index='电话回访'] .menu-btn[value='查询']").data("profession");
+						
+						var page = $(".tab-container .content-active").find("*[name=currentPage]").text();
+						$(window.parent.document).find("iframe").attr("src","classinfo/tel_visit.html?from=1&classinfoId="+classinfoId+"&page="+page+"&classInfo="+classInfo+"&year="+year+"&organization="+organization+"&profession="+profession);
+					}
+				}
+			},
+			"error" : function(){
+				toastr.error("系统异常");
+			}
+			
+		});
+	}
+	
+	Classinfo.prototype.organization = function(){
+		$.ajax({
+			"url" : "/stuenroll/classinfo/organization",
+			"type" : "post",
+			"dataType" : "json",
+			"async" : false,
+			"data" : null,
+			"success" : function(json){
+				var organization = json.result;
+				if(organization != "辽宁省就业网"){
+					$(".tab-list .tab-item[data-index='电话回访']").css("display","none");
+				}
+			},
+			"error" : function(){
+				toastr.error("系统异常");
+			}
+		
+		});
+	}
+	
+	Classinfo.prototype.searchStuName = function(json){
+		$.ajax({
+			"url" : "/stuenroll/classinfo/queryStuName",
+			"type" : "post",
+			"dataType" : "json",
+			"data" : json,
+			"success" : function(json){
+				var data = json.result;
+				var name = data.name;
+				toastr.success("成功回访"+name);
+			},
+			"error" : function(){
+				toastr.error("系统异常");
+			}
+		
+		});
+	}
+	
+	
+

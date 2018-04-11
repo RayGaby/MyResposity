@@ -1,0 +1,360 @@
+body {
+    background-color: #e7e7e7;
+}
+.main-container {
+    background-color: #fff;
+    margin: 15/16rem;
+    padding: 15/16rem;
+    .tab-list {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #EBEEF7;
+        .tab-item {
+            color: #fff;
+            background-color: #02A0E9;
+            float: left;
+            height: 36/16rem;
+            line-height: 36/16rem;
+            text-align: center;
+            padding-left: 20/16rem;
+            padding-right: 20/16rem;
+            letter-spacing: 1/16rem;
+            font-size: 14/16rem;
+            cursor: pointer;
+        }
+    }
+    .tab-container {
+        overflow: hidden;
+        .tab-content {
+            .operation-list {
+                margin: 0;
+                padding: 0;
+                height: 48/16rem;
+                .operation-item {
+                    display: none;
+                    float: left;
+                    height: 48/16rem;
+                    line-height: 48/16rem;
+                    text-align: center;
+                    letter-spacing: 1/16rem;
+                    font-size: 14/16rem;
+                    padding-left: 10/16rem;
+                    padding-right: 10/16rem;
+                    cursor: pointer;
+                }
+            }
+            .Infile-container {
+                z-index: 10;
+                display: none;
+                width: 1601/16rem;
+                height: 130/16rem;
+                position: absolute;
+                background-color: #F0F0F0;
+                border-radius: 5/16rem;
+                padding-bottom: 30/16rem;
+                //margin-left: 50/16rem;
+                box-shadow: 0 3/16rem 4/16rem rgba(0,0,0,0.18);
+                .filetitle-content {
+                    padding-top: 15/16rem;
+                    padding-left: 30/16rem;
+                    padding-right: 30/16rem;
+                    .file-title {
+                        font-size: 16/16rem;
+                        border-bottom: dashed 1.5/16rem #999;
+                        padding-bottom: 15/16rem;
+                    }
+                }
+                .file{
+                    margin-top: 15/16rem;
+                }
+                .file-btn {
+                    //float: left;
+                    margin-top: -25/16rem;
+                    margin-left: 220/16rem;
+                    margin-bottom: 30/16rem;
+                    width: 200/16rem;
+                    .btn {
+                        width: 120/16rem;
+                        height: 30/16rem;
+                        border-radius: 3/16rem;
+                        border: none;
+                        font-weight: bold;
+                        font-size: 14/16rem;
+                        outline: none;
+                        cursor: pointer;
+                        margin-right: 20/16rem;
+                    }
+                    .red {
+                        color: #fff;
+                        background-color: #E86167;
+                        &:active {
+                            background-color: #EB777C;
+                        }
+                    }
+                }
+            }
+            .Outfile-container {
+                z-index: 10;
+                display: none;
+                width: 1601/16rem;
+                height: 130/16rem;
+                position: absolute;
+                background-color: #F0F0F0;
+                border-radius: 5/16rem;
+                padding-bottom: 30/16rem;
+                box-shadow: 0 3/16rem 4/16rem rgba(0,0,0,0.18);
+                //margin-left: 50/16rem;
+                .filetitle-content {
+                    padding-top: 15/16rem;
+                    padding-left: 30/16rem;
+                    padding-right: 30/16rem;
+                    .file-title {
+                        font-size: 16/16rem;
+                        border-bottom: dashed 1.5/16rem #999;
+                        padding-bottom: 15/16rem;
+                    }
+                }
+                .file-btn {
+                    float: left;
+                    margin-top: 10/16rem;
+                    margin-left: 60/16rem;
+                    margin-bottom: 30/16rem;
+                    width: 200/16rem;
+                    .btn {
+                        width: 120/16rem;
+                        height: 30/16rem;
+                        border-radius: 3/16rem;
+                        border: none;
+                        font-weight: bold;
+                        font-size: 14/16rem;
+                        outline: none;
+                        cursor: pointer;
+                        margin-right: 20/16rem;
+                    }
+                    .red {
+                        color: #fff;
+                        background-color: #E86167;
+                        &:active {
+                            background-color: #EB777C;
+                        }
+                    }
+                }
+            }
+            .showMember-container {
+                z-index: 8;
+                display: none;
+                height: 560/16rem;
+                width: 1601/16rem;
+                position: absolute;
+                background-color: #F0F0F0;
+                border-radius: 5/16rem;
+                padding-bottom: 30/16rem;
+                margin-bottom: 15/16rem;
+                .title-content {
+                    padding-top: 15/16rem;
+                    padding-left: 30/16rem;
+                    padding-right: 30/16rem;
+                    .title {
+                        font-size: 16/16rem;
+                        border-bottom: dashed 1.5/16rem #999;
+                        padding-bottom: 15/16rem;
+                    }
+                }
+                .showtab-content {
+                    width: 1000/16rem;
+                    margin-top: 20/16rem;
+                    margin-left: 30/16rem;
+                    float: left;
+                    .member-table {
+                        width: 100%;
+                        clear: none;
+                        float: none;
+                        font-size: 14/16rem;
+                        border: solid #e0e0e0 1/16rem;
+                        border-collapse: collapse;
+                        tr {
+                            height: 35/16rem;
+                            &:nth-child(1) {
+                                background-color: #0099FF;
+                                color: #fff;
+                            }
+                            &:nth-child(even) {
+                                background-color: #fff;
+                            }
+                        }
+                        td {
+                            padding: 0;
+                            margin: 0;
+                            border: solid #e0e0e0 1/16rem;
+                            padding-left: 10/16rem;
+                            padding-right: 10/16rem;
+                            font-size: 14/16rem;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                        }
+                        th {
+                            padding: 0;
+                            margin: 0;
+                            border: solid #e0e0e0 1/16rem;
+                            padding-left: 10/16rem;
+                            padding-right: 10/16rem;
+                            text-align: left;
+                        }
+                    }
+                    .page-content {
+                        background-color: #fff;
+                        .memberpage-list {
+                            margin: 0;
+                            padding: 0;
+                            overflow: hidden;
+                            margin-top: 15/16rem;
+                            .memberpage-item {
+                                height: 40/16rem;
+                                font-size: 14/16rem;
+                                line-height: 40/16rem;
+                            }
+                            .memberpage-info {
+                                float: left;
+                                margin-left: 15/16rem;
+                                span {
+                                    margin-left: 5/16rem;
+                                    margin-right: 5/16rem;
+                                }
+                            }
+                            .memberpage-operation {
+                                float: right;
+                                margin-right: 10/16rem;
+                                a {
+                                    cursor: pointer;
+                                    padding-left: 5/16rem;
+                                    padding-right: 5/16rem;
+                                    &:hover {
+                                        color: #ff6700;
+                                    }
+                                }
+                                .page-active {
+                                    color: red;
+                                    font-weight: 600;
+                                }
+                                .page-disable {
+                                    color: #B9B9B9;
+                                    cursor: default;
+                                    &:hover {
+                                        color: #B9B9B9;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                .btn-item {
+                    margin-top: 30/16rem;
+                    margin-left: 1060/16rem;
+                    .btn {
+                        width: 120/16rem;
+                        height: 30/16rem;
+                        border-radius: 3/16rem;
+                        border: none;
+                        font-weight: bold;
+                        font-size: 14/16rem;
+                        outline: none;
+                        cursor: pointer;
+                        margin-right: 20/16rem;
+                    }
+                    .red {
+                        color: #fff;
+                        background-color: #E86167;
+                        &:active {
+                            background-color: #EB777C;
+                        }
+                    }
+                }
+            }
+        }
+        .data-table {
+            .state-item {
+                width: 70/16rem;
+                height: 26/16rem;
+                border: solid 1/16rem #e0e0e0;
+                border-radius: 14/16rem;
+                box-shadow: 0 1/16rem 2/16rem 0 #222 inset;
+                position: relative;
+                //visibility: hidden;
+                .close {
+                    display: block;
+                    height: inherit;
+                    line-height: 26/16rem;
+                    position: absolute;
+                    left: 12/16rem;
+                    font-size: 14/16rem;
+                    color: #fff;
+                }
+                .open {
+                    display: none;
+                    height: inherit;
+                    line-height: 26/16rem;
+                    position: absolute;
+                    right: 12/16rem;
+                    font-size: 14/16rem;
+                    color: #fff;
+                }
+                .btn {
+                    width: 28/16rem;
+                    height: 28/16rem;
+                    border: solid 1/16rem #e0e0e0;
+                    border-radius: 16/16rem;
+                    background-color: #fafafa;
+                    box-shadow: 0 0 3/16rem 0 #aaa;
+                    position: absolute;
+                    top: -2/16rem;
+                    transition: all 0.1s;
+                }
+            }
+        }
+        .page-list {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #EBEEF7;
+            margin-top: 15/16rem;
+            .page-item {
+                height: 40/16rem;
+                font-size: 14/16rem;
+                line-height: 40/16rem;
+            }
+            .page-info {
+                float: left;
+                margin-left: 15/16rem;
+                span {
+                    margin-left: 5/16rem;
+                    margin-right: 5/16rem;
+                }
+            }
+            .page-operation {
+                float: right;
+                margin-right: 10/16rem;
+                a {
+                    cursor: pointer;
+                    padding-left: 5/16rem;
+                    padding-right: 5/16rem;
+                    &:hover {
+                        color: #ff6700;
+                    }
+                }
+                .page-active {
+                    color: red;
+                    font-weight: 600;
+                }
+                .page-disable {
+                    color: #B9B9B9;
+                    cursor: default;
+                    &:hover {
+                        color: #B9B9B9;
+                    }
+                }
+            }
+        }
+    }
+}

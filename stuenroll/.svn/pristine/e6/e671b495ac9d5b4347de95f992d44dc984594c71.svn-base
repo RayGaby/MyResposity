@@ -1,0 +1,887 @@
+$(function() {
+	if (!checkPermission([ "1_1" ])) {
+		return;
+	}
+
+	/**
+	 * 抽象的列表接口
+	 */
+	var I_List = function() {
+
+	}
+
+	/**
+	 * 好友列表抽象方法
+	 */
+	I_List.prototype.searchFriend = function(json) {
+		throw "抽象方法";
+	}
+	I_List.prototype.addFriend = function(json) {
+		throw "抽象方法";
+	}
+	I_List.prototype.searchFriendCount = function() {
+		throw "抽象方法";
+	}
+	I_List.prototype.deleteById = function(id) {
+		throw "抽象方法";
+	}
+	I_List.prototype.friendTop = function(id) {
+		throw "抽象方法";
+	}
+	I_List.prototype.searchFriendFromUser = function() {
+		throw "抽象方法";
+	}
+	I_List.prototype.init = function(obj) {
+		throw "抽象方法";
+	}
+	I_List.prototype.initadd = function(obj) {
+		throw "抽象方法";
+	}
+	I_List.prototype.userOnLine = function() {
+		throw "抽象方法";
+	}
+	I_List.prototype.userOnLineadd = function() {
+		throw "抽象方法";
+	}
+	I_List.prototype.initMyFriendPhoto = function(json) {
+		throw "抽象方法";
+	}
+	I_List.prototype.initaddMyFriendPhoto = function(json) {
+		throw "抽象方法";
+	}
+
+	var List = function() {
+
+	}
+	// 全局变量
+	var search_switch = true;
+	var timer_switch = 1;
+
+	List.prototype = new I_List(); // 继承父类
+
+	List.prototype.searchFriendFromUser = function(json) {
+		var searchname = $("#search").val();
+		$.ajax({
+			"url" : "/stuenroll/friend/searchFriendFromUser",
+			"type" : "post",
+			"dataType" : "json",
+			"data" : {
+				"username" : searchname
+			},
+			"async" : false,
+			"success" : function(json) {
+				var data = json.result;
+				if (data == null) {
+					alert("没有找到该好友!");
+					timer_switch = 0;
+					return;
+				}
+				var item = $(".myfriends-container .list-container");
+				// 清空好友信息
+				item.find(".list-item").remove();
+				item.find(".add-list-item").remove();
+
+				var temp = "";
+
+				temp += "<dt class='add-list-item' >";
+				temp += "<div class='add-photo-container'>";
+				temp += "<img src='../../img/bg.png' class='add-user-photo'/>";
+				temp += "<div class='add-small-circle add-circle-green'></div>";
+				temp += "</div>";
+				temp += "<div class='add-personal-info'>";
+				temp += "<dl class='add-info-container'>";
+				temp += "<dt class='add-myfriends-name'>" + data.username + "</dt>";
+				temp += "<dt class='add-myfriends-role'>" + data.role + "</dt>";
+				temp += "<dt class='add-myfriends-organization'>" + data.organization + "</dt>";
+				temp += "</dl>";
+				temp += "</div>";
+				temp += "<div class='add-action'>";
+				temp += "<input type='button' name='add' id='add' value='添加' class='add' />";
+				temp += "</div>";
+				temp += "</dt>";
+				item.append(temp);
+				list.initadd(item);
+			},
+			"error" : function() {
+				toastr.error("系统异常");
+			}
+		});
+	}
+	List.prototype.searchFriend = function(json) {
+		//alert(1)
+		// 显示好友列表
+		$.ajax({
+			"url" : "/stuenroll/friend/searchFriend",
+			"type" : "post",
+			"dataType" : "json",
+			"data" : json,
+			"async" : false,
+			"success" : function(json) {
+				//alert(2)
+				var data = json.result;
+				if (data.length == 0) {
+					// alert("没有找到该好友!")
+					search_switch = false;
+					return;
+				}
+				var item = $(".myfriends-container .list-container");
+				// 清空好友信息
+				item.find(".list-item").remove();
+				item.find(".add-list-item").remove();
+
+				var temp = "";
+				for (var i = 0; i < data.length; i++) {
+					var one = data[i];
+
+					temp += "<dt class='list-item' >";
+					temp += "<div class='photo-container'>";
+					temp += "<img src='../../img/bg.png' class='user-photo'/>";
+					temp += "<div class='small-circle circle-green'></div>";
+					temp += "</div>";
+					temp += "<div class='personal-info'>";
+					temp += "<dl class='info-container'>";
+					temp += "<dt class='myfriends-name'>" + one.friendname + "</dt>";
+					temp += "<dt class='myfriends-role'>" + one.role + "</dt>";
+					temp += "<dt class='myfriends-organization'>" + one.organization + "</dt>";
+					temp += "</dl>";
+					temp += "</div>";
+					temp += "<div class='action action-hidden'>";
+					temp += "<img src='../../img/star.png' class='star'/>";
+					temp += "<img src='../../img/furcation_fff.png' class='furcation'/>";
+					temp += "<a class='friend-id'>" + one.id + "</a>";
+					temp += "</div>";
+					temp += "</dt>";
+
+				}
+				item.append(temp);
+				list.init(item);
+			},
+			"error" : function() {
+				toastr.error("系统异常");
+			}
+		});
+	}
+	List.prototype.addFriend = function() {
+		// 弹出确认对话框
+		var bool = confirm("是否要添加该好友？");
+		if (bool == false) {
+			return;
+		}
+		var friendname = $(".add-list-item").find(".add-myfriends-name").text();
+		var friendrole = $(".add-list-item").find(".add-myfriends-role").text();
+		var friendorganization = $(".add-list-item").find(".add-myfriends-organization").text();
+
+		$.ajax({
+			"url" : "/stuenroll/friend/addFriend",
+			"type" : "post",
+			"dataType" : "json",
+			"data" : {
+				"friendname" : friendname,
+				"role" : friendrole,
+				"organization" : friendorganization
+			},
+			"success" : function(json) {
+				if (json.result) {
+					toastr.success("添加好友成功");
+				}
+			},
+			"error" : function() {
+				toastr.error("系统异常");
+			}
+		});
+	}
+
+	List.prototype.searchFriendCount = function() {
+		$.ajax({
+			"url" : "/stuenroll/friend/searchFriendCount",
+			"type" : "post",
+			"dataType" : "json",
+			"data" : null,
+			"async" : false,
+			"success" : function(json) {
+				var count = json.result; // 总记录数
+				var totalPages = (count % 10 == 0) ? count / 10 : Math.floor(count / 10) + 1;
+				// 记录总页数
+				$("#totalPages").text(totalPages);
+			},
+			"error" : function() {
+				toastr.error("系统异常");
+			}
+		});
+	}
+	List.prototype.deleteById = function(id) {
+		// 弹出确认对话框
+		var bool = confirm("确定要删除该好友？");
+		if (bool == false) {
+			return;
+		}
+		$.ajax({
+			"url" : "/stuenroll/friend/deleteById",
+			"type" : "post",
+			"dataType" : "json",
+			// "traditional" : true, //发送数组JSON格式
+			"async" : false,
+			"data" : {
+				"id" : id
+			},
+			"success" : function(json) {
+				alert("该好友已删除！");
+				toastr.success("该好友已删除！");
+			},
+			"error" : function() {
+				toastr.error("系统异常");
+			}
+		});
+	}
+	List.prototype.friendTop = function(id) {
+		$.ajax({
+			"url" : "/stuenroll/friend/friendTop",
+			"type" : "post",
+			"dataType" : "json",
+			"async" : false,
+			"data" : {
+				"id" : id
+			},
+			"success" : function(json) {
+				list.searchFriend();
+				list.searchFriendCount();
+				list.userOnLine();
+				list.initMyFriendPhoto();
+			},
+			"error" : function() {
+				toastr.error("系统异常");
+			}
+		});
+	}
+	List.prototype.initadd = function(obj) {
+		var $item = obj.find(".add-list-item");
+		// 鼠标选中列表项
+		// 添加好友点击事件
+		$item.find(".add-action").unbind("click");
+		$item.find(".add-action").click(function(event) {
+			list.addFriend();
+			event.stopPropagation();
+		});
+	}
+	List.prototype.init = function(obj) {
+		var $item = obj.find(".list-item");
+		// 鼠标选中列表项
+		$item.unbind("click");
+		$item.click(function(event) {
+
+			$(".myfriends-container .list-item").removeClass("bgc-active");
+			$(this).addClass("bgc-active");
+			$(".myfriends-container .action").addClass("action-hidden");
+			var action = $(this).find(".action");
+			$(action).removeClass("action-hidden");
+			event.stopPropagation();
+		});
+		// 删除好友点击事件
+		$item.find(".furcation").unbind("click");
+		$item.find(".furcation").click(function(event) {
+
+			var id = $(this).parents(".action").find(".friend-id").text();
+			// 先删除
+			list.deleteById(id);
+			// 再查询
+			list.searchFriendCount();
+			var totalPages = $(this).parents(".myfriends-container").find("#totalPages").text();
+
+			var currentPage = $(this).parents(".myfriends-container").find("#currentPage").text();
+
+			totalPages = new Number(totalPages);
+			currentPage = new Number(currentPage);
+
+			if (currentPage > totalPages) {
+				currentPage = totalPages;
+
+			}
+
+			$(this).parents(".myfriends-container").find("#currentPage").text(currentPage); // 更新当前页数
+
+			list.searchFriend({
+				"page": currentPage
+			});
+			list.userOnLine();
+			list.initMyFriendPhoto({
+				"page": currentPage
+			});
+			event.stopPropagation();
+		});
+		// 好友列表中置顶点击事件
+		$item.find(".star").unbind("click");
+		$item.find(".star").click(function(event) {
+			var id = $(this).parents(".action").find(".friend-id").text();
+			list.friendTop(id);
+
+			var item = $(".myfriends-container .list-item");
+			$(".myfriends-container .list-item").removeClass("bgc-active");
+			$(item[0]).addClass("bgc-active");
+			$(".myfriends-container .action").addClass("action-hidden");
+			$(item[0]).find(".action").removeClass("action-hidden");
+
+			$(".myfriends-container").find("#currentPage").text(1);
+
+			event.stopPropagation();
+		});
+	}
+	List.prototype.userOnLine = function() {
+		// 判断用户是否在线
+		var $item = $(".myfriends-list").find(".list-item");
+
+		for (var i = 0; i < $item.length; i++) {
+			var username = $($item[i]).find(".myfriends-name").text();
+			$.ajax({
+				"url" : "/stuenroll/friend/userOnLine",
+				"type" : "post",
+				"dataType" : "json",
+				"async" : false,
+				"data" : {
+					"username" : username
+				},
+				"success" : function(json) {
+					if (json.result) {
+						$($item[i]).find(".small-circle").removeClass("circle-red");
+						$($item[i]).find(".small-circle").addClass("circle-green");
+					}
+					else {
+						$($item[i]).find(".small-circle").removeClass("circle-green");
+						$($item[i]).find(".small-circle").addClass("circle-red");
+					}
+
+				},
+				"error" : function() {
+					toastr.error("系统异常");
+				}
+			});
+		}
+	}
+
+	List.prototype.initPhoto = function() {
+		var item = $(".personal-infomation .photo-container");
+		// alert(sessionStorage.username)
+		var timer = setInterval(function() {
+			var w = 0;
+			if (w == 0) {
+				// 清空好友头像
+				item.find(".personal-photo").remove();
+
+				var temp = "<img src='http://192.168.1.52/stuenroll/friend/getPhoto?name=" + sessionStorage.username
+						+ "' class='personal-photo' />";
+
+				item.append(temp);
+
+				clearInterval(timer);
+			}
+		}, 20);
+
+	}
+	List.prototype.initMyFriendPhoto = function(json) {
+		$.ajax({
+			"url" : "/stuenroll/friend/searchFriend",
+			"type" : "post",
+			"dataType" : "json",
+			"data" : json,
+			// "async": false,
+			"success" : function(json) {
+
+				var data = json.result;
+				if (data.length == 0) {
+
+					return;
+				}
+				var item = $(".list-container").find(".photo-container");
+
+				var timer = setInterval(function() {
+					var w = 0;
+					if (w == 0) {
+
+						for (var i = 0; i < data.length; i++) {
+							var one = data[i];
+							// 清空好友頭像
+							$(item[i]).find(".user-photo").remove();
+							// alert(one.friendname)
+							var temp = "<img src='http://192.168.1.52/stuenroll/friend/getPhoto?name=" + one.friendname
+									+ "' class='user-photo' />";
+							$(item[i]).append(temp);
+							var timer = setInterval(function() {
+								var j = 0;
+								if (j == 0) {
+									clearInterval(timer);
+								}
+							}, 30);
+						}
+						clearInterval(timer);
+					}
+				}, 220);
+
+			},
+			"error" : function() {
+				toastr.error("系统异常");
+			}
+		});
+	}
+
+	List.prototype.initaddMyFriendPhoto = function(json) {
+		var searchname = $("#search").val();
+		$.ajax({
+			"url" : "/stuenroll/friend/searchFriendFromUser",
+			"type" : "post",
+			"dataType" : "json",
+			"data" : {
+				"username" : searchname
+			},
+			"async" : false,
+			"success" : function(json) {
+				var data = json.result;
+				if (data == null) {
+					// alert("没有找到该好友addphoto!");
+					return;
+				}
+				// alert(data.username)
+				var item = $(".list-container").find(".add-photo-container");
+				var timer = setInterval(function() {
+					var w = 0;
+					if (w == 0) {
+						// 清空好友头像
+						item.find(".add-user-photo").remove();
+
+						var temp = "<img src='http://192.168.1.52/stuenroll/friend/getPhoto?name=" + data.username
+								+ "' class='add-user-photo'/>";
+
+						item.append(temp);
+
+						clearInterval(timer);
+					}
+				}, 20);
+			},
+			"error" : function() {
+				toastr.error("系统异常");
+			}
+		});
+	}
+
+	List.prototype.userOnLineadd = function() {
+		// 判断用户是否在线
+		var $item = $(".myfriends-list").find(".add-list-item");
+		var username = $item.find(".add-myfriends-name").text();
+		$.ajax({
+			"url" : "/stuenroll/friend/userOnLine",
+			"type" : "post",
+			"dataType" : "json",
+			"async" : false,
+			"data" : {
+				"username" : username
+			},
+			"success" : function(json) {
+				if (json.result) {
+					$item.find(".add-small-circle").removeClass("add-circle-red");
+					$item.find(".add-small-circle").addClass("add-circle-green");
+				}
+				else {
+					$item.find(".add-small-circle").removeClass("add-circle-green");
+					$item.find(".add-small-circle").addClass("add-circle-red");
+				}
+
+			},
+			"error" : function() {
+				toastr.error("系统异常");
+			}
+		});
+	}
+
+
+	// 点击上一页
+	$(".myfriends-bottom").find("*[name='prevBtn']").click(function() {
+		var temp = $(this).parents(".page-list").find("#currentPage");
+		var currentPage = temp.text();
+		currentPage = new Number(currentPage);
+		if (currentPage > 1) {
+			list.searchFriend({
+				"page" : currentPage - 1
+			});
+			list.userOnLine();
+			list.initMyFriendPhoto({
+				"page" : currentPage - 1
+			});
+			temp.text(currentPage - 1); // 当前页数减去1页
+		}
+	});
+	// 点击下一页
+	$(".myfriends-bottom").find("*[name='nextBtn']").click(function() {
+		var temp = $(this).parents(".page-list").find("#currentPage");
+		var currentPage = temp.text();
+
+		var totalPages = $(this).parents(".page-list").find("#totalPages").text();
+
+		currentPage = new Number(currentPage);
+		totalPages = new Number(totalPages);
+
+		if (currentPage < totalPages) {
+			list.searchFriend({
+				"page" : currentPage + 1
+			});
+
+			list.userOnLine();
+			list.initMyFriendPhoto({
+				"page" : currentPage + 1
+			});
+			temp.text(currentPage + 1); // 当前页数加上1页
+		}
+	});
+	// 点击查询好友
+	var searchFlag = true;
+	$(".myfriends-container .title-mark").click(function() {
+		if (searchFlag == true) {
+			// 显示查询好友面板
+			$("#search").val("");
+			$(".myfriends-list .myfriends-search").css("top", 0 + "rem");
+
+			var item = $(".myfriends-container .list-item");
+
+			searchFlag = false;
+		}
+		else {
+			// 收起查询好友面板
+			$(".myfriends-list .myfriends-search").css("top", -100 + "rem");
+
+			searchFlag = true;
+		}
+
+	});
+
+	// 查找好友删除按钮
+	$(".myfriends-search .search-furcation").click(function() {
+		$("#search").val("");
+	});
+
+	// 查找好友查找按钮
+	$(".myfriends-search .magnifier").click(function() {
+		$(".myfriends-list .myfriends-search").css("top", -100 + "rem");
+		searchFlag = true;
+		// 首先在好友列表中查询
+		var friendname = $("#search").val();
+		list.searchFriend({
+			"friendname" : friendname
+		});
+		list.userOnLine();
+		list.initMyFriendPhoto({
+			"friendname" : friendname
+		});
+
+		if (search_switch == false) {
+			// 好友列表中不存在然后在user表里查询
+
+			list.searchFriendFromUser();
+			list.userOnLineadd();
+			list.initaddMyFriendPhoto();
+			if (timer_switch == 0) {
+				// user表中也不存在，没有找到该好友
+				list.searchFriend();
+				list.searchFriendCount();
+				list.userOnLine();
+				list.initMyFriendPhoto();
+				$(".page-list").find("#currentPage").text(1);
+			}
+			else if (timer_switch == 1) {
+				// 在user表中找到
+				$(".page-list").find("#totalPages").text(1);
+				$(".page-list").find("#currentPage").text(1);
+				var timer = setInterval(function() {
+					var i = 0;
+					if (i == 0) {
+						list.searchFriend();
+						list.searchFriendCount();
+						list.userOnLine();
+						list.initMyFriendPhoto();
+						clearInterval(timer);
+					}
+				}, 9000);
+			}
+
+		}
+		else {
+			// 在好友列表中找到
+			$(".page-list").find("#totalPages").text(1);
+			$(".page-list").find("#currentPage").text(1);
+			var timer = setInterval(function() {
+				var i = 0;
+				if (i == 0) {
+					list.searchFriend();
+					list.searchFriendCount();
+					list.userOnLine();
+					list.initMyFriendPhoto();
+					clearInterval(timer);
+				}
+			}, 9000);
+
+		}
+		timer_switch = 1;
+		search_switch = true;
+
+	});
+	
+	
+	var I_User = function() {
+
+	}
+
+	/**
+	 * 获取注册新用户单选项方法
+	 */
+	I_User.prototype.searchSelectableRole = function() {
+		throw "抽象方法";
+	}
+	I_User.prototype.searchSelectableOrganization = function() {
+		throw "抽象方法";
+	}
+	I_User.prototype.insertUserInfo = function(json) {
+		throw "抽象方法";
+	}
+
+	var User = function() {
+
+	}
+
+	var photo_id;
+	var sexval;
+	var blockval;
+	var organizationval;
+	var roleval;
+	var blockval;
+	User.prototype = new I_User();
+
+	User.prototype.insertUserInfo = function(json) {
+		username = $("#username").val();
+		password = $("#password").val();
+		name = $("#name").val();
+		pid = $("#pid").val();
+		tel = $("#tel").val();
+		email = $("#email").val();
+		job = $("#position").val();
+
+		$.ajax({
+			"url" : "/stuenroll/userinfo/insertUserInfo",
+			"type" : "post",
+			"async" : false,
+			"traditional" : true,
+			"dataType" : "json",
+			"data" : {
+				"username" : username,
+				"password" : password,
+				"name" : name,
+				"sex" : sexval,
+				"pid" : pid,
+				"tel" : tel,
+				"email" : email,
+				"job" : job,
+				"organization" : organizationval,
+				"role" : roleval,
+				"block" : blockval,
+				"photo_id" : photo_id
+			},
+			"success" : function(json) {
+				// alert(2)
+				var num = json.insert;
+				toastr.success("添加了" + num + "条记录");
+			},
+			"error" : function() {
+				toastr.error("系统异常");
+			}
+
+		});
+
+	}
+
+	User.prototype.searchSelectableRole = function() {
+		$.ajax({
+			"url" : "/stuenroll/userinfo/searchSelectableRole",
+			"type" : "post",
+			"async" : true,
+			"dataType" : "json",
+			"data" : null,
+			"success" : function(json) {
+				var data = json.result;
+				var role = $("#role");
+				var temp = "";
+				for (var i = 0; i < data.length; i++) {
+					var one = data[i];
+					console.log(one.name);
+					temp += "<li class='dropdown-item' >" + one.name + "</li>";
+				}
+				role.find(".dropdown-list").append(temp);
+				DropDown.init(role); // 初始化下拉菜单
+				// 取出角色下拉菜单的值
+				$("#role").find(".dropdown-item").click(function() {
+					roleval = $(this).parents(".dropdown").find(".value").text();
+					// alert(roleval)
+				});
+			},
+			"error" : function() {
+				toastr.error("系统异常");
+			}
+		});
+	}
+
+	User.prototype.searchSelectableOrganization = function() {
+		// alert(123)
+		$.ajax({
+			"url" : "/stuenroll/userinfo/searchOrganizationJoinInYearAtDropDown",
+			"type" : "post",
+			"dataType" : "json",
+			"data" : {
+				"year" : new Date().getFullYear()
+			},
+			"success" : function(json) {
+				var data = json.result;
+				var organization = $("#organization");
+				console.log(organization);
+				var temp = "";
+				for (var i = 0; i < data.length; i++) {
+					var one = data[i];
+					console.log(one.name);
+					console.log(one.id);
+					temp += "<li class='dropdown-item' data-id='" + one.id + "'>" + one.name + "</li>";
+				}
+				organization.find(".dropdown-list").append(temp);
+				console.log(organization.find(".dropdown-list"))
+				DropDown.init(organization); // 初始化下拉菜单
+				// 取出培训机构下拉菜单的值
+				$("#organization").find(".dropdown-item").click(function() {
+					organizationval = $(this).parents(".dropdown").find(".value").text();
+					// alert(organizationval)
+				});
+			},
+			"error" : function() {
+				toastr.error("系统异常");
+			}
+		});
+	}
+
+	function factory(key) {
+		if (key == "User") {
+			return new User();
+		}
+		else if (key == "List") {
+			return new List();
+		}
+	}
+	var list = factory("List");
+
+	list.searchFriend();
+	list.searchFriendCount();
+
+	list.userOnLine();
+	list.initMyFriendPhoto();
+
+	var user = factory("User");
+	user.searchSelectableRole();
+	user.searchSelectableOrganization();
+
+	DropDown.initAll();
+	// 取出性别下拉菜单的值
+	$("#sex").find(".dropdown-item").click(function() {
+		sexval = $(this).parents(".dropdown").find(".value").text();
+		// alert(sexval)
+	});
+
+	// 取出用户状态下拉菜单的值
+	$("#block").find(".dropdown-item").click(function() {
+		blockval = $(this).parents(".dropdown").find(".value").text();
+		// alert(blockval)
+	});
+	// 输入项键盘弹起事件
+	$(".main-container .input").keyup(function() {
+		if (this.id != "pid" && this.checkValidity()) {
+			$(this).removeClass("error");
+		}
+		else {
+			$(this).addClass("error");
+		}
+		if (this.id == "pid") {
+			if (checkPid($(this).val())) {
+				$(this).removeClass("error");
+			}
+			else {
+				$(this).addClass("error");
+			}
+		}
+	});
+
+	// 上传控件
+	var $uploadImageForm = $("#uploadImageForm");
+	$uploadImageForm.find(".preView").click(function(event) {
+		$uploadImageForm.find(".file").click();
+		event.stopPropagation();
+	});
+	$uploadImageForm.on("change", handler = function() {
+		var temp_filename = $uploadImageForm.find(".file").val();
+		var _ext = temp_filename.split(".").slice(-1)[0].toLowerCase();
+		if ([ 'png', 'bmp', 'jpg', 'gif' ].indexOf(_ext) == -1) {
+			console.log("不支持的图片格式" + _ext);
+			return;
+		}
+		var reader = new FileReader();
+		reader.readAsDataURL($uploadImageForm.find(".file")[0].files[0]);
+		reader.onload = function(e) {
+			$uploadImageForm.find(".preView").attr("src", this.result);
+		}
+
+	});
+	$("#image").click(function() {
+		// ajax上传表单
+		$.ajax({
+			"type" : "post",
+			"url" : "/stuenroll/userinfo/save",
+			"async" : true,
+			"data" : new FormData($("#uploadImageForm")[0]),
+			"cache" : false,
+			"contentType" : false,
+			"processData" : false,
+			"success" : function(json) {
+				photo_id = json.result;
+				toastr.success("上传头像成功");
+			},
+			"error" : function() {
+				toastr.warning("上传头像失败");
+			}
+		});
+	});
+
+	// 点击注册事件
+	var passwordval;
+	var repasswordval;
+
+	$("#registernow").click(function() {
+		var bool = true;
+		var data = $(".main-container .input");
+		data.each(function(i, one) {
+			// console.log(data);
+			bool = bool && one.checkValidity(); // 检查正则表达式
+		});
+		var temp = $("main-container .dropdown").find(".value");
+		// console.log(temp);
+		for (var i = 0; i < temp.length; i++) {
+			bool = bool && ($(temp[i]).text() != "- 选择 -");
+		}
+		if (!bool) {
+			toastr.warning("请检查输入信息是否完善！");
+			return;
+		}
+		passwordval = $("#password").val();
+		repasswordval = $("#rePassword").val();
+		if (repasswordval == passwordval) {
+			// alert(1)
+			user.insertUserInfo();
+			$(".main-container .input").val("");
+			$(".main-container .value").text("- 选择 -");
+			window.location.href = "list.html";
+		}
+		else {
+			toastr.warning("请检查重复密码是否一致！");
+		}
+	});
+
+	
+
+});

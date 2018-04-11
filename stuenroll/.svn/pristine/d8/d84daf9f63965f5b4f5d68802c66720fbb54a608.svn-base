@@ -1,0 +1,174 @@
+$(function() {
+
+	/**
+	 * 用户信息管理抽象接口
+	 */
+	var I_UserInfo = function() {
+
+	}
+
+	// I_UserInfo.prototype.change = function(url) {
+	// throw "抽象方法";
+	// }
+	I_UserInfo.prototype.searchUserInfo = function(json) {
+			throw "抽象方法";
+		}
+		// I_UserInfo.prototype.searchUserInfoCount = function(json) {
+		// throw "抽象方法";
+		// }
+	I_UserInfo.prototype.deleteUserInfo = function() {
+		throw "抽象方法";
+	}
+
+	var UserInfo = function() {
+
+	}
+
+	UserInfo.prototype = new I_UserInfo();
+	//
+	// userInfo.prototype.change = function(url) {
+	//
+	// }
+	UserInfo.prototype.searchUserInfo = function(json) {
+		// alert(1)
+		$.ajax({
+			"url": "/stuenroll/userinfo/searchUserInfo",
+			"type": "post",
+			"dataType": "json",
+			"async": "false",
+			"data": json,
+			"success": function(json) {
+				// alert(123)
+				var data = json.result;
+
+				var table = $(".tab-container .data-table");
+
+				// 清空表格数据
+				table.find("tr:gt(0)").remove();
+				// 获得当前页数
+				var currentPage = $(".tab-container  #currentPage").text();
+				// 转化成数字类型
+				currentPage = new Number(currentPage);
+				// 当前页数的行号起始数字
+				var start = (currentPage - 1) * 35;
+
+				var temp = "";
+				for (var i = 0; i < data.length; i++) {
+					var one = data[i];
+					console.log(one.name);
+					temp += "<tr>";
+					temp += "<td><input type='checkbox' name='id' value='" + one.id + "' /></td>"
+					temp += "<td>" + (start + i + 1) + "</td>";
+					temp += "<td>" + one.username + "</td>";
+					temp += "<td>" + one.name + "</td>";
+					temp += "<td>" + one.organization + "</td>";
+					temp += "<td>" + one.role + "</td>";
+					temp += "<td>" + one.tel + "</td>";
+					temp += "<td>" + one.email + "</td>";
+					temp += "</tr>";
+				}
+				table.append(temp);
+
+			},
+			"error": function() {
+				toastr.error("系统异常");
+			}
+
+		});
+	}
+
+	// UserInfo.prototype.searchUserInfoCount = function(json) {
+	//
+	// }
+	//
+	UserInfo.prototype.deleteUserInfo = function() {
+			// 弹出确认对话框
+			var bool = confirm("是否删除选中的记录");
+			if (bool == false) {
+				return;
+			}
+			// 获得被选中的记录
+			var content = $(".tab-container .tab-content");
+			// 被选中的复选框
+			var checkbox = content.find("*[name='id']:checked");
+
+			var id = [];
+			for (var i = 0; i < checkbox.length; i++) {
+				id.push($(checkbox[i]).val());
+			}
+			$.ajax({
+				"url": "/stuenroll/userinfo/deleteUserInfo",
+				"type": "post",
+				"dataType": "json",
+				"traditional": true,
+				"async": false,
+				"data": {
+					"id": id
+				},
+				"success": function(json) {
+					toastr.success("删除了" + json.deleteRows + "条记录");
+				},
+				"error": function() {
+					toastr.error("系统异常");
+				}
+			});
+		}
+		/**
+		 * 显示班级信息接口
+		 */
+	var I_ShowClass = function() {
+
+		}
+		/**
+		 * 显示班级信息面板抽象方法
+		 */
+	I_ShowClass.prototype.show = function() {
+			throw "抽象方法";
+		}
+		/**
+		 * 隐藏班级信息面板抽象方法
+		 */
+	I_ShowClass.prototype.hide = function() {
+		throw "抽象方法";
+	}
+
+	var ShowClass = function() {
+
+	}
+	ShowClass.prototype = new I_ShowClass();
+
+	ShowClass.prototype.show = function() {
+		$(".main-container .showclass-container").fadeIn();
+	}
+	ShowClass.prototype.hide = function() {
+		$(".main-container .showclass-container").fadeOut();
+	}
+
+	function factory(key) {
+		if (key == "ShowClass") {
+			return new ShowClass();
+		} else if (key == "UserInfo") {
+			return new UserInfo();
+		}
+	}
+
+	var showClass = factory("ShowClass");
+	var userInfo = factory("UserInfo");
+
+	userInfo.searchUserInfo();
+
+	$(".main-container .btn-item").click(function() {
+
+		showClass.hide();
+
+	});
+
+	var element = $(".tab-container .tab-content");
+
+	element.find("*[name='delete']").click(function() {
+		// 先删除
+		userInfo.deleteUserInfo();
+		// 再查询
+	});
+
+});

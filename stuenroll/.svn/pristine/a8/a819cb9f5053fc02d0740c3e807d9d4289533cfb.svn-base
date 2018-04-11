@@ -1,0 +1,1741 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="../../css/base.css" />
+<link rel="stylesheet" type="text/css" href="../../font/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="../../js/plugin/toastr.css" />
+<link rel="stylesheet" type="text/css" href="enroll.css" />
+</head>
+
+<body>
+	<div class="main-container">
+		<dl class="tab-list no-select">
+			<dt class="tab-item tab-active" data-index="全部学员">全部学员</dt>
+			<dt class="tab-item" data-index="已分班">已分班</dt>
+			<dt class="tab-item" data-index="未分班">未分班</dt>
+			<dt class="tab-item" data-index="中退学员">中退学员</dt>
+		</dl>
+		<div class="tab-container">
+			<div class="tab-content content-active" data-index="全部学员">
+				<dl class="operation-list no-select">
+					<dt class="operation-item" name="search">查询
+                        <div class="menu searchMenu">
+                            <h4 class="menu-title">学生信息检索</h4>
+                            <dl>
+                                <dt class="label">姓名:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="name"  class="keyword input" placeholder="姓名" autocomplete="off" pattern="^[\u4e00-\u9fa5]{2,15}$"/>
+                                </dt>
+                                <dt class="label">身份证号:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="pid" value="" class="keyword input" placeholder="身份证号"  autocomplete="off"/>
+                                </dt>
+                                <dt class="label">年届:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="year" value="" class="keyword input" placeholder="年届" autocomplete="off" pattern="^[1-9]\d{3}$" />
+                                </dt>
+                                <input type="button" class="menu-btn" name="search-btn" value="查询" />
+                            </dl>
+                            <dl>
+                                <dt class="label">性别:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="sex">
+                                        <option value ="">请选择性别(可不选)</option>
+                                        <option value ="男">男</option>
+                                        <option value ="女">女</option>
+                                    </select>
+                                </dt>
+                                <dt class="label">学历:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="education">
+                                        <option value ="">请选择学历(可不选)</option>
+                                        <option value ="专科">专科</option>
+                                        <option value ="本科">本科</option>
+                                        <option value ="研究生">研究生</option>
+                                        <option value ="博士">博士</option>
+                                    </select>   
+                                </dt>
+                                <dt class="label">培训机构:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="organization">
+                                    </select>   
+                                </dt>
+                                <input type="button" class="menu-btn" name="clear-btn" value="清除" />
+                            </dl>
+                            <dl>
+                                <dt class="label">培训专业:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="profession">
+                                        <option value ="">请选择培训专业(可不选)</option>
+                                    </select>
+                                </dt>
+                                <dt class="label">班级编号:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="className" value="" class="keyword input" placeholder="班级编号" autocomplete="off" pattern="^[a-zA-Z\u4e00-\u9fa5]{4-20}$" />
+                                </dt>
+                                <dt class="label">学生状态:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="state_id">
+                                        <option value ="">请选择学生状态(可不选)</option>
+                                        <option value ="1">报名</option>
+                                        <option value ="2">审查</option>
+                                        <option value ="3">学习</option>
+                                        <option value ="4">中退</option>
+                                        <option value ="5">就业</option>
+                                    </select>   
+                                </dt>
+                                <input type="button" class="menu-btn" name="close-btn" value="关闭" />
+                            </dl>
+                            <a class="bref">条件查询:</a>
+                        </div>
+                    </dt>
+                    <dt class="operation-item" name="append">添加
+                        <div class="menu appendMenu">
+                            <h4 class="menu-title">学生信息添加</h4>
+                            <dl>
+                                <dt class="label">姓名:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="name" value="" class="keyword input" placeholder="姓名" autocomplete="off" required="required" pattern="^[\u4e00-\u9fa5]{2,15}$"/>
+                                </dt>
+                                <dt class="label">性别:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="sex" required="required">
+                                        <option value ="男">男</option>
+                                        <option value ="女">女</option>
+                                    </select>
+                                </dt>
+                                <dt class="label">民族:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="nation" required="required">
+                                        <option value ="汉族">汉族</option>
+                                        <option value ="壮族">壮族</option>
+                                        <option value ="汉族">汉族</option>
+                                        <option value ="回族">回族</option>
+                                        <option value ="苗族">苗族</option>
+                                        <option value ="满族">满族</option>
+                                        <option value ="其他">其他</option>
+                                    </select>   
+                                </dt>
+                                <input type="button" class="menu-btn" name="append-btn" value="添加" />
+                            </dl>
+                            <dl>
+                                <dt class="label">身份证号:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="pid" value="" class="keyword input" placeholder="身份证号" autocomplete="off" required="required" />
+                                </dt>
+                                <dt class="label">毕业学校:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="graduate_school" value="" class="keyword input" placeholder="毕业学校" required="required"pattern="^[\u4e00-\u9fa5]{4,30}$"/>
+                                </dt>
+                                <dt class="label">毕业年份:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="graduate_year" required="required">
+                                        <option value ="">毕业年份</option>
+                                       	
+                                    </select>   
+                                </dt>
+                                <input type="button" class="menu-btn" name="clear-btn" value="清除" />
+                            </dl>
+                            <dl>
+                                <dt class="label">毕业日期:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="graduate_date" value="" class="keyword input" placeholder="毕业日期" required="required" pattern="^(\d{4})-(0\d{1|1[0-2])-(0\d{1}|[12]\d{1}|3[01])$" />
+                                </dt>
+                                <dt class="label">所学专业:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="major" required="required">
+                                        <option value ="哲学">哲学</option>
+                                        <option value ="经济学">经济学</option>
+                                        <option value ="法学">法学</option>
+                                        <option value ="教育学">教育学</option>
+                                        <option value ="文学">文学</option>
+                                        <option value ="历史学">历史学</option>
+                                        <option value ="理学">理学</option>
+                                        <option value ="工学">工学</option>
+                                        <option value ="农学">农学</option>
+                                        <option value ="医学">医学</option>
+                                        <option value ="军事学">军事学</option>
+                                        <option value ="管理学">管理学</option>
+                                    </select>   
+                                </dt>
+                                <dt class="label">健康状况:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="healthy" required="required">
+                                        <option value ="健康">健康</option>
+                                        <option value ="残疾">残疾</option>
+                                    </select>   
+                                </dt>
+                                <input type="button" class="menu-btn" name="close-btn" value="关闭" />
+                            </dl>
+                            <dl>
+                                <dt class="label">政治面貌:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="politics" required="required">
+                                        <option value ="中共党员">中共党员</option>
+                                        <option value ="中共预备党员">中共预备党员</option>
+                                        <option value ="共青团员">共青团员</option>
+                                        <option value ="民革党员">民革党员</option>
+                                        <option value ="民盟盟员">民盟盟员</option>
+                                        <option value ="民建会员">民建会员</option>
+                                        <option value ="民进会员">民进会员</option>
+                                        <option value ="农工党党员">农工党党员</option>
+                                        <option value ="致公党党员">致公党党员</option>
+                                        <option value ="九三学社社员">九三学社社员</option>
+                                        <option value ="台盟盟员">台盟盟员</option>
+                                        <option value ="无党派民主人士">无党派民主人士</option>
+                                        <option value ="群众">群众</option>
+                                    </select>   
+                                </dt>
+                                <dt class="label">出生日期:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="birthday" value="" class="keyword input" placeholder="出生日期"  required="required" pattern="^(\d{4})-(0\d{1|1[0-2])-(0\d{1}|[12]\d{1}|3[01])$"/>
+                                </dt>
+                                <dt class="label">现居住地:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="resident_address" value="" class="keyword input" placeholder="现居住地" required="required" pattern="^[a-zA-Z0-9\u4e00-\u9fa5]{5,50}$"/>
+                                </dt>
+                            </dl>
+                            <dl>
+                                <dt class="label">家庭地址:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="home_address" value="" class="keyword input" placeholder="家庭地址" required="required" pattern="^[a-zA-Z0-9\u4e00-\u9fa5]{5,50}$" />
+                                </dt>
+                                <dt class="label">户籍地址:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="permanent_address" value="" class="keyword input" placeholder="户籍地址" required="required" pattern="^[a-zA-Z0-9\u4e00-\u9fa5]{5,50}$" />
+                                </dt>
+                                <dt class="label">移动电话:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="tel" value="" class="keyword input" placeholder="移动电话" required="required" pattern="^[1-9]\d{10}$" />
+                                </dt>
+                            </dl>
+                            <dl>
+                                <dt class="label">家庭电话:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="home_tel" value="" class="keyword input" placeholder="家庭电话" required="required" pattern="^[1-9]\d{10}$" />
+                                </dt>
+                                <dt class="label">email:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="email" value="" class="keyword input" placeholder="email" required="required" pattern="^[a-zA-Z0-9_-]+\@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)$" />
+                                </dt>
+                                <dt class="label">培训机构:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="organization" required="required">
+                                    </select>   
+                                </dt>
+                            </dl>
+                            <dl>
+                                <dt class="label">申报专业:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="profession" required="required">
+                                    </select>   
+                                </dt>
+                                <dt class="label">培训地点:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="place" required="required">
+                                    </select>   
+                                </dt>
+                                <dt class="label">班级编号:</dt>
+                                <dt class="condition">
+                                	<input type="text" name="className" value="" class="keyword input" placeholder="班级编号" autocomplete="off" pattern="^[a-zA-Z\u4e00-\u9fa5]{4-20}$" />
+                                </dt>
+                            </dl>
+                            <a class="bref">学生基本信息:</a>
+                        </div>
+                    </dt>
+                    <dt class="operation-item" name="update">修改
+                        <div  class="menu updateMenu">
+                            <h4 class="menu-title">学生信息修改</h4>
+                            <dl>
+                                <dt class="label">姓名:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="name" value="" class="keyword input" placeholder="姓名" autocomplete="off" required="required" pattern="^[\u4e00-\u9fa5]{2,15}$"/>
+                                </dt>
+                                <dt class="label">性别:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="sex" required="required">
+                                        <option value ="男">男</option>
+                                        <option value ="女">女</option>
+                                    </select>
+                                </dt>
+                                <dt class="label">民族:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="nation" required="required">
+                                        <option value ="汉族">汉族</option>
+                                        <option value ="壮族">壮族</option>
+                                        <option value ="汉族">汉族</option>
+                                        <option value ="回族">回族</option>
+                                        <option value ="苗族">苗族</option>
+                                        <option value ="满族">满族</option>
+                                        <option value ="其他">其他</option>
+                                    </select>   
+                                </dt>
+                                <input type="button" class="menu-btn" name="append-btn" value="修改" />
+                            </dl>
+                            <dl>
+                                <dt class="label">身份证号:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="pid" value="" class="keyword input" placeholder="身份证号" autocomplete="off" required="required" />
+                                </dt>
+                                <dt class="label">毕业学校:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="graduate_school" value="" class="keyword input" placeholder="毕业学校" required="required"pattern="^[\u4e00-\u9fa5]{4,30}$"/>
+                                </dt>
+                                <dt class="label">毕业年份:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="graduate_year" required="required">
+                                        <option value ="">毕业年份</option>
+                                        <option value ="2016">2016</option>
+                                        <option value ="2015">2015</option>
+                                        <option value ="2014">2014</option>
+                                        <option value ="2013">2013</option>
+                                        <option value ="2012">2012</option>
+                                    </select>   
+                                </dt>
+                                <input type="button" class="menu-btn" name="clear-btn" value="清除" />
+                            </dl>
+                            <dl>
+                                <dt class="label">毕业日期:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="graduate_date" value="" class="keyword input" placeholder="毕业日期" required="required" pattern="^(\d{4})-(0\d{1|1[0-2])-(0\d{1}|[12]\d{1}|3[01])$" />
+                                </dt>
+                                <dt class="label">所学专业:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="major" required="required">
+                                        <option value ="哲学">哲学</option>
+                                        <option value ="经济学">经济学</option>
+                                        <option value ="法学">法学</option>
+                                        <option value ="教育学">教育学</option>
+                                        <option value ="文学">文学</option>
+                                        <option value ="历史学">历史学</option>
+                                        <option value ="理学">理学</option>
+                                        <option value ="工学">工学</option>
+                                        <option value ="农学">农学</option>
+                                        <option value ="医学">医学</option>
+                                        <option value ="军事学">军事学</option>
+                                        <option value ="管理学">管理学</option>
+                                    </select>   
+                                </dt>
+                                <dt class="label">健康状况:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="healthy" required="required">
+                                        <option value ="健康">健康</option>
+                                        <option value ="残疾">残疾</option>
+                                    </select>   
+                                </dt>
+                                <input type="button" class="menu-btn" name="close-btn" value="关闭" />
+                            </dl>
+                            <dl>
+                                <dt class="label">政治面貌:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="politics" required="required">
+                                        <option value ="中共党员">中共党员</option>
+                                        <option value ="中共预备党员">中共预备党员</option>
+                                        <option value ="共青团员">共青团员</option>
+                                        <option value ="民革党员">民革党员</option>
+                                        <option value ="民盟盟员">民盟盟员</option>
+                                        <option value ="民建会员">民建会员</option>
+                                        <option value ="民进会员">民进会员</option>
+                                        <option value ="农工党党员">农工党党员</option>
+                                        <option value ="致公党党员">致公党党员</option>
+                                        <option value ="九三学社社员">九三学社社员</option>
+                                        <option value ="台盟盟员">台盟盟员</option>
+                                        <option value ="无党派民主人士">无党派民主人士</option>
+                                        <option value ="群众">群众</option>
+                                    </select>   
+                                </dt>
+                                <dt class="label">出生日期:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="birthday" value="" class="keyword input" placeholder="出生日期"  required="required" pattern="^(\d{4})-(0\d{1|1[0-2])-(0\d{1}|[12]\d{1}|3[01])$"/>
+                                </dt>
+                                <dt class="label">现居住地:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="resident_address" value="" class="keyword input" placeholder="现居住地" required="required" pattern="^[a-zA-Z0-9\u4e00-\u9fa5]{5,50}$"/>
+                                </dt>
+                            </dl>
+                            <dl>
+                                <dt class="label">家庭地址:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="home_address" value="" class="keyword input" placeholder="家庭地址" required="required" pattern="^[a-zA-Z0-9\u4e00-\u9fa5]{5,50}$" />
+                                </dt>
+                                <dt class="label">户籍地址:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="permanent_address" value="" class="keyword input" placeholder="户籍地址" required="required" pattern="^[a-zA-Z0-9\u4e00-\u9fa5]{5,50}$" />
+                                </dt>
+                                <dt class="label">移动电话:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="tel" value="" class="keyword input" placeholder="移动电话" required="required" pattern="^[1-9]\d{10}$" />
+                                </dt>
+                            </dl>
+                            <dl>
+                                <dt class="label">家庭电话:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="home_tel" value="" class="keyword input" placeholder="家庭电话" required="required" pattern="^[1-9]\d{10}$" />
+                                </dt>
+                                <dt class="label">email:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="email" value="" class="keyword input" placeholder="email" required="required" pattern="^[a-zA-Z0-9_-]+\@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)$" />
+                                </dt>
+                                <dt class="label">培训机构:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="organization" required="required">
+                                    </select>   
+                                </dt>
+                            </dl>
+                            <dl>
+                                <dt class="label">申报专业:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="profession" required="required">
+                                    	
+                                    </select>   
+                                </dt>
+                                <dt class="label">培训地点:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="place" required="required">
+                                    	<option value ="大连">大连</option>
+                                        <option value ="沈阳">沈阳</option>
+                                        <option value ="鞍山">鞍山 </option>
+                                    </select>   
+                                </dt>
+                                <dt class="label">班级编号:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="className" value="" class="keyword input" placeholder="班级编号" autocomplete="off" pattern="^[a-zA-Z\u4e00-\u9fa5]{4-20}$" />  
+                                </dt>
+                            </dl>
+                            <a class="bref">学生基本信息:</a>
+                        </div>
+                    </dt>
+                    <dt class="operation-item" name="delete">删除</dt>
+                    <dt class="operation-item" name="divide">学员分班
+                    	<div  class="menu divideMenu">
+                    		<h4 class="menu-title">学生分班</h4>
+                            <dl>
+                            	<dt class="label">培训机构:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="organization" required="required">
+                                    </select>   
+                                </dt>
+                                <dt class="label">专业:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="profession" required="required">
+                                    <option value ="">请选择专业</option>
+                                    </select>   
+                                </dt>
+                                <input type="button" class="menu-btn" name="save-btn" value="保存" />
+                            </dl>
+                            <dl>
+                                <dt class="label">班级:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="class_name" required="required">
+                                    <option value =""></option>
+                                    </select>   
+                                </dt>
+                                <dt class="label">地点:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="place" required="required">
+                                    <option value =""></option>
+                                    </select>   
+                                </dt>
+                                <input type="button" class="menu-btn" name="close-btn" value="关闭" />
+                            </dl>
+                            <a class="bref">分班信息:</a>
+                    	</div>
+                    </dt>
+                    <dt class="operation-item" name="undivided">取消分班</dt>
+                    <dt class="operation-item" name="quit">学员中退
+                    	<div class="menu quitMenu">
+                    		<h4 class="menu-title">学生中退</h4>
+                            <dl>
+                            	<dt class="label">中退原因:</dt>
+                                <div class="quit-text">
+                                	<dl>
+                                    	<textarea class="quit-reason textarea" name="reason" value=""></textarea>
+                                    </dl>
+                                    <dl>
+                                    	<input type="button" class="menu-btn text-btn" name="save-btn" value="保存" />
+                                		<input type="button" class="menu-btn text-btn" name="clear-btn" value="清除" />
+                                    	<input type="button" class="menu-btn" name="close-btn" value="关闭" />
+                                    </dl>
+                                </div>
+                            </dl>
+                            <dl>
+                                <dt class="label">中退日期:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="quit_date" value="" class="keyword input" pattern="^(\d{4})-(0\d{1|1[0-2])-(0\d{1}|[12]\d{1}|3[01])$" />
+                                </dt>
+                            </dl>
+                            <a class="bref">中退申请:</a>
+                    	</div></dt>
+                    <dt class="operation-item" name="unquit">取消中退</dt>
+				</dl>
+				<table class="data-table">
+					<tr>
+						<th></th>
+						<th>序号</th>
+						<th>姓名</th>
+						<th>身份证号</th>
+						<th>电话</th>
+						<th>培训机构</th>
+						<th>申报专业</th>
+						<th>班级编号</th>
+						<th>年届</th>
+						<th>状态</th>
+					</tr>
+				</table>
+				<dl class="page-list no-select">
+					<dt class="page-item page-info">
+						总计<span class="totalRows"></span>条记录，<span class="currentPage">1</span>/<span class="totalPages"></span>页
+					</dt>
+					<dt class="page-item page-operation">
+						<a name="prevBtn">上一页</a> <a class="page-active page-test">1</a> <a class=" page-test">2</a> <a class="page-test">3</a> <a class="page-test">4</a> <a class=" page-test">5</a> <a name="nextBtn">下一页</a>
+					</dt>
+				</dl>
+			</div>
+			<div class="tab-content" data-index="已分班">
+				<dl class="operation-list no-select">
+					<dt class="operation-item" name="search">查询
+                        <div class="menu searchMenu">
+                            <h4 class="menu-title">学生信息检索</h4>
+                            <dl>
+                                <dt class="label">姓名:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="name"  class="keyword input" placeholder="姓名" autocomplete="off" pattern="^[\u4e00-\u9fa5]{2,15}$"/>
+                                </dt>
+                                <dt class="label">身份证号:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="pid" value="" class="keyword input" placeholder="身份证号"  autocomplete="off"/>
+                                </dt>
+                                <dt class="label">年届:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="year" value="" class="keyword input" placeholder="年届" autocomplete="off" pattern="^[1-9]\d{3}$" />
+                                </dt>
+                                <input type="button" class="menu-btn" name="search-btn" value="查询" />
+                            </dl>
+                            <dl>
+                                <dt class="label">性别:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="sex">
+                                        <option value ="">请选择性别(可不选)</option>
+                                        <option value ="男">男</option>
+                                        <option value ="女">女</option>
+                                    </select>
+                                </dt>
+                                <dt class="label">学历:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="education">
+                                        <option value ="">请选择学历(可不选)</option>
+                                        <option value ="专科">专科</option>
+                                        <option value ="本科">本科</option>
+                                        <option value ="研究生">研究生</option>
+                                        <option value ="博士">博士</option>
+                                    </select>   
+                                </dt>
+                                <dt class="label">培训机构:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="organization">
+                                    </select>   
+                                </dt>
+                                <input type="button" class="menu-btn" name="clear-btn" value="清除" />
+                            </dl>
+                            <dl>
+                                <dt class="label">培训专业:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="profession">
+                                        <option value ="">请选择培训专业(可不选)</option>
+                                    </select>
+                                </dt>
+                                <dt class="label">班级编号:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="className" value="" class="keyword input" placeholder="班级编号" autocomplete="off" pattern="^[a-zA-Z\u4e00-\u9fa5]{4-20}$" />  
+                                </dt>
+                                <dt class="label">学生状态:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="state_id">
+                                        <option value ="">请选择学生状态(可不选)</option>
+                                    </select>   
+                                </dt>
+                                <input type="button" class="menu-btn" name="close-btn" value="关闭" />
+                            </dl>
+                            <a class="bref">条件查询:</a>
+                        </div>
+                    </dt>
+                    <dt class="operation-item" name="append">添加
+                        <div class="menu appendMenu">
+                            <h4 class="menu-title">学生信息添加</h4>
+                           <dl>
+                                <dt class="label">姓名:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="name" value="" class="keyword input" placeholder="姓名" autocomplete="off" required="required" pattern="^[\u4e00-\u9fa5]{2,15}$"/>
+                                </dt>
+                                <dt class="label">性别:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="sex" required="required">
+                                        <option value ="男">男</option>
+                                        <option value ="女">女</option>
+                                    </select>
+                                </dt>
+                                <dt class="label">民族:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="nation" required="required">
+                                        <option value ="汉族">汉族</option>
+                                        <option value ="壮族">壮族</option>
+                                        <option value ="汉族">汉族</option>
+                                        <option value ="回族">回族</option>
+                                        <option value ="苗族">苗族</option>
+                                        <option value ="满族">满族</option>
+                                        <option value ="其他">其他</option>
+                                    </select>   
+                                </dt>
+                                <input type="button" class="menu-btn" name="append-btn" value="添加" />
+                            </dl>
+                            <dl>
+                                <dt class="label">身份证号:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="pid" value="" class="keyword input" placeholder="身份证号" autocomplete="off" required="required" />
+                                </dt>
+                                <dt class="label">毕业学校:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="graduate_school" value="" class="keyword input" placeholder="毕业学校" required="required"pattern="^[\u4e00-\u9fa5]{4,30}$"/>
+                                </dt>
+                                <dt class="label">毕业年份:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="graduate_year" required="required">
+                                        <option value ="">毕业年份</option>
+                                    </select>   
+                                </dt>
+                                <input type="button" class="menu-btn" name="clear-btn" value="清除" />
+                            </dl>
+                            <dl>
+                                <dt class="label">毕业日期:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="graduate_date" value="" class="keyword input" placeholder="毕业日期" required="required" pattern="^(\d{4})-(0\d{1|1[0-2])-(0\d{1}|[12]\d{1}|3[01])$" />
+                                </dt>
+                                <dt class="label">所学专业:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="major" required="required">
+                                        <option value ="哲学">哲学</option>
+                                        <option value ="经济学">经济学</option>
+                                        <option value ="法学">法学</option>
+                                        <option value ="教育学">教育学</option>
+                                        <option value ="文学">文学</option>
+                                        <option value ="历史学">历史学</option>
+                                        <option value ="理学">理学</option>
+                                        <option value ="工学">工学</option>
+                                        <option value ="农学">农学</option>
+                                        <option value ="医学">医学</option>
+                                        <option value ="军事学">军事学</option>
+                                        <option value ="管理学">管理学</option>
+                                    </select>   
+                                </dt>
+                                <dt class="label">健康状况:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="healthy" required="required">
+                                        <option value ="健康">健康</option>
+                                        <option value ="残疾">残疾</option>
+                                    </select>   
+                                </dt>
+                                <input type="button" class="menu-btn" name="close-btn" value="关闭" />
+                            </dl>
+                            <dl>
+                                <dt class="label">政治面貌:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="politics" required="required">
+                                        <option value ="中共党员">中共党员</option>
+                                        <option value ="中共预备党员">中共预备党员</option>
+                                        <option value ="共青团员">共青团员</option>
+                                        <option value ="民革党员">民革党员</option>
+                                        <option value ="民盟盟员">民盟盟员</option>
+                                        <option value ="民建会员">民建会员</option>
+                                        <option value ="民进会员">民进会员</option>
+                                        <option value ="农工党党员">农工党党员</option>
+                                        <option value ="致公党党员">致公党党员</option>
+                                        <option value ="九三学社社员">九三学社社员</option>
+                                        <option value ="台盟盟员">台盟盟员</option>
+                                        <option value ="无党派民主人士">无党派民主人士</option>
+                                        <option value ="群众">群众</option>
+                                    </select>   
+                                </dt>
+                                <dt class="label">出生日期:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="birthday" value="" class="keyword input" placeholder="出生日期"  required="required" pattern="^(\d{4})-(0\d{1|1[0-2])-(0\d{1}|[12]\d{1}|3[01])$"/>
+                                </dt>
+                                <dt class="label">现居住地:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="resident_address" value="" class="keyword input" placeholder="现居住地" required="required" pattern="^[a-zA-Z0-9\u4e00-\u9fa5]{5,50}$"/>
+                                </dt>
+                            </dl>
+                            <dl>
+                                <dt class="label">家庭地址:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="home_address" value="" class="keyword input" placeholder="家庭地址" required="required" pattern="^[a-zA-Z0-9\u4e00-\u9fa5]{5,50}$" />
+                                </dt>
+                                <dt class="label">户籍地址:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="permanent_address" value="" class="keyword input" placeholder="户籍地址" required="required" pattern="^[a-zA-Z0-9\u4e00-\u9fa5]{5,50}$" />
+                                </dt>
+                                <dt class="label">移动电话:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="tel" value="" class="keyword input" placeholder="移动电话" required="required" pattern="^[1-9]\d{10}$" />
+                                </dt>
+                            </dl>
+                            <dl>
+                                <dt class="label">家庭电话:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="home_tel" value="" class="keyword input" placeholder="家庭电话" required="required" pattern="^[1-9]\d{10}$" />
+                                </dt>
+                                <dt class="label">email:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="email" value="" class="keyword input" placeholder="email" required="required" pattern="^[a-zA-Z0-9_-]+\@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)$" />
+                                </dt>
+                                <dt class="label">培训机构:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="organization" required="required">
+                                    </select>   
+                                </dt>
+                            </dl>
+                            <dl>
+                                <dt class="label">申报专业:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="profession" required="required">
+                                    </select>   
+                                </dt>
+                                <dt class="label">培训地点:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="place" required="required">
+                                    </select>   
+                                </dt>
+                                <dt class="label">班级编号:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="className" value="" class="keyword input" placeholder="班级编号" autocomplete="off" pattern="^[a-zA-Z\u4e00-\u9fa5]{4-20}$" />   
+                                </dt>
+                            </dl>
+                            <a class="bref">学生基本信息:</a>
+                        </div>
+                    </dt>
+                    <dt class="operation-item" name="update">修改
+                        <div  class="menu updateMenu">
+                            <h4 class="menu-title">学生信息修改</h4>
+                            <dl>
+                                <dt class="label">姓名:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="name" value="" class="keyword input" placeholder="姓名" autocomplete="off" required="required" pattern="^[\u4e00-\u9fa5]{2,15}$"/>
+                                </dt>
+                                <dt class="label">性别:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="sex" required="required">
+                                        <option value ="男">男</option>
+                                        <option value ="女">女</option>
+                                    </select>
+                                </dt>
+                                <dt class="label">民族:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="nation" required="required">
+                                        <option value ="汉族">汉族</option>
+                                        <option value ="壮族">壮族</option>
+                                        <option value ="汉族">汉族</option>
+                                        <option value ="回族">回族</option>
+                                        <option value ="苗族">苗族</option>
+                                        <option value ="满族">满族</option>
+                                        <option value ="其他">其他</option>
+                                    </select>   
+                                </dt>
+                                <input type="button" class="menu-btn" name="append-btn" value="修改" />
+                            </dl>
+                            <dl>
+                                <dt class="label">身份证号:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="pid" value="" class="keyword input" placeholder="身份证号" autocomplete="off" required="required" />
+                                </dt>
+                                <dt class="label">毕业学校:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="graduate_school" value="" class="keyword input" placeholder="毕业学校" required="required"pattern="^[\u4e00-\u9fa5]{4,30}$"/>
+                                </dt>
+                                <dt class="label">毕业年份:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="graduate_year" required="required">
+                                        <option value ="">毕业年份</option>
+                                    </select>   
+                                </dt>
+                                <input type="button" class="menu-btn" name="clear-btn" value="清除" />
+                            </dl>
+                            <dl>
+                                <dt class="label">毕业日期:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="graduate_date" value="" class="keyword input" placeholder="毕业日期" required="required" pattern="^(\d{4})-(0\d{1|1[0-2])-(0\d{1}|[12]\d{1}|3[01])$" />
+                                </dt>
+                                <dt class="label">所学专业:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="major" required="required">
+                                        <option value ="哲学">哲学</option>
+                                        <option value ="经济学">经济学</option>
+                                        <option value ="法学">法学</option>
+                                        <option value ="教育学">教育学</option>
+                                        <option value ="文学">文学</option>
+                                        <option value ="历史学">历史学</option>
+                                        <option value ="理学">理学</option>
+                                        <option value ="工学">工学</option>
+                                        <option value ="农学">农学</option>
+                                        <option value ="医学">医学</option>
+                                        <option value ="军事学">军事学</option>
+                                        <option value ="管理学">管理学</option>
+                                    </select>   
+                                </dt>
+                                <dt class="label">健康状况:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="healthy" required="required">
+                                        <option value ="健康">健康</option>
+                                        <option value ="残疾">残疾</option>
+                                    </select>   
+                                </dt>
+                                <input type="button" class="menu-btn" name="close-btn" value="关闭" />
+                            </dl>
+                            <dl>
+                                <dt class="label">政治面貌:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="politics" required="required">
+                                        <option value ="中共党员">中共党员</option>
+                                        <option value ="中共预备党员">中共预备党员</option>
+                                        <option value ="共青团员">共青团员</option>
+                                        <option value ="民革党员">民革党员</option>
+                                        <option value ="民盟盟员">民盟盟员</option>
+                                        <option value ="民建会员">民建会员</option>
+                                        <option value ="民进会员">民进会员</option>
+                                        <option value ="农工党党员">农工党党员</option>
+                                        <option value ="致公党党员">致公党党员</option>
+                                        <option value ="九三学社社员">九三学社社员</option>
+                                        <option value ="台盟盟员">台盟盟员</option>
+                                        <option value ="无党派民主人士">无党派民主人士</option>
+                                        <option value ="群众">群众</option>
+                                    </select>   
+                                </dt>
+                                <dt class="label">出生日期:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="birthday" value="" class="keyword input" placeholder="出生日期"  required="required" pattern="^(\d{4})-(0\d{1|1[0-2])-(0\d{1}|[12]\d{1}|3[01])$"/>
+                                </dt>
+                                <dt class="label">现居住地:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="resident_address" value="" class="keyword input" placeholder="现居住地" required="required" pattern="^[a-zA-Z0-9\u4e00-\u9fa5]{5,50}$"/>
+                                </dt>
+                            </dl>
+                            <dl>
+                                <dt class="label">家庭地址:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="home_address" value="" class="keyword input" placeholder="家庭地址" required="required" pattern="^[a-zA-Z0-9\u4e00-\u9fa5]{5,50}$" />
+                                </dt>
+                                <dt class="label">户籍地址:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="permanent_address" value="" class="keyword input" placeholder="户籍地址" required="required" pattern="^[a-zA-Z0-9\u4e00-\u9fa5]{5,50}$" />
+                                </dt>
+                                <dt class="label">移动电话:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="tel" value="" class="keyword input" placeholder="移动电话" required="required" pattern="^[1-9]\d{10}$" />
+                                </dt>
+                            </dl>
+                            <dl>
+                                <dt class="label">家庭电话:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="home_tel" value="" class="keyword input" placeholder="家庭电话" required="required" pattern="^[1-9]\d{10}$" />
+                                </dt>
+                                <dt class="label">email:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="email" value="" class="keyword input" placeholder="email" required="required" pattern="^[a-zA-Z0-9_-]+\@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)$" />
+                                </dt>
+                                <dt class="label">培训机构:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="organization" required="required">
+                                    </select>   
+                                </dt>
+                            </dl>
+                            <dl>
+                                <dt class="label">申报专业:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="profession" required="required">
+                                    </select>   
+                                </dt>
+                                <dt class="label">培训地点:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="place" required="required">
+                                    </select>   
+                                </dt>
+                                <dt class="label">班级编号:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="className" value="" class="keyword input" placeholder="班级编号" autocomplete="off" pattern="^[a-zA-Z\u4e00-\u9fa5]{4-20}$" />  
+                                </dt>
+                            </dl>
+                            <a class="bref">学生基本信息:</a>
+                        </div>
+                    </dt>
+                    <dt class="operation-item" name="delete">删除</dt>
+                    <dt class="operation-item" name="undivided">取消分班</dt>
+				</dl>
+				<table class="data-table">
+					<tr>
+						<th></th>
+						<th>序号</th>
+						<th>姓名</th>
+						<th>身份证号</th>
+						<th>电话</th>
+						<th>培训机构</th>
+						<th>申报专业</th>
+						<th>班级编号</th>
+						<th>年届</th>
+						<th>状态</th>
+					</tr>
+				</table>
+				<dl class="page-list no-select">
+					<dt class="page-item page-info">
+						总计<span class="totalRows"></span>条记录，<span class="currentPage">1</span>/<span class="totalPages"></span>页
+					</dt>
+					<dt class="page-item page-operation">
+						<a name="prevBtn">上一页</a> <a class="page-active page-test">1</a> <a class=" page-test">2</a> <a class="page-test">3</a> <a class="page-test">4</a> <a class=" page-test">5</a> <a name="nextBtn">下一页</a>
+					</dt>
+				</dl>
+			</div>
+			<div class="tab-content" data-index="未分班">
+				<dl class="operation-list no-select">
+					<dt class="operation-item" name="search">查询
+                        <div class="menu searchMenu">
+                            <h4 class="menu-title">学生信息检索</h4>
+                            <dl>
+                                <dt class="label">姓名:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="name"  class="keyword input" placeholder="姓名" autocomplete="off" pattern="^[\u4e00-\u9fa5]{2,15}$"/>
+                                </dt>
+                                <dt class="label">身份证号:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="pid" value="" class="keyword input" placeholder="身份证号"  autocomplete="off"/>
+                                </dt>
+                                <dt class="label">年届:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="year" value="" class="keyword input" placeholder="年届" autocomplete="off" pattern="^[1-9]\d{3}$" />
+                                </dt>
+                                <input type="button" class="menu-btn" name="search-btn" value="查询" />
+                            </dl>
+                            <dl>
+                                <dt class="label">性别:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="sex">
+                                        <option value ="">请选择性别(可不选)</option>
+                                        <option value ="男">男</option>
+                                        <option value ="女">女</option>
+                                    </select>
+                                </dt>
+                                <dt class="label">学历:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="education">
+                                        <option value ="">请选择学历(可不选)</option>
+                                        <option value ="专科">专科</option>
+                                        <option value ="本科">本科</option>
+                                        <option value ="研究生">研究生</option>
+                                        <option value ="博士">博士</option>
+                                    </select>   
+                                </dt>
+                                <dt class="label">培训机构:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="organization">
+                                    </select>   
+                                </dt>
+                                <input type="button" class="menu-btn" name="clear-btn" value="清除" />
+                            </dl>
+                            <dl>
+                                <dt class="label">培训专业:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="profession">
+                                        <option value ="">请选择培训专业(可不选)</option>
+                                    </select>
+                                </dt>
+                                <dt class="label">班级编号:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="className" value="" class="keyword input" placeholder="未分班" autocomplete="off" pattern="^[a-zA-Z\u4e00-\u9fa5]{4-20}$" />   
+                                </dt>
+                                <dt class="label">学生状态:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="state_id">
+                                        <option value ="">请选择学生状态(可不选)</option>
+                                    </select>   
+                                </dt>
+                                <input type="button" class="menu-btn" name="close-btn" value="关闭" />
+                            </dl>
+                            <a class="bref">条件查询:</a>
+                        </div>
+                    </dt>
+                    <dt class="operation-item" name="append">添加
+                        <div class="menu appendMenu">
+                            <h4 class="menu-title">学生信息添加</h4>
+                            <dl>
+                                <dt class="label">姓名:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="name" value="" class="keyword input" placeholder="姓名" autocomplete="off" required="required" pattern="^[\u4e00-\u9fa5]{2,15}$"/>
+                                </dt>
+                                <dt class="label">性别:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="sex" required="required">
+                                        <option value ="男">男</option>
+                                        <option value ="女">女</option>
+                                    </select>
+                                </dt>
+                                <dt class="label">民族:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="nation" required="required">
+                                        <option value ="汉族">汉族</option>
+                                        <option value ="壮族">壮族</option>
+                                        <option value ="汉族">汉族</option>
+                                        <option value ="回族">回族</option>
+                                        <option value ="苗族">苗族</option>
+                                        <option value ="满族">满族</option>
+                                        <option value ="其他">其他</option>
+                                    </select>   
+                                </dt>
+                                <input type="button" class="menu-btn" name="append-btn" value="添加" />
+                            </dl>
+                            <dl>
+                                <dt class="label">身份证号:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="pid" value="" class="keyword input" placeholder="身份证号" autocomplete="off" required="required" />
+                                </dt>
+                                <dt class="label">毕业学校:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="graduate_school" value="" class="keyword input" placeholder="毕业学校" required="required"pattern="^[\u4e00-\u9fa5]{4,30}$"/>
+                                </dt>
+                                <dt class="label">毕业年份:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="graduate_year" required="required">
+                                        <option value ="">毕业年份</option>
+                                    </select>   
+                                </dt>
+                                <input type="button" class="menu-btn" name="clear-btn" value="清除" />
+                            </dl>
+                            <dl>
+                                <dt class="label">毕业日期:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="graduate_date" value="" class="keyword input" placeholder="毕业日期" required="required" pattern="^(\d{4})-(0\d{1|1[0-2])-(0\d{1}|[12]\d{1}|3[01])$" />
+                                </dt>
+                                <dt class="label">所学专业:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="major" required="required">
+                                        <option value ="哲学">哲学</option>
+                                        <option value ="经济学">经济学</option>
+                                        <option value ="法学">法学</option>
+                                        <option value ="教育学">教育学</option>
+                                        <option value ="文学">文学</option>
+                                        <option value ="历史学">历史学</option>
+                                        <option value ="理学">理学</option>
+                                        <option value ="工学">工学</option>
+                                        <option value ="农学">农学</option>
+                                        <option value ="医学">医学</option>
+                                        <option value ="军事学">军事学</option>
+                                        <option value ="管理学">管理学</option>
+                                    </select>   
+                                </dt>
+                                <dt class="label">健康状况:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="healthy" required="required">
+                                        <option value ="健康">健康</option>
+                                        <option value ="残疾">残疾</option>
+                                    </select>   
+                                </dt>
+                                <input type="button" class="menu-btn" name="close-btn" value="关闭" />
+                            </dl>
+                            <dl>
+                                <dt class="label">政治面貌:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="politics" required="required">
+                                        <option value ="中共党员">中共党员</option>
+                                        <option value ="中共预备党员">中共预备党员</option>
+                                        <option value ="共青团员">共青团员</option>
+                                        <option value ="民革党员">民革党员</option>
+                                        <option value ="民盟盟员">民盟盟员</option>
+                                        <option value ="民建会员">民建会员</option>
+                                        <option value ="民进会员">民进会员</option>
+                                        <option value ="农工党党员">农工党党员</option>
+                                        <option value ="致公党党员">致公党党员</option>
+                                        <option value ="九三学社社员">九三学社社员</option>
+                                        <option value ="台盟盟员">台盟盟员</option>
+                                        <option value ="无党派民主人士">无党派民主人士</option>
+                                        <option value ="群众">群众</option>
+                                    </select>   
+                                </dt>
+                                <dt class="label">出生日期:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="birthday" value="" class="keyword input" placeholder="出生日期"  required="required" pattern="^(\d{4})-(0\d{1|1[0-2])-(0\d{1}|[12]\d{1}|3[01])$"/>
+                                </dt>
+                                <dt class="label">现居住地:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="resident_address" value="" class="keyword input" placeholder="现居住地" required="required" pattern="^[a-zA-Z0-9\u4e00-\u9fa5]{5,50}$"/>
+                                </dt>
+                            </dl>
+                            <dl>
+                                <dt class="label">家庭地址:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="home_address" value="" class="keyword input" placeholder="家庭地址" required="required" pattern="^[a-zA-Z0-9\u4e00-\u9fa5]{5,50}$" />
+                                </dt>
+                                <dt class="label">户籍地址:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="permanent_address" value="" class="keyword input" placeholder="户籍地址" required="required" pattern="^[a-zA-Z0-9\u4e00-\u9fa5]{5,50}$" />
+                                </dt>
+                                <dt class="label">移动电话:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="tel" value="" class="keyword input" placeholder="移动电话" required="required" pattern="^[1-9]\d{10}$" />
+                                </dt>
+                            </dl>
+                            <dl>
+                                <dt class="label">家庭电话:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="home_tel" value="" class="keyword input" placeholder="家庭电话" required="required" pattern="^[1-9]\d{10}$" />
+                                </dt>
+                                <dt class="label">email:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="email" value="" class="keyword input" placeholder="email" required="required" pattern="^[a-zA-Z0-9_-]+\@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)$" />
+                                </dt>
+                                <dt class="label">培训机构:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="organization" required="required">
+                                    </select>   
+                                </dt>
+                            </dl>
+                            <dl>
+                                <dt class="label">申报专业:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="profession" required="required">
+                                    </select>   
+                                </dt>
+                                <dt class="label">培训地点:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="place" required="required">
+                                    </select>   
+                                </dt>
+                                <dt class="label">班级编号:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="className" value="" class="keyword input" placeholder="班级编号" autocomplete="off"  pattern="^[a-zA-Z\u4e00-\u9fa5]{4-20}$" />  
+                                </dt>
+                            </dl>
+                            <a class="bref">学生基本信息:</a>
+                        </div>
+                    </dt>
+                    <dt class="operation-item" name="update">修改
+                        <div  class="menu updateMenu">
+                            <h4 class="menu-title">学生信息修改</h4>
+                            <dl>
+                                <dt class="label">姓名:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="name" value="" class="keyword input" placeholder="姓名" autocomplete="off" required="required" pattern="^[\u4e00-\u9fa5]{2,15}$"/>
+                                </dt>
+                                <dt class="label">性别:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="sex" required="required">
+                                        <option value ="男">男</option>
+                                        <option value ="女">女</option>
+                                    </select>
+                                </dt>
+                                <dt class="label">民族:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="nation" required="required">
+                                        <option value ="汉族">汉族</option>
+                                        <option value ="壮族">壮族</option>
+                                        <option value ="汉族">汉族</option>
+                                        <option value ="回族">回族</option>
+                                        <option value ="苗族">苗族</option>
+                                        <option value ="满族">满族</option>
+                                        <option value ="其他">其他</option>
+                                    </select>   
+                                </dt>
+                                <input type="button" class="menu-btn" name="append-btn" value="修改" />
+                            </dl>
+                            <dl>
+                                <dt class="label">身份证号:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="pid" value="" class="keyword input" placeholder="身份证号" autocomplete="off" required="required" />
+                                </dt>
+                                <dt class="label">毕业学校:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="graduate_school" value="" class="keyword input" placeholder="毕业学校" required="required"pattern="^[\u4e00-\u9fa5]{4,30}$"/>
+                                </dt>
+                                <dt class="label">毕业年份:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="graduate_year" required="required">
+                                        <option value ="">毕业年份</option>
+                                    </select>   
+                                </dt>
+                                <input type="button" class="menu-btn" name="clear-btn" value="清除" />
+                            </dl>
+                            <dl>
+                                <dt class="label">毕业日期:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="graduate_date" value="" class="keyword input" placeholder="毕业日期" required="required" pattern="^(\d{4})-(0\d{1|1[0-2])-(0\d{1}|[12]\d{1}|3[01])$" />
+                                </dt>
+                                <dt class="label">所学专业:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="major" required="required">
+                                        <option value ="哲学">哲学</option>
+                                        <option value ="经济学">经济学</option>
+                                        <option value ="法学">法学</option>
+                                        <option value ="教育学">教育学</option>
+                                        <option value ="文学">文学</option>
+                                        <option value ="历史学">历史学</option>
+                                        <option value ="理学">理学</option>
+                                        <option value ="工学">工学</option>
+                                        <option value ="农学">农学</option>
+                                        <option value ="医学">医学</option>
+                                        <option value ="军事学">军事学</option>
+                                        <option value ="管理学">管理学</option>
+                                    </select>   
+                                </dt>
+                                <dt class="label">健康状况:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="healthy" required="required">
+                                        <option value ="健康">健康</option>
+                                        <option value ="残疾">残疾</option>
+                                    </select>   
+                                </dt>
+                                <input type="button" class="menu-btn" name="close-btn" value="关闭" />
+                            </dl>
+                            <dl>
+                                <dt class="label">政治面貌:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="politics" required="required">
+                                        <option value ="中共党员">中共党员</option>
+                                        <option value ="中共预备党员">中共预备党员</option>
+                                        <option value ="共青团员">共青团员</option>
+                                        <option value ="民革党员">民革党员</option>
+                                        <option value ="民盟盟员">民盟盟员</option>
+                                        <option value ="民建会员">民建会员</option>
+                                        <option value ="民进会员">民进会员</option>
+                                        <option value ="农工党党员">农工党党员</option>
+                                        <option value ="致公党党员">致公党党员</option>
+                                        <option value ="九三学社社员">九三学社社员</option>
+                                        <option value ="台盟盟员">台盟盟员</option>
+                                        <option value ="无党派民主人士">无党派民主人士</option>
+                                        <option value ="群众">群众</option>
+                                    </select>   
+                                </dt>
+                                <dt class="label">出生日期:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="birthday" value="" class="keyword input" placeholder="出生日期"  required="required" pattern="^(\d{4})-(0\d{1|1[0-2])-(0\d{1}|[12]\d{1}|3[01])$"/>
+                                </dt>
+                                <dt class="label">现居住地:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="resident_address" value="" class="keyword input" placeholder="现居住地" required="required" pattern="^[a-zA-Z0-9\u4e00-\u9fa5]{5,50}$"/>
+                                </dt>
+                            </dl>
+                            <dl>
+                                <dt class="label">家庭地址:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="home_address" value="" class="keyword input" placeholder="家庭地址" required="required" pattern="^[a-zA-Z0-9\u4e00-\u9fa5]{5,50}$" />
+                                </dt>
+                                <dt class="label">户籍地址:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="permanent_address" value="" class="keyword input" placeholder="户籍地址" required="required" pattern="^[a-zA-Z0-9\u4e00-\u9fa5]{5,50}$" />
+                                </dt>
+                                <dt class="label">移动电话:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="tel" value="" class="keyword input" placeholder="移动电话" required="required" pattern="^[1-9]\d{10}$" />
+                                </dt>
+                            </dl>
+                            <dl>
+                                <dt class="label">家庭电话:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="home_tel" value="" class="keyword input" placeholder="家庭电话" required="required" pattern="^[1-9]\d{10}$" />
+                                </dt>
+                                <dt class="label">email:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="email" value="" class="keyword input" placeholder="email" required="required" pattern="^[a-zA-Z0-9_-]+\@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)$" />
+                                </dt>
+                                <dt class="label">培训机构:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="organization" required="required">
+                                    </select>   
+                                </dt>
+                            </dl>
+                            <dl>
+                                <dt class="label">申报专业:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="profession" required="required">
+                                    </select>   
+                                </dt>
+                                <dt class="label">培训地点:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="place" required="required">
+                                    </select>   
+                                </dt>
+                                <dt class="label">班级编号:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="className" value="" class="keyword input" placeholder="班级编号" autocomplete="off"  pattern="^[a-zA-Z\u4e00-\u9fa5]{4-20}$" /> 
+                                </dt>
+                            </dl>
+                            <a class="bref">学生基本信息:</a>
+                        </div>
+                    </dt>
+                    <dt class="operation-item" name="delete">删除</dt>
+                    <dt class="operation-item" name="divide">学员分班
+                    	<div  class="menu divideMenu">
+                    		<h4 class="menu-title">学生分班</h4>
+                            <dl>
+                            	<dt class="label">培训机构:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="organization" required="required">
+                                    </select>   
+                                </dt>
+                                <dt class="label">专业:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="profession" required="required">
+                                    <option value =""></option>
+                                    </select>   
+                                </dt>
+                                <input type="button" class="menu-btn" name="save-btn" value="保存" />
+                            </dl>
+                            <dl>
+                                <dt class="label">班级:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="class_name" required="required">
+                                    <option value =""></option>
+                                    </select>   
+                                </dt>
+                                <dt class="label">地点:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="place" required="required">
+                                    <option value =""></option>
+                                    </select>   
+                                </dt>
+                                <input type="button" class="menu-btn" name="close-btn" value="关闭" />
+                            </dl>
+                            <a class="bref">分班信息:</a>
+                    	</div>
+                    </dt>
+
+				</dl>
+				<table class="data-table">
+					<tr>
+						<th></th>
+						<th>序号</th>
+						<th>姓名</th>
+						<th>身份证号</th>
+						<th>电话</th>
+						<th>培训机构</th>
+						<th>申报专业</th>
+						<th>班级编号</th>
+						<th>年届</th>
+						<th>状态</th>
+					</tr>
+				</table>
+				<dl class="page-list no-select">
+					<dt class="page-item page-info">
+						总计<span class="totalRows"></span>条记录，<span class="currentPage">1</span>/<span class="totalPages"></span>页
+					</dt>
+					<dt class="page-item page-operation">
+						<a name="prevBtn">上一页</a> <a class="page-active page-test">1</a> <a class=" page-test">2</a> <a class="page-test">3</a> <a class="page-test">4</a> <a class=" page-test">5</a> <a name="nextBtn">下一页</a>
+					</dt>
+				</dl>
+			</div>
+			<div class="tab-content" data-index="中退学员">
+				<dl class="operation-list no-select">
+					<dt class="operation-item" name="search">查询
+                        <div class="menu searchMenu">
+                            <h4 class="menu-title">学生信息检索</h4>
+                            <dl>
+                                <dt class="label">姓名:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="name"  class="keyword input" placeholder="姓名" autocomplete="off" pattern="^[\u4e00-\u9fa5]{2,15}$"/>
+                                </dt>
+                                <dt class="label">身份证号:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="pid" value="" class="keyword input" placeholder="身份证号"  autocomplete="off"/>
+                                </dt>
+                                <dt class="label">年届:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="year" value="" class="keyword input" placeholder="年届" autocomplete="off" pattern="^[1-9]\d{3}$" />
+                                </dt>
+                                <input type="button" class="menu-btn" name="search-btn" value="查询" />
+                            </dl>
+                            <dl>
+                                <dt class="label">性别:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="sex">
+                                        <option value ="">请选择性别(可不选)</option>
+                                        <option value ="男">男</option>
+                                        <option value ="女">女</option>
+                                    </select>
+                                </dt>
+                                <dt class="label">学历:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="education">
+                                        <option value ="">请选择学历(可不选)</option>
+                                        <option value ="专科">专科</option>
+                                        <option value ="本科">本科</option>
+                                        <option value ="研究生">研究生</option>
+                                        <option value ="博士">博士</option>
+                                    </select>   
+                                </dt>
+                                <dt class="label">培训机构:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="organization">
+                                    </select>   
+                                </dt>
+                                <input type="button" class="menu-btn" name="clear-btn" value="清除" />
+                            </dl>
+                            <dl>
+                                <dt class="label">培训专业:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="profession">
+                                        <option value ="">请选择培训专业(可不选)</option>
+                                    </select>
+                                </dt>
+                                <dt class="label">班级编号:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="className" value="" class="keyword input" placeholder="班级编号" autocomplete="off" pattern="^[a-zA-Z\u4e00-\u9fa5]{4-20}$" />   
+                                </dt>
+                                <dt class="label">学生状态:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="state_id">
+                                        <option value ="">中退</option>
+                                    </select>   
+                                </dt>
+                                <input type="button" class="menu-btn" name="close-btn" value="关闭" />
+                            </dl>
+                            <a class="bref">条件查询:</a>
+                        </div>
+                    </dt>
+                    <dt class="operation-item" name="append">添加
+                        <div class="menu appendMenu">
+                            <h4 class="menu-title">学生信息添加</h4>
+                            <dl>
+                                <dt class="label">姓名:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="name" value="" class="keyword input" placeholder="姓名" autocomplete="off" required="required" pattern="^[\u4e00-\u9fa5]{2,15}$"/>
+                                </dt>
+                                <dt class="label">性别:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="sex" required="required">
+                                        <option value ="男">男</option>
+                                        <option value ="女">女</option>
+                                    </select>
+                                </dt>
+                                <dt class="label">民族:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="nation" required="required">
+                                        <option value ="汉族">汉族</option>
+                                        <option value ="壮族">壮族</option>
+                                        <option value ="汉族">汉族</option>
+                                        <option value ="回族">回族</option>
+                                        <option value ="苗族">苗族</option>
+                                        <option value ="满族">满族</option>
+                                        <option value ="其他">其他</option>
+                                    </select>   
+                                </dt>
+                                <input type="button" class="menu-btn" name="append-btn" value="添加" />
+                            </dl>
+                            <dl>
+                                <dt class="label">身份证号:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="pid" value="" class="keyword input" placeholder="身份证号" autocomplete="off" required="required" />
+                                </dt>
+                                <dt class="label">毕业学校:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="graduate_school" value="" class="keyword input" placeholder="毕业学校" required="required"pattern="^[\u4e00-\u9fa5]{4,30}$"/>
+                                </dt>
+                                <dt class="label">毕业年份:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="graduate_year" required="required">
+                                        <option value ="">毕业年份</option>
+                                    </select>   
+                                </dt>
+                                <input type="button" class="menu-btn" name="clear-btn" value="清除" />
+                            </dl>
+                            <dl>
+                                <dt class="label">毕业日期:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="graduate_date" value="" class="keyword input" placeholder="毕业日期" required="required" pattern="^(\d{4})-(0\d{1|1[0-2])-(0\d{1}|[12]\d{1}|3[01])$" />
+                                </dt>
+                                <dt class="label">所学专业:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="major" required="required">
+                                        <option value ="哲学">哲学</option>
+                                        <option value ="经济学">经济学</option>
+                                        <option value ="法学">法学</option>
+                                        <option value ="教育学">教育学</option>
+                                        <option value ="文学">文学</option>
+                                        <option value ="历史学">历史学</option>
+                                        <option value ="理学">理学</option>
+                                        <option value ="工学">工学</option>
+                                        <option value ="农学">农学</option>
+                                        <option value ="医学">医学</option>
+                                        <option value ="军事学">军事学</option>
+                                        <option value ="管理学">管理学</option>
+                                    </select>   
+                                </dt>
+                                <dt class="label">健康状况:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="healthy" required="required">
+                                        <option value ="健康">健康</option>
+                                        <option value ="残疾">残疾</option>
+                                    </select>   
+                                </dt>
+                                <input type="button" class="menu-btn" name="close-btn" value="关闭" />
+                            </dl>
+                            <dl>
+                                <dt class="label">政治面貌:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="politics" required="required">
+                                        <option value ="中共党员">中共党员</option>
+                                        <option value ="中共预备党员">中共预备党员</option>
+                                        <option value ="共青团员">共青团员</option>
+                                        <option value ="民革党员">民革党员</option>
+                                        <option value ="民盟盟员">民盟盟员</option>
+                                        <option value ="民建会员">民建会员</option>
+                                        <option value ="民进会员">民进会员</option>
+                                        <option value ="农工党党员">农工党党员</option>
+                                        <option value ="致公党党员">致公党党员</option>
+                                        <option value ="九三学社社员">九三学社社员</option>
+                                        <option value ="台盟盟员">台盟盟员</option>
+                                        <option value ="无党派民主人士">无党派民主人士</option>
+                                        <option value ="群众">群众</option>
+                                    </select>   
+                                </dt>
+                                <dt class="label">出生日期:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="birthday" value="" class="keyword input" placeholder="出生日期"  required="required" pattern="^(\d{4})-(0\d{1|1[0-2])-(0\d{1}|[12]\d{1}|3[01])$"/>
+                                </dt>
+                                <dt class="label">现居住地:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="resident_address" value="" class="keyword input" placeholder="现居住地" required="required" pattern="^[a-zA-Z0-9\u4e00-\u9fa5]{5,50}$"/>
+                                </dt>
+                            </dl>
+                            <dl>
+                                <dt class="label">家庭地址:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="home_address" value="" class="keyword input" placeholder="家庭地址" required="required" pattern="^[a-zA-Z0-9\u4e00-\u9fa5]{5,50}$" />
+                                </dt>
+                                <dt class="label">户籍地址:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="permanent_address" value="" class="keyword input" placeholder="户籍地址" required="required" pattern="^[a-zA-Z0-9\u4e00-\u9fa5]{5,50}$" />
+                                </dt>
+                                <dt class="label">移动电话:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="tel" value="" class="keyword input" placeholder="移动电话" required="required" pattern="^[1-9]\d{10}$" />
+                                </dt>
+                            </dl>
+                            <dl>
+                                <dt class="label">家庭电话:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="home_tel" value="" class="keyword input" placeholder="家庭电话" required="required" pattern="^[1-9]\d{10}$" />
+                                </dt>
+                                <dt class="label">email:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="email" value="" class="keyword input" placeholder="email" required="required" pattern="^[a-zA-Z0-9_-]+\@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)$" />
+                                </dt>
+                                <dt class="label">培训机构:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="organization" required="required">
+                                    </select>   
+                                </dt>
+                            </dl>
+                            <dl>
+                                <dt class="label">申报专业:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="profession" required="required">
+                                    </select>   
+                                </dt>
+                                <dt class="label">培训地点:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="place" required="required">
+                                    </select>   
+                                </dt>
+                                <dt class="label">班级编号:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="className" value="" class="keyword input"  placeholder="班级编号" autocomplete="off" pattern="^[a-zA-Z\u4e00-\u9fa5]{4-20}$" />   
+                                </dt>
+                            </dl>
+                            <a class="bref">学生基本信息:</a>
+                        </div>
+                    </dt>
+                    <dt class="operation-item" name="update">修改
+                        <div  class="menu updateMenu">
+                            <h4 class="menu-title">学生信息修改</h4>
+                            <dl>
+                                <dt class="label">姓名:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="name" value="" class="keyword input" placeholder="姓名" autocomplete="off" required="required" pattern="^[\u4e00-\u9fa5]{2,15}$"/>
+                                </dt>
+                                <dt class="label">性别:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="sex" required="required">
+                                        <option value ="男">男</option>
+                                        <option value ="女">女</option>
+                                    </select>
+                                </dt>
+                                <dt class="label">民族:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="nation" required="required">
+                                        <option value ="汉族">汉族</option>
+                                        <option value ="壮族">壮族</option>
+                                        <option value ="汉族">汉族</option>
+                                        <option value ="回族">回族</option>
+                                        <option value ="苗族">苗族</option>
+                                        <option value ="满族">满族</option>
+                                        <option value ="其他">其他</option>
+                                    </select>   
+                                </dt>
+                                <input type="button" class="menu-btn" name="append-btn" value="修改" />
+                            </dl>
+                            <dl>
+                                <dt class="label">身份证号:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="pid" value="" class="keyword input" placeholder="身份证号" autocomplete="off" required="required" />
+                                </dt>
+                                <dt class="label">毕业学校:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="graduate_school" value="" class="keyword input" placeholder="毕业学校" required="required"pattern="^[\u4e00-\u9fa5]{4,30}$"/>
+                                </dt>
+                                <dt class="label">毕业年份:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="graduate_year" required="required">
+                                        <option value ="">毕业年份</option>
+                                    </select>   
+                                </dt>
+                                <input type="button" class="menu-btn" name="clear-btn" value="清除" />
+                            </dl>
+                            <dl>
+                                <dt class="label">毕业日期:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="graduate_date" value="" class="keyword input" placeholder="毕业日期" required="required" pattern="^(\d{4})-(0\d{1|1[0-2])-(0\d{1}|[12]\d{1}|3[01])$" />
+                                </dt>
+                                <dt class="label">所学专业:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="major" required="required">
+                                        <option value ="哲学">哲学</option>
+                                        <option value ="经济学">经济学</option>
+                                        <option value ="法学">法学</option>
+                                        <option value ="教育学">教育学</option>
+                                        <option value ="文学">文学</option>
+                                        <option value ="历史学">历史学</option>
+                                        <option value ="理学">理学</option>
+                                        <option value ="工学">工学</option>
+                                        <option value ="农学">农学</option>
+                                        <option value ="医学">医学</option>
+                                        <option value ="军事学">军事学</option>
+                                        <option value ="管理学">管理学</option>
+                                    </select>   
+                                </dt>
+                                <dt class="label">健康状况:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="healthy" required="required">
+                                        <option value ="健康">健康</option>
+                                        <option value ="残疾">残疾</option>
+                                    </select>   
+                                </dt>
+                                <input type="button" class="menu-btn" name="close-btn" value="关闭" />
+                            </dl>
+                            <dl>
+                                <dt class="label">政治面貌:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="politics" required="required">
+                                        <option value ="中共党员">中共党员</option>
+                                        <option value ="中共预备党员">中共预备党员</option>
+                                        <option value ="共青团员">共青团员</option>
+                                        <option value ="民革党员">民革党员</option>
+                                        <option value ="民盟盟员">民盟盟员</option>
+                                        <option value ="民建会员">民建会员</option>
+                                        <option value ="民进会员">民进会员</option>
+                                        <option value ="农工党党员">农工党党员</option>
+                                        <option value ="致公党党员">致公党党员</option>
+                                        <option value ="九三学社社员">九三学社社员</option>
+                                        <option value ="台盟盟员">台盟盟员</option>
+                                        <option value ="无党派民主人士">无党派民主人士</option>
+                                        <option value ="群众">群众</option>
+                                    </select>   
+                                </dt>
+                                <dt class="label">出生日期:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="birthday" value="" class="keyword input" placeholder="出生日期"  required="required" pattern="^(\d{4})-(0\d{1|1[0-2])-(0\d{1}|[12]\d{1}|3[01])$"/>
+                                </dt>
+                                <dt class="label">现居住地:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="resident_address" value="" class="keyword input" placeholder="现居住地" required="required" pattern="^[a-zA-Z0-9\u4e00-\u9fa5]{5,50}$"/>
+                                </dt>
+                            </dl>
+                            <dl>
+                                <dt class="label">家庭地址:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="home_address" value="" class="keyword input" placeholder="家庭地址" required="required" pattern="^[a-zA-Z0-9\u4e00-\u9fa5]{5,50}$" />
+                                </dt>
+                                <dt class="label">户籍地址:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="permanent_address" value="" class="keyword input" placeholder="户籍地址" required="required" pattern="^[a-zA-Z0-9\u4e00-\u9fa5]{5,50}$" />
+                                </dt>
+                                <dt class="label">移动电话:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="tel" value="" class="keyword input" placeholder="移动电话" required="required" pattern="^[1-9]\d{10}$" />
+                                </dt>
+                            </dl>
+                            <dl>
+                                <dt class="label">家庭电话:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="home_tel" value="" class="keyword input" placeholder="家庭电话" required="required" pattern="^[1-9]\d{10}$" />
+                                </dt>
+                                <dt class="label">email:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="email" value="" class="keyword input" placeholder="email" required="required" pattern="^[a-zA-Z0-9_-]+\@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)$" />
+                                </dt>
+                                <dt class="label">培训机构:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="organization" required="required">
+                                    </select>   
+                                </dt>
+                            </dl>
+                            <dl>
+                                <dt class="label">申报专业:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="profession" required="required">
+                                    </select>   
+                                </dt>
+                                <dt class="label">培训地点:</dt>
+                                <dt class="condition">
+                                    <select class="select-box" name="place" required="required">
+                                    </select>   
+                                </dt>
+                                <dt class="label">班级编号:</dt>
+                                <dt class="condition">
+                                    <input type="text" name="className" value="" class="keyword input" placeholder="班级编号" autocomplete="off"  pattern="^[a-zA-Z\u4e00-\u9fa5]{4-20}$" />  
+                                </dt>
+                            </dl>
+                            <a class="bref">学生基本信息:</a>
+                        </div>
+                    </dt>
+                    <dt class="operation-item" name="delete">删除</dt>
+                    <dt class="operation-item" name="unquit">取消中退</dt>
+				</dl>
+				<table class="data-table">
+					<tr>
+						<th></th>
+						<th>序号</th>
+						<th>姓名</th>
+						<th>身份证号</th>
+						<th>电话</th>
+						<th>培训机构</th>
+						<th>申报专业</th>
+						<th>班级编号</th>
+						<th>年届</th>
+						<th>状态</th>
+					</tr>
+				</table>
+				<dl class="page-list no-select">
+					<dt class="page-item page-info">
+						总计<span class="totalRows"></span>条记录，<span class="currentPage">1</span>/<span class="totalPages"></span>页
+					</dt>
+					<dt class="page-item page-operation">
+						<a name="prevBtn">上一页</a> <a class="page-active page-test">1</a> <a class=" page-test">2</a> <a class="page-test">3</a> <a class="page-test">4</a> <a class=" page-test">5</a> <a name="nextBtn">下一页</a>
+					</dt>
+				</dl>
+			</div>
+		</div>
+	</div>
+	<script src="../../js/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/pid.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/plugin/toastr.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/permission.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/tab.js" type="text/javascript" charset="utf-8"></script>
+	<script src="enroll.js" type="text/javascript" charset="utf-8"></script>
+</body>
+
+</html>

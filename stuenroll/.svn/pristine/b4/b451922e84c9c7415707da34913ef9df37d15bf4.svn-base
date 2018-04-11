@@ -1,0 +1,660 @@
+body {
+    background-color: #e7e7e7;
+}
+.main-container {
+    height: 1430/16rem;
+    //padding: 15/16rem;
+    display: -moz-box;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    .update-color {
+        color: #E86167;
+    }
+    .info-content {
+        overflow: hidden;
+        height: inherit;
+        padding-right: 15/16rem;
+        flex-grow: 1;
+        min-width: 1310/16rem;
+        .info-list {
+            overflow: hidden;
+            .info-item {
+                height: 357.5/16rem;
+                overflow: hidden;
+                &:nth-child(1) {
+                    background-color: #fff;
+                    .title {
+                        height: 120/16rem;
+                        padding-left: 60/16rem;
+                        padding-top: 35/16rem;
+                        .first-title {
+                            float: left;
+                            background-color: black;
+                            color: #fff;
+                            font-weight: 600;
+                            font-size: 26/16rem;
+                            height: 45/16rem;
+                            width: 150/16rem;
+                            padding-left: 20/16rem;
+                            line-height: 45/16rem;
+                        }
+                        .next-title {
+                            float: left;
+                            font-size: 20/16rem;
+                            font-weight: 400;
+                            padding-left: 20/16rem;
+                            line-height: 27/16rem;
+                            border-bottom: solid 5/16rem black;
+                        }
+                    }
+                    .input-content {
+                        position: relative;
+                        .input-flag {
+                            .sign {
+                                position: absolute;
+                                width: 60/16rem;
+                                height: 35/16rem;
+                                border: solid 4/16rem #297ACC;
+                                background-color: #3398FD;
+                                border-radius: 30%;
+                                border-top-right-radius: 100%;
+                                border-bottom-right-radius: 100%;
+                                color: #fff;
+                                text-align: center;
+                                line-height: 28/16rem;
+                                font-size: 15/16rem;
+                                left: 120/16rem;
+                            }
+                            .desc {
+                                position: absolute;
+                                left: 200/16rem;
+                                font-size: 20/16rem;
+                                letter-spacing: 1/16rem;
+                                text-align: center;
+                                width: inherit;
+                            }
+                        }
+                        .input-list {
+                            position: absolute;
+                            padding-left: 400/16rem;
+                            .input-item {
+                                padding-top: 10/16rem;
+                                padding-bottom: 10/16rem;
+                                label {
+                                    width: 75/16rem;
+                                    font-size: 14/16rem;
+                                    letter-spacing: 1/16rem;
+                                    display: inline-block;
+                                }
+                                .input {
+                                    width: 300/16rem;
+                                    height: 40/16rem;
+                                    outline: none;
+                                    border-radius: 3/16rem;
+                                    border: solid 1/16rem #e0e0e0;
+                                    color: #333;
+                                    font-size: 14/16rem;
+                                    letter-spacing: 1/16rem;
+                                    padding-left: 15/16rem;
+                                    padding-right: 15/16rem;
+                                }
+                            }
+                        }
+                        .input-photo {
+                            background-color: #E0E0E0;
+                            left: 1000/16rem;
+                            position: absolute;
+                            width: 180/16rem;
+                            height: 180/16rem;
+                            .selectFile {
+                                width: 180/16rem;
+                                height: 180/16rem;
+                                overflow: hidden;
+                                border-radius: 5/16rem;
+                                .file {
+                                    width: 200/16rem;
+                                }
+                                .preView {
+                                    width: 200/16rem;
+                                    height: 200/16rem;
+                                }
+                            }
+                            .saveFile-button {
+                                margin-top: 10/16rem;
+                                padding-left: 52/16rem;
+                                .save-btn {
+                                    width: 80/16rem;
+                                    height: 25/16rem;
+                                    border-radius: 2/16rem;
+                                    border: none;
+                                    font-weight: bold;
+                                    letter-spacing: 1/16rem;
+                                    font-size: 10/16rem;
+                                    outline: none;
+                                    cursor: pointer;
+                                    color: white;
+                                    background-color: #02A0E9;
+                                }
+                            }
+                        }
+                    }
+                }
+                &:nth-child(2) {
+                    background-color: #ECF0F1;
+                    .input-content {
+                        position: relative;
+                        .input-flag {
+                            padding-top: 30/16rem;
+                            .sign {
+                                position: absolute;
+                                width: 60/16rem;
+                                height: 35/16rem;
+                                border: solid 4/16rem #297ACC;
+                                background-color: #3398FD;
+                                border-radius: 30%;
+                                border-top-right-radius: 100%;
+                                border-bottom-right-radius: 100%;
+                                color: #fff;
+                                text-align: center;
+                                line-height: 28/16rem;
+                                font-size: 15/16rem;
+                                left: 120/16rem;
+                            }
+                            .desc {
+                                position: absolute;
+                                padding-left: 200/16rem;
+                                font-size: 20/16rem;
+                                letter-spacing: 1/16rem;
+                                text-align: center;
+                                width: inherit;
+                            }
+                        }
+                        .input-list {
+                            position: absolute;
+                            padding-left: 400/16rem;
+                            .input-item {
+                                padding-bottom: 20/16rem;
+                                label {
+                                    width: 75/16rem;
+                                    font-size: 14/16rem;
+                                    letter-spacing: 1/16rem;
+                                    display: inline-block;
+                                }
+                                .input {
+                                    width: 300/16rem;
+                                    height: 40/16rem;
+                                    outline: none;
+                                    border-radius: 3/16rem;
+                                    border: solid 1/16rem #e0e0e0;
+                                    color: #333;
+                                    font-size: 14/16rem;
+                                    letter-spacing: 1/16rem;
+                                    padding-left: 15/16rem;
+                                    padding-right: 15/16rem;
+                                }
+                            }
+                        }
+                    }
+                }
+                &:nth-child(3) {
+                    background-color: #fff;
+                    .input-content {
+                        position: relative;
+                        .input-flag {
+                            padding-top: 30/16rem;
+                            .sign {
+                                position: absolute;
+                                width: 60/16rem;
+                                height: 35/16rem;
+                                border: solid 4/16rem #297ACC;
+                                background-color: #3398FD;
+                                border-radius: 30%;
+                                border-top-right-radius: 100%;
+                                border-bottom-right-radius: 100%;
+                                color: #fff;
+                                text-align: center;
+                                line-height: 28/16rem;
+                                font-size: 15/16rem;
+                                left: 120/16rem;
+                            }
+                            .desc {
+                                position: absolute;
+                                padding-left: 200/16rem;
+                                font-size: 20/16rem;
+                                letter-spacing: 1/16rem;
+                                text-align: center;
+                                width: inherit;
+                            }
+                        }
+                        .input-list {
+                            position: absolute;
+                            padding-left: 400/16rem;
+                            .input-item {
+                                padding-bottom: 25/16rem;
+                                label {
+                                    width: 75/16rem;
+                                    font-size: 14/16rem;
+                                    letter-spacing: 1/16rem;
+                                    display: inline-block;
+                                }
+                                .input {
+                                    width: 300/16rem;
+                                    height: 40/16rem;
+                                    outline: none;
+                                    border-radius: 3/16rem;
+                                    border: solid 1/16rem #e0e0e0;
+                                    color: #333;
+                                    font-size: 14/16rem;
+                                    letter-spacing: 1/16rem;
+                                    padding-left: 15/16rem;
+                                    padding-right: 15/16rem;
+                                }
+                                .btn {
+                                    width: 135/16rem;
+                                    height: 30/16rem;
+                                    border-radius: 3/16rem;
+                                    border: none;
+                                    font-weight: bold;
+                                    letter-spacing: 1/16rem;
+                                    font-size: 14/16rem;
+                                    outline: none;
+                                    cursor: pointer;
+                                }
+                                .green {
+                                    color: #fff;
+                                    background-color: #0EC093;
+                                    &:active {
+                                        background-color: #10D8A5;
+                                    }
+                                }
+                                .red {
+                                    color: #fff;
+                                    background-color: #E86167;
+                                    &:active {
+                                        background-color: #EB777C;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                &:nth-child(4) {
+                    background-color: #ECF0F1;
+                    .last-title {
+                        width: 200/16rem;
+                        color: #666666;
+                        //margin-right: 0;
+                        padding-left: 42/16rem;
+                        float: left;
+                    }
+                    .text {
+                        float: left;
+                        color: #666666;
+                        .first-text {
+                            float: left;
+                            height: 240/16rem;
+                            width: 400/16rem;
+                        }
+                        .line {
+                            float: left;
+                            width: 1/16rem;
+                            height: 240/16rem;
+                            background-color: #666666;
+                            margin-left: 90/16rem;
+                        }
+                        .second-text {
+                            float: left;
+                            margin-left: 90/16rem;
+                            height: 240/16rem;
+                            width: 400/16rem;
+                        }
+                        .sub-title {
+                            font-size: 14/16rem;
+                        }
+                        .desc {
+                            font-size: 14/16rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .myfriends-container {
+        height: 1430/16rem;
+        width: 330/16rem;
+        flex-grow: 0;
+        flex-shrink: 0;
+        .search-hidden {
+            height: 15/16rem;
+            width: 330/16rem;
+            background-color: #E7E7E7;
+            position: relative;
+            z-index: 2;
+        }
+        .myfriends-title {
+            position: relative;
+            height: 80/16rem;
+            background-color: #fff;
+            width: 330/16rem;
+            z-index: 2;   
+            .title-context {
+                height: 40/16rem;
+                float: left;
+                margin: 20/16rem 0 0 30/16rem;
+                font-size: 20/16rem;
+                font-weight: 700;
+                letter-spacing: 1/16rem;
+                color: #3999FF;
+            }
+            .title-mark {
+                height: 33/16rem;
+                width: 22/16rem;
+                text-align: center;
+                margin-top: 15/16rem;
+                margin-left: 10/16rem;
+                font-size: 26/16rem;
+                font-weight: 700;
+                background-color: #3399FF;
+                color: #fff;
+                float: left;
+                cursor: pointer;
+            }
+        }
+        .myfriends-list {
+            background-color: #fff;
+            height: 1300/16rem;
+            width: 330/16rem;
+            position: relative;
+            .myfriends-search {
+                height: 120/16rem;
+                width: 330/16rem;
+                text-align: center;
+                position: absolute;
+                top: -120/16rem;
+                position: relative;
+                z-index: 1;
+                background-color: rgba(0, 204, 204, 0.949019607843137);
+                transition: all 0.75s;
+                .input {
+                    width: 280/16rem;
+                    height: 45/16rem;
+                    line-height: 45/16rem;
+                    margin-top: 37/16rem;
+                    padding-left: 55/16rem;
+                    padding-right: 45/16rem;
+                    border-top-left-radius: 45/16rem;
+                    border-top-right-radius: 45/16rem;
+                    border-bottom-left-radius: 45/16rem;
+                    border-bottom-right-radius: 45/16rem;
+                    font-size: 14/16rem;
+                    //background-color: rgba(255,255,255,0.7);
+                    border: solid #e9e9e9 1/16rem;
+                    color: #333;
+                    letter-spacing: 1/16rem;
+                    outline: none;
+                    border: none;
+                }
+                .magnifier {
+                    height: 22/16rem;
+                    width: 22/16rem;
+                    position: absolute;
+                    top: 49/16rem;
+                    left: 39/16rem;
+                    cursor: pointer;
+                }
+                .search-furcation {
+                    height: 20/16rem;
+                    width: 20/16rem;
+                    position: absolute;
+                    top: 49/16rem;
+                    left: 262/16rem;
+                    cursor: pointer;
+                }
+            }
+            .list-container {
+                height: inherit;
+                margin: 0;
+                padding: 0;
+                position: absolute;
+                top: 0;
+                .list-item {
+                    height: 100/16rem;
+                    padding-left: 19/16rem;
+                    //opacity: 0.4;
+                    .photo-container {
+                        margin-top: 15/16rem;
+                        float: left;
+                        width: 90/16rem;
+                        position: relative;
+                        .user-photo {
+                            float: left;
+                            width: 70/16rem;
+                            height: 70/16rem;
+                            border-radius: 100%;
+                            border: solid 2/16rem #939395;
+                        }
+                        .small-circle {
+                            float: left;
+                            position: absolute;
+                            top: 54/16rem;
+                            left: 51/16rem;
+                            width: 20/16rem;
+                            height: 20/16rem;
+                            border-radius: 100%;
+                            background-color: #3188CF;
+                            border: solid 4/16rem #fff;
+                        }
+                        .circle-green {
+                            background-color: #82D15C;
+                        }
+                        .circle-red {
+                            background-color: #F55D5E;
+                        }
+                    }
+                    .personal-info {
+                        float: left;
+                        width: 160/16rem;
+                        height: 80/16rem;
+                        margin-top: 15/16rem;
+                        .info-container {
+                            margin: 0;
+                            .myfriends-name {
+                                font-size: 18/16rem;
+                                font-weight: 600;
+                                padding-bottom: 5/15rem;
+                            }
+                            .myfriends-role {
+                                font-size: 12/16rem;
+                            }
+                            .myfriends-organization {
+                                font-size: 12/16rem;
+                            }
+                        }
+                    }
+                    .action {
+                        float: left;
+                        margin-top: 15/16rem;
+                        .star {
+                            height: 22/16rem;
+                            width: 22/16rem;
+                            float: left;
+                            margin-right: 5/16rem;
+                            color: #fff;
+                            cursor: pointer;
+                        }
+                        .furcation {
+                            height: 22/16rem;
+                            width: 22/16rem;
+                            float: left;
+                            margin-right: 2/16rem;
+                            color: #fff;
+                            cursor: pointer;
+                        }
+                        .friend-id {
+                            display: none;
+                        }
+                    }
+                    .action-hidden {
+                        display: none;
+                    }
+                }
+                .bgc-active {
+                    background-color: #3399FF;
+                    color: #fff;
+                }
+                .add-list-item {
+                    height: 100/16rem;
+                    padding-left: 25/16rem;
+                    //opacity: 0.4;
+                    .add-photo-container {
+                        margin-top: 15/16rem;
+                        float: left;
+                        width: 90/16rem;
+                        position: relative;
+                        .add-user-photo {
+                            float: left;
+                            width: 70/16rem;
+                            height: 70/16rem;
+                            border-radius: 100%;
+                            border: solid 2/16rem #F0C8A1;
+                        }
+                        .add-small-circle {
+                            float: left;
+                            position: absolute;
+                            top: 54/16rem;
+                            left: 51/16rem;
+                            width: 20/16rem;
+                            height: 20/16rem;
+                            border-radius: 100%;
+                            background-color: #3188CF;
+                            border: solid 4/16rem #fff;
+                        }
+                        .add-circle-green {
+                            background-color: #82D15C;
+                        }
+                        .add-circle-red {
+                            background-color: #F55D5E;
+                        }
+                    }
+                    .add-personal-info {
+                        float: left;
+                        width: 160/16rem;
+                        height: 80/16rem;
+                        margin-top: 15/16rem;
+                        .add-info-container {
+                            margin: 0;
+                            .add-myfriends-name {
+                                font-size: 18/16rem;
+                                font-weight: 600;
+                                padding-bottom: 5/15rem;
+                                color: #EF7600;
+                            }
+                            .add-myfriends-role {
+                                font-size: 12/16rem;
+                                color: #EF7600;
+                            }
+                            .add-myfriends-organization {
+                                font-size: 12/16rem;
+                                color: #EF7600;
+                            }
+                        }
+                    }
+                    .add-action {
+                        float: left;
+                        margin-top: 33/16rem;
+                        cursor: pointer;
+                        .add {
+                            width: 50/16rem;
+                            height: 26/16rem;
+                            outline: none;
+                            background-color: #F0B478;
+                            border-radius: 5/16rem;
+                            border: solid #e9e9e9 1/16rem;
+                            font-weight: bold;
+                            font-size: 14/16rem;
+                            letter-spacing: 1/16rem;
+                            color: #fff;
+                            cursor: pointer;
+                            &:active {
+                                background-color: #F0B981;
+                            }
+                        }
+                    }
+                }
+            }
+            .list-container-hidden {
+                display: none;
+                height: 1000/16rem;
+                width: 330/16rem;
+                background-color: #fff;
+            }
+        }
+        .myfriends-bottom {
+            width: 330/16rem;
+            .page-list {
+                margin: 0;
+                padding-top: 10/16rem;
+                overflow: hidden;
+                background-color: #EBEEF7;
+                .page-item {
+                    height: 35/16rem;
+                    line-height: 35/16rem;
+                    font-size: 14/16rem;
+                    font-weight: bold;
+                }
+                .page-operation1 {
+                    float: left;
+                    width: 25%;
+                    a {
+                        color: #fff;
+                        cursor: pointer;
+                        margin-left: 12/16rem;
+                        padding-left: 5/16rem;
+                        padding-right: 5/16rem;
+                        &:hover {
+                            color: #ff6700;
+                        }
+                    }
+                    background-color: #3399FF;
+                    border-top-left-radius: 30/16rem;
+                    border-top-right-radius: 9/16rem;
+                    border-bottom-left-radius: 30/16rem;
+                    border-bottom-right-radius: 9/16rem;
+                }
+                .page-operation2 {
+                    float: right;
+                    width: 25%;
+                    a {
+                        color: #fff;
+                        cursor: pointer;
+                        margin-left: 12/16rem;
+                        padding-left: 5/16rem;
+                        padding-right: 5/16rem;
+                        &:hover {
+                            color: #ff6700;
+                        }
+                    }
+                    background-color: #3399FF;
+                    border-top-left-radius: 9/16rem;
+                    border-top-right-radius: 30/16rem;
+                    border-bottom-left-radius: 9/16rem;
+                    border-bottom-right-radius: 30/16rem;
+                }
+                .page-info {
+                    float: left;
+                    width: 50%;
+                    text-align: center;
+                    span {
+                        margin-left: 5/16rem;
+                        margin-right: 5/16rem;
+                    }
+                }
+            }
+        }
+    }
+    .error {
+        color: red !important;
+    }
+}    

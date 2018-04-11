@@ -1,0 +1,178 @@
+package cn.gov.hrss.ln.stuenroll.db.mariadb;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+
+import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.activerecord.Record;
+
+import cn.gov.hrss.ln.stuenroll.db.I_FriendDao;
+import cn.gov.hrss.ln.stuenroll.plugin.MongoKit;
+
+public class FriendDao implements I_FriendDao{
+
+	@Override
+	public List<Record> searchFriend(HashMap map,long start,long length) {
+		ArrayList param = new ArrayList();
+		String username = (String) map.get("username");
+		param.add(username);
+		String friendname = (String) map.get("friendname");
+		
+		StringBuffer sql= new StringBuffer();
+		sql.append("SELECT ");
+		sql.append("	id, ");
+		sql.append("	friendname, ");
+		sql.append("	role, ");
+		sql.append("	organization ");
+		sql.append("FROM ");
+		sql.append("	friend ");
+		sql.append("WHERE ");
+		sql.append("	username = ? ");
+		if (friendname != null && friendname.length() > 0) {
+			sql.append(" AND friendname= ? ");
+			param.add(friendname);
+		}
+		sql.append(" ORDER BY place_no ");
+		sql.append("LIMIT ?, ?; ");
+		param.add(start);
+		param.add(length);
+		
+		List<Record> list = Db.find(sql.toString(), param.toArray());	
+		for (Record record : list) {
+			record.set("id", record.getLong("id").toString());			
+		}
+		return list;
+	}
+
+	@Override
+	public long searchFriendCount(String username) {
+		StringBuffer sql= new StringBuffer();
+		sql.append("SELECT ");
+		sql.append("	COUNT(*) ");
+		sql.append("FROM ");
+		sql.append("	friend ");
+		sql.append("WHERE ");
+		sql.append("	username = ?; ");
+		
+		long count = Db.queryLong(sql.toString(),username);
+
+		return count;
+	}
+
+	@Override
+	public int deleteById(Long id) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("DELETE ");
+		sql.append("FROM ");
+		sql.append("	friend ");
+		sql.append("WHERE ");
+		sql.append("	id=?; ");
+		
+		int i=Db.update(sql.toString(),id);
+		return i;
+	}
+
+	@Override
+	public boolean friendTop(Long id,String username) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("UPDATE friend ");
+		sql.append("SET place_no=0 ");
+		sql.append("WHERE id=? ");
+		
+		int i=Db.update(sql.toString(), id);
+		boolean bool;
+		if(i==1){
+			bool=true;
+		}
+		else {
+			bool=false;
+		}
+		if(bool){
+			StringBuffer sql_1 = new StringBuffer();
+			sql_1.append("UPDATE friend ");
+			sql_1.append("SET place_no=place_no+1 ");
+			sql_1.append("WHERE username=? ");
+			int j=Db.update(sql_1.toString(),username);
+		}
+		return bool;
+		
+	}
+
+	@Override
+	public Record searchFriendFromUser(String username) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT ");
+		sql.append("	u.`username`, ");
+		sql.append("	r.`name` AS role, ");
+		sql.append("	o.`name` AS organization ");
+		sql.append("FROM ");
+		sql.append("	`user` AS u ");
+		sql.append("JOIN role AS r ON r.id = u.role_id ");
+		sql.append("JOIN organization AS o ON o.id = u.organization_id ");
+		sql.append("WHERE ");
+		sql.append("	u.username = ? ");
+		sql.append("AND u.block = 0 ");
+		
+		Record record = Db.findFirst(sql.toString(), username);
+		return record;
+	}
+
+	@Override
+	public boolean addFriend(String username, String friendname, String role, String organization) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("INSERT INTO friend ( ");
+		sql.append("	id, ");
+		sql.append("	username, ");
+		sql.append("	friendname, ");
+		sql.append("	role, ");
+		sql.append("	organization, ");
+		sql.append("	place_no ");
+		sql.append(") ");
+		sql.append("VALUES ");
+		sql.append("	( ");
+		sql.append("		NEXT ");
+		sql.append("		VALUE ");
+		sql.append("			FOR MYCATSEQ_GLOBAL, ");
+		sql.append("			?, ");
+		sql.append("			?, ");
+		sql.append("			?, ");
+		sql.append("			?, ");
+		sql.append("			0 ");
+		sql.append("	); ");
+		
+		int i=Db.update(sql.toString(),username,friendname,role,organization);
+		boolean bool=(i==1) ? true : false;
+		if(bool){
+			StringBuffer sql_1 = new StringBuffer();
+			sql_1.append("UPDATE friend ");
+			sql_1.append("SET place_no=place_no+1 ");
+			sql_1.append("WHERE username=? ");
+			int j=Db.update(sql_1.toString(),username);
+		}
+		return bool;
+	}
+
+	@Override
+	public String getPhoto(String name) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT ");
+		sql.append("	photo_id ");
+		sql.append("FROM ");
+		sql.append("	`user`  ");
+		sql.append("WHERE ");
+		sql.append("	username = ? ");
+		
+
+		String photo_no=Db.queryStr(sql.toString(),name);
+		if(photo_no==null){
+			photo_no="57995af9b26c14386b232e1f";
+		}
+		System.out.println(photo_no);
+
+		return photo_no;
+	}
+
+}

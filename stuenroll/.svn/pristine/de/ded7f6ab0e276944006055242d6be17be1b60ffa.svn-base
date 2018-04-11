@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="../../css/base.css" />
+		<link rel="stylesheet" type="text/css" href="../../font/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="../../js/plugin/toastr.css" />
+		<link rel="stylesheet" type="text/css" href="my.css" />
+		<title></title>
+	</head>
+	<body>
+		<div class="chart-container">
+			<div class="content1">
+				1
+				
+			</div>
+			<div class="content2">
+				2
+			</div>
+			<div class="content3">
+				<div class="content3_1">
+					3.1
+				</div>
+				<div class="content3_2">
+					3.2
+				</div>
+
+			</div>
+		</div>
+		<div class="myfriends-container no-select">
+			<div class="myfriends-title">
+				
+				<h2 class="title-context">好友列表</h2>
+				<div class="title-mark">
+					+
+				</div>
+				
+			</div>
+			
+			<div class="myfriends-list">
+				<div class="myfriends-search myfriends-search-hidden">
+					<input type="text" name="search" id="search" value="" class="input" placeholder="查询用户"/>	
+			    	
+			    	<img src="../../img/icon_7.png" class="magnifier"/>
+			    	<img src="../../img/icon_17.png" class="search-furcation"/>
+				</div>
+			    
+			    <dl class="list-container" >
+						<!--   <dt class="list-item">	
+							<div class="photo-container">							
+								<img src="../../img/photo.png" class="user-photo"/>
+								<div class="small-circle circle-green"></div>
+							</div>
+									
+							<div class="personal-info">
+								
+								<dl class="info-container">
+									<dt class="myfriends-name">章思远</dt>
+									<dt class="myfriends-role">普通用户</dt>
+									<dt class="myfriends-organization">大连中软卓越计算机培训中心</dt>
+				                </dl>
+							</div>
+							<div class="action action-hidden">
+								<img src="../../img/星.png" class="star"/>
+								<img src="../../img/叉.png" class="furcation"/>
+							</div>
+						</dt> -->
+				
+				</dl>
+			</div>
+			<div class="myfriends-bottom">
+				<dl class="page-list no-select">
+					<dt class="page-item page-operation1">
+						<a name="prevBtn">上一页</a>						
+					</dt>
+					<dt class="page-item page-info">
+						<span id="currentPage">1</span>/
+						<span id="totalPages">1</span>页
+					</dt>
+					<dt class="page-item page-operation2">							
+						<a name="nextBtn">下一页</a>
+					</dt>
+				</dl>
+			</div>
+		</div>
+
+		<script src="../../js/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/echarts/echarts.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/plugin/toastr.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/permission.js" type="text/javascript" charset="utf-8"></script>
+		<script src="my.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+
+</html>

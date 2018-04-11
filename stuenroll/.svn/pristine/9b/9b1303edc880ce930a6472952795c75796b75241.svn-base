@@ -1,0 +1,26 @@
+package cn.gov.hrss.ln.stuenroll.db.mariadb;
+
+import java.util.List;
+
+import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.activerecord.Record;
+
+import cn.gov.hrss.ln.stuenroll.db.I_ProfessionDao;
+
+public class ProfessionDao implements I_ProfessionDao {
+
+	@Override
+	public String searchName(long id) {
+		StringBuffer _builder = new StringBuffer();
+		_builder.append("	SELECT ");
+		_builder.append("	`name` ");
+		_builder.append("	FROM ");
+		_builder.append("	profession ");
+		_builder.append("	WHERE ");
+		_builder.append("	id = ? ");
+
+		String name = Db.queryStr(_builder.toString(), id);
+		return name;
+	}
+
+}

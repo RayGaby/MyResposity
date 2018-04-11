@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="../../css/base.css" />
+		<link rel="stylesheet" type="text/css" href="../../font/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="../../js/plugin/toastr.css" />
+		<link rel="stylesheet" href="../../js/plugin/dropdown.css" />
+		<link rel="stylesheet" type="text/css" href="user.css" />
+
+	</head>
+
+	<body>
+		<div class="main-container">
+			<div class="info-content">
+				<dl class="info-list">
+					<dt class="info-item">
+						<div class="title">
+							<div class="first-title">用户资料</div>
+							<h1 class="next-title">新用户注册</h1>
+						</div>
+						<div class="input-content">
+							<div class="input-flag">
+								<div class="sign">1</div>
+								<div class="desc">账户信息</div>
+							</div>
+							<dl class="input-list">
+								<dt class="input-item">
+									<label for="username">用户名：</label>
+									<input type="text" id="username" name="username" class="input" placeholder="用户名" autocomplete="off"  required="required" pattern="^[a-zA-Z0-9]{3,15}$"/>			
+								</dt>
+								<dt class="input-item">
+									<label for="password">密码：</label>
+									<input type="password" id="password" name="password" class="input" placeholder="密码" autocomplete="off"  required="required" pattern="^[0-9a-zA-Z]{6,15}$"/>
+								</dt>
+								<dt class="input-item">
+									<label for="rePassword">重复密码：</label>
+									<input type="password" id="rePassword" name="rePassword" class="input" placeholder="重复密码" autocomplete="off"  required="required" pattern="^[0-9a-zA-Z]{6,15}$"/>
+								</dt>
+							</dl>
+						<div class="input-photo">
+							<form class="uploadImageForm" id="uploadImageForm" action="#" enctype="multipart/form-data" method="post">
+								<div class="selectFile">
+									<img class="preView" src="../../img/photo.png"/>
+									<input class="file" type="file" name="photo" id="file" value="">
+								</div>
+								<div class="saveFile-button">
+									<input type="button" class="save-btn" name="collectionName" id="image" value="上传头像"/>
+								</div>
+							</form>
+						</div>
+				</div>
+					</dt>
+					<dt class="info-item">
+						<div class="input-content">
+							<div class="input-flag">
+								<div class="sign">2</div>
+								<div class="desc">基本信息</div>
+							</div>
+							<dl class="input-list">
+								<dt class="input-item">
+									<label for="name">姓名：</label>
+									<input type="text" id="name" name="name" class="input" placeholder="姓名" autocomplete="off"  required="required" pattern="^[\u4e00-\u9fa5]{2,15}$"/>			
+								</dt>
+								<dt class="input-item">
+									<label for="sex">性别：</label>
+									<div name="sex" class="dropdown" id="sex">
+										<span class="value">- 选择 -</span>
+										<i class="iconfont arrowhead">&#xe610;</i>
+										<ul class="dropdown-list">
+											<li class="dropdown-item" >男</li>
+											<li class="dropdown-item" >女</li>
+										</ul>
+									</div>
+								</dt>
+								<dt class="input-item">
+									<label for="pid">身份证号：</label>
+									<input type="text" id="pid" name="pid" class="input" placeholder="身份证号" autocomplete="off" required="required"/>
+								</dt>
+								<dt class="input-item">
+									<label for="tel">电话：</label>
+									<input type="text" id="tel" name="tel" class="input" placeholder="电话" autocomplete="off" required="required" pattern="^1\d{10}$"/>
+								</dt>
+								<dt class="input-item">
+									<label for="email">电子信箱：</label>
+									<input type="email" id="email" name="email" class="input" placeholder="电子信箱" autocomplete="off" required="required"/>
+								</dt>
+							</dl>
+
+							</div>
+					</dt>
+					<dt class="info-item">
+							<div class="input-content">
+					            <div class="input-flag">
+									<div class="sign">3</div>
+									<div class="desc">系统信息</div>
+								</div>
+								    <dl class="input-list">
+									    <dt class="input-item">
+										    <label for="organization" >培训机构：</label>
+										    <div name="organization" class="dropdown" id="organization">
+												<span class="value">- 选择 -</span>
+												<i class="iconfont arrowhead">&#xe610;</i>
+												<ul class="dropdown-list">
+													
+												</ul>
+											</div>
+									    </dt>
+										<dt class="input-item">
+										    <label for="position">职位：</label>
+										    <input type="text" id="position" name="position" class="input" placeholder="职位" autocomplete="off"  required="required" pattern="^[\u4e00-\u9fa5]{2,15}$"/>
+									    </dt>
+										<dt class="input-item">
+										    <label for="role">角色：</label>
+										    <div name="role" class="dropdown" id="role">
+												<span class="value">- 选择 -</span>
+												<i class="iconfont arrowhead">&#xe610;</i>
+												<ul class="dropdown-list">
+													
+												</ul>
+											</div>
+									    </dt>
+										<dt class="input-item">
+										    <label for="user-state">用户状态：</label>
+										    <div name="user-state" class="dropdown" id="block">
+												<span class="value">- 选择 -</span>
+												<i class="iconfont arrowhead">&#xe610;</i>
+												<ul class="dropdown-list">
+													<li class="dropdown-item">0</li>
+													<li class="dropdown-item">1</li>
+												</ul>
+											</div>
+										</dt>
+										<div class="input-item" >
+											<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+											<input type="button" class="btn green" name="cancel" value="立即注册" id="registernow" tabindex="-1"/>
+										    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+										    <a href="list.html">
+										    <input type="button" class="btn red" name="cancel" value="取消"  tabindex="-1"/>
+										    </a>
+										</div>
+									</dl>
+					</dt>
+					<dt class="info-item">
+						<h2 class="last-title ">用户须知</h2>
+						<dl class="text">
+							<dt class="first-text">
+								<h3 class="sub-title">账号管理规则</h3>
+								<p class="desc">1) 必须使用真实身份信息注册账号，昵称和用户资料等自定义命名均不得使用违反国家法规或带侮辱性的词语或图片；
+												<br>
+												<br>
+												2) 所有注册账号只可用于正常登陆邀请网、邀请购物、进行游戏、完成任务，不得用于对邀请网进行恶意攻击或破坏；
+												<br>
+												<br>
+												3) 一个用户只能注册和使用一个邀请网账号；
+												<br>
+												<br>
+												4) 邀请网官方有权对任何不符合账号管理规则的账号进行冻结和处罚。</p>
+								
+							</dt>
+							<p class="line"></p>
+							<dt class="second-text">
+								<h3 class="sub-title">用户行为准则</h3>
+								<p class="desc">1)同意并按照邀请网网官方不时发布、变更和修改的此用户规则及其他规则，接受并使用我们的产品和服务，不得通过不正当的手段或其他不公平的手段使用我们的产品和服务或参与我们的邀请购物以及非常任务等活动。
+												<br>
+												<br>
+												2) 用户不得干扰官方正常地提供产品和服务，包括但不限于：
+												<br>
+												<br>
+												3) 用户必须保管好自己的账号和密码，由于用户个人的原因导致账号和密码泄密而造成的后果均将由该用户自行承担。</p>
+							</dt>
+						</dl>
+					</dt>
+				</dl>
+		</div>
+				<div class="myfriends-container no-select">
+				<div class="search-hidden"></div>
+				<div class="myfriends-title">
+
+					<h2 class="title-context">好友列表</h2>
+					<div class="title-mark">
+						+
+					</div>
+
+				</div>
+
+				<div class="myfriends-list">
+					<div class="myfriends-search myfriends-search-hidden">
+						<input type="text" name="search" id="search" value="" class="input" placeholder="查询用户" />
+
+						<img src="../../img/magnifier.png" class="magnifier" />
+						<img src="../../img/furcation.png" class="search-furcation" />
+					</div>
+
+					<dl class="list-container">
+						<!--
+                        	好友信息
+                        -->
+						<dt class="list-item bgc-active">	
+							<div class="photo-container">							
+								<img src="../../img/photo.png" class="user-photo"/>
+								<div class="small-circle circle-green"></div>
+							</div>
+									
+							<div class="personal-info">
+								
+								<dl class="info-container">
+									<dt class="myfriends-name">章思远</dt>
+									<dt class="myfriends-role">普通用户</dt>
+									<dt class="myfriends-organization">大连中软卓越计算机培训中心</dt>
+				                </dl>
+							</div>
+							<div class="action">
+								<img src="../../img/star.png" class="star"/>
+								<img src="../../img/furcation.png" class="furcation"/>
+								<a class='friend-id'>aaaa</a>
+							</div>
+						</dt> 
+						<!--
+                        	添加好友信息
+                        -->
+						  <dt class="add-list-item">	
+							<div class="add-photo-container">							
+								<img src="../../img/photo.png" class="add-user-photo"/>
+								<div class="add-small-circle add-circle-green"></div>
+							</div>
+									
+							<div class="add-personal-info">
+								
+								<dl class="add-info-container">
+									<dt class="add-myfriends-name">章思远</dt>
+									<dt class="add-myfriends-role">普通用户</dt>
+									<dt class="add-myfriends-organization">大连中软卓越计算机培训中心</dt>
+				                </dl>
+							</div>
+							<div class="add-action">
+								<input type="button" name="add" id="add" value="添加" class="add" />
+							</div>
+						</dt> 
+
+					</dl>
+				</div>
+				<div class="myfriends-bottom">
+					<dl class="page-list no-select">
+						<dt class="page-item page-operation1">
+							<a name="prevBtn">上一页</a>						
+						</dt>
+						<dt class="page-item page-info">
+							<span id="currentPage">1</span>/
+							<span id="totalPages">1</span>页
+						</dt>
+						<dt class="page-item page-operation2">							
+							<a name="nextBtn">下一页</a>
+						</dt>
+					</dl>
+				</div>
+			</div>
+			
+		</div>
+
+		<script src="../../js/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/pid.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/plugin/toastr.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/permission.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/tab.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="../../js/plugin/dropdown.js"></script>
+		<script src="user.js" type="text/javascript" charset="utf-8"></script>
+
+	</body>
+
+</html>

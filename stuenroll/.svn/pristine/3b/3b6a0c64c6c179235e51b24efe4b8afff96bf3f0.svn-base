@@ -1,0 +1,34 @@
+package cn.gov.hrss.ln.stuenroll.excelUtil;
+
+/**
+ * 放置读取excel的路径
+ * 以及生成excel的路径
+ * @author GoldRoger
+ *
+ */
+
+public class Common {
+	// common
+	private String importPATH;
+	private String exportPATH;
+
+	public String getImportPATH() {
+		return importPATH;
+	}
+
+	public void setImportPATH(String importPATH) {
+		this.importPATH = importPATH;
+	}
+
+	public String getExportPATH() {
+		return exportPATH;
+	}
+
+	public void setExportPATH(String exportPATH) {
+		this.exportPATH = exportPATH;
+	}
+	
+	
+	
+}
+

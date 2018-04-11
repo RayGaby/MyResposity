@@ -1,0 +1,23 @@
+.header {
+    background-color: #E21C46;
+}
+.f1 {
+    color: #fff;
+}
+.f1:active {
+    color: #fff;
+}
+.f2 {
+    margin-left: 20/16rem;
+    margin-top: 20/16rem;
+    margin-bottom: 15/16rem;
+}
+.slt{
+    font-size: 1px;
+}
+.operate {
+    margin: 20/16rem 15/16rem;
+}
+.error {
+    color: red !important;
+}

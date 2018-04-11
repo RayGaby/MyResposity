@@ -1,0 +1,275 @@
+body {
+  background-color: #e7e7e7;
+}
+.main-container {
+  background-color: #fff;
+  margin: 0.9375rem;
+  padding: 0.9375rem;
+}
+.main-container .tab-list {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #EBEEF7;
+}
+.main-container .tab-list .tab-item {
+  float: left;
+  height: 2.25rem;
+  line-height: 2.25rem;
+  text-align: center;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  letter-spacing: 0.0625rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+.main-container .tab-list .tab-active {
+  color: #fff;
+  background-color: #02A0E9;
+}
+.main-container .tab-container {
+  overflow: hidden;
+}
+.main-container .tab-container .tab-content {
+  display: none;
+}
+.main-container .tab-container .tab-content .operation-list {
+  margin: 0;
+  padding: 0;
+  height: 3rem;
+}
+.main-container .tab-container .tab-content .operation-list .operation-item {
+  float: left;
+  height: 3rem;
+  line-height: 3rem;
+  text-align: center;
+  letter-spacing: 0.0625rem;
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  display : none;
+}
+.main-container .tab-container .tab-content .check-table {
+  display: none;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 17.5rem;
+  position: absolute;
+  border-radius: 0.1875rem;
+  border: solid #e0e0e0 0.0625rem;
+}
+.main-container .tab-container .tab-content .check-table .table-title {
+  position: relative;
+  left: 2.9375rem;
+  top: 0.625rem;
+  white-space: nowrap;
+  font-weight: bold;
+  font-size: 0.9375rem;
+  width: 91.8125rem;
+  border-bottom: #ccc dashed 0.0625rem;
+}
+.main-container .tab-container .tab-content .check-table .table-info {
+  text-align: left;
+  font-size: 0.875rem;
+  position: relative;
+}
+.main-container .tab-container .tab-content .check-table .table-info .check-info .info-title {
+  position: relative;
+  overflow: hidden;
+  font-weight: bold;
+  left: 2.9375rem;
+  top: 1.25rem;
+}
+.main-container .tab-container .tab-content .check-table .table-info .check-info .check-item {
+  position: relative;
+  top: -0.25rem;
+  left: 8rem;
+  margin: 0 auto 1.5625rem 2.5rem;
+}
+.main-container .tab-container .tab-content .check-table .table-info .check-info .check-item label {
+  width: 6.25rem;
+  letter-spacing: 0.0625rem;
+}
+.main-container .tab-container .tab-content .check-table .table-info .check-info .check-item .input {
+  width: 12.5rem;
+  height: 2rem;
+  outline: none;
+  border-radius: 0.1875rem;
+  border: solid 0.0625rem #e0e0e0;
+  font-size: 0.875rem;
+  padding-left: 0.375rem;
+  padding-right: 0.375rem;
+  margin-right: 1.875rem;
+}
+.main-container .tab-container .tab-content .check-table .table-info .check-info .check-item .btn {
+  width: 7.5rem;
+  height: 2rem;
+  background-color: #F4494E;
+  border: none;
+  color: #fff;
+  outline: none;
+  border-radius: 0.1875rem;
+  letter-spacing: 0.0625rem;
+  font-size: 0.875rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+.main-container .tab-container .tab-content .check-table .table-info .check-info .check-item #searchBtn {
+  margin-left: -1.875rem;
+}
+.main-container .tab-container .tab-content .check-table .table-info .check-info .check-item .year {
+  margin-left: 1.875rem;
+}
+.main-container .tab-container .tab-content .check-table .table-info .check-info .check-item .education {
+  margin-left: 3.75rem;
+}
+.main-container .tab-container .tab-content .check-table .table-info .check-info .check-item .organization {
+  margin-left: 1.875rem;
+}
+.main-container .tab-container .tab-content .check-table .table-info .check-info .check-item .profession {
+  margin-left: -1.875rem;
+}
+.main-container .tab-container .tab-content .check-table .table-info .check-info .check-item .classInfo {
+  margin-left: 1.875rem;
+}
+.main-container .tab-container .tab-content .add-table {
+  display: none;
+  background-color: #f0f0f0;
+  height: 31.25rem;
+  width: 100%;
+  position: absolute;
+  border: solid #e0e0e0 0.0625rem;
+  border-radius: 0.1875rem;
+}
+.main-container .tab-container .tab-content .add-table .table-title {
+  position: relative;
+  left: 2.9375rem;
+  top: 1.5625rem;
+  padding-bottom: 0.625rem;
+  white-space: nowrap;
+  font-weight: bold;
+  font-size: 0.9375rem;
+  border-bottom: #ccc dashed 0.0625rem;
+  width: 91.8125rem;
+}
+.main-container .tab-container .tab-content .add-table .table-info {
+  font-size: 0.875rem;
+  position: relative;
+}
+.main-container .tab-container .tab-content .add-table .table-info .check-info {
+  padding: 0 auto 0 auto;
+}
+.main-container .tab-container .tab-content .add-table .table-info .check-info .info-title {
+  position: relative;
+  overflow: hidden;
+  font-weight: bold;
+  top: 1.75rem;
+  left: 2.9375rem;
+}
+.main-container .tab-container .tab-content .add-table .table-info .check-info .check-item {
+  position: relative;
+  top: 0.25rem;
+  left: 8rem;
+  margin: 0 auto 1.5625rem 1.875rem;
+}
+.main-container .tab-container .tab-content .add-table .table-info .check-info .check-item label {
+  width: 6.25rem;
+  letter-spacing: 0.0625rem;
+}
+.main-container .tab-container .tab-content .add-table .table-info .check-info .check-item .input {
+  width: 12.5rem;
+  height: 2rem;
+  outline: none;
+  border-radius: 0.1875rem;
+  border: solid 0.0625rem #e0e0e0;
+  font-size: 0.8125rem;
+  padding-left: 0.625rem;
+  padding-right: 0.9375rem;
+  margin-right: 1.875rem;
+}
+.main-container .tab-container .tab-content .add-table .table-info .check-info .check-item .btn {
+  width: 7.5rem;
+  height: 2rem;
+  background-color: #F4494E;
+  color: white;
+  border: none;
+  border-radius: 0.1875rem;
+  letter-spacing: 0.0625rem;
+  font-size: 0.875rem;
+  font-weight: bolder;
+  cursor: pointer;
+}
+.main-container .tab-container .tab-content .add-table .table-info .check-info .check-item .name {
+  margin-left: 1.875rem;
+}
+.main-container .tab-container .tab-content .add-table .table-info .check-info .check-item .sex {
+  margin-left: 1.875rem;
+}
+.main-container .tab-container .tab-content .add-table .table-info .check-info .check-item .race {
+  margin-left: 3.75rem;
+}
+.main-container .tab-container .tab-content .add-table .table-info .check-info .check-item .birthday {
+  margin-left: 1.875rem;
+}
+.main-container .tab-container .tab-content .add-table .table-info .check-info .check-item .place {
+  margin-left: 1.875rem;
+}
+.main-container .tab-container .tab-content .add-table .table-info .check-info .check-item .health {
+  margin-left: 1.875rem;
+}
+.main-container .tab-container .tab-content .add-table .table-info .check-info .check-item .year {
+  margin-left: 3.75rem;
+}
+.main-container .tab-container .tab-content .add-table .table-info .check-info .check-item .education {
+  margin-left: 3.75rem;
+}
+.main-container .tab-container .content-active {
+  display: block;
+}
+.main-container .tab-container .page-list {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #EBEEF7;
+  margin-top: 0.9375rem;
+}
+.main-container .tab-container .page-list .page-item {
+  height: 2.5rem;
+  font-size: 0.875rem;
+  line-height: 2.5rem;
+}
+.main-container .tab-container .page-list .page-info {
+  float: left;
+  margin-left: 0.9375rem;
+}
+.main-container .tab-container .page-list .page-info span {
+  margin-left: 0.3125rem;
+  margin-right: 0.3125rem;
+}
+.main-container .tab-container .page-list .page-operation {
+  float: right;
+  margin-right: 0.625rem;
+}
+.main-container .tab-container .page-list .page-operation a {
+  cursor: pointer;
+  padding-left: 0.3125rem;
+  padding-right: 0.3125rem;
+}
+.main-container .tab-container .page-list .page-operation a:hover {
+  color: #ff6700;
+}
+.main-container .tab-container .page-list .page-operation .page-active {
+  color: red;
+  font-weight: 600;
+}
+.main-container .tab-container .page-list .page-operation .page-disable {
+  color: #B9B9B9;
+  cursor: default;
+}
+.main-container .tab-container .page-list .page-operation .page-disable:hover {
+  color: #B9B9B9;
+}
+/*# sourceMappingURL=archive.css.map */

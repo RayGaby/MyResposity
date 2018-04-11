@@ -1,0 +1,72 @@
+package cn.gov.hrss.ln.stuenroll.setting;
+
+import java.io.File;
+
+import com.jfinal.plugin.activerecord.Record;
+
+import cn.gov.hrss.ln.stuenroll.db.I_StudentAppUserDao;
+
+public class SettingService implements I_SettingService {
+	private I_StudentAppUserDao i_StudentAppUserDao;
+
+	@Override
+	public boolean setIcon(long id, File file) {
+		boolean bool = i_StudentAppUserDao.setIcon(id, file);
+		return bool;
+	}
+
+	@Override
+	public File getIcon(long id) {
+		File file = i_StudentAppUserDao.getIcon(id);
+		return file;
+	}
+
+	@Override
+	public Record getInfo(long id) {
+		Record record = i_StudentAppUserDao.getInfo(id);
+		return record;
+
+	}
+
+	@Override
+	public Record getMoreInfo(long id) {
+		Record record = i_StudentAppUserDao.getMoreInfo(id);
+		return record;
+
+	}
+
+	@Override
+	public String setPassword(long id, String username, String password, String newpassword) {
+		String info = i_StudentAppUserDao.setPassword(id, username, password, newpassword);
+		return info;
+	}
+
+	@Override
+	public boolean setTel(long id, long tel) {
+		boolean bool = i_StudentAppUserDao.setTel(id, tel);
+		return bool;
+
+	}
+
+	@Override
+	public boolean setEmail(long id, String email) {
+		boolean bool = i_StudentAppUserDao.setEmail(id, email);
+		return bool;
+
+	}
+
+	@Override
+	public boolean setNickname(long id, String nickname) {
+		boolean bool = i_StudentAppUserDao.setNickname(id, nickname);
+		return bool;
+	}
+
+	public I_StudentAppUserDao getI_StudentAppUserDao() {
+		return i_StudentAppUserDao;
+	}
+
+	public void setI_StudentAppUserDao(I_StudentAppUserDao i_StudentAppUserDao) {
+		this.i_StudentAppUserDao = i_StudentAppUserDao;
+	}
+
+}

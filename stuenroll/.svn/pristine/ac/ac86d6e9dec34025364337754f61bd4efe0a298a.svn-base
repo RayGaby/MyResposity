@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="../../css/base.css" />
+		<link rel="stylesheet" type="text/css" href="../../font/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="../../js/plugin/toastr.css" />
+		<link rel="stylesheet" type="text/css" href="list.css" />
+	</head>
+
+	<body>
+		<div class="main-container">
+			<dl class="tab-list no-select">
+				<dt class="tab-item">用户列表</dt>
+			</dl>
+			<div class="tab-container">
+				<div class="tab-content">
+					<dl class="operation-list no-select">
+						<a class="operation-item" name="add" href= "user.html" >添加</a>
+						<dt class="operation-item" name="update">修改</dt>
+						<dt class="operation-item" name="delete">删除</dt>
+						<dt class="operation-item" id="infile">导入</dt>
+						<dt class="operation-item" id="outfile">导出</dt>
+					</dl>
+					<div class="Infile-container">
+						<div class="filetitle-content">
+							<h1 class="file-title">导入文件</h1>
+						</div>
+						<div class="file-btn">
+							<input type="button" class="btn gray" name="Excel" id="Excel" value="Excel"/>
+							
+						</div>
+						<div class="file-btn">
+							<input type="button" class="btn gray" name="XML" id="XML" value="XML"/>
+							
+						</div>
+						<div class="file-btn">
+							<input type="button" class="btn gray" name="CSV" id="CSV" value="CSV"/>
+						</div>
+					</div>
+					<div class="Outfile-container">
+						<div class="filetitle-content">
+							<h1 class="file-title">导出文件</h1>
+						</div>
+						<div class="file-btn">
+							<input type="button" name="Excel" href="#" onClick = "$('#class-table').tableExport({type:'excel',separator:';',escape:'false'});" id="Excel" class="btn gray" value="Excel" />
+						</div>
+						<div class="file-btn">
+							<input type="button" href="#" onClick = "$('#class-table').tableExport({type:'xml',separator:';',escape:'false'});"class="btn gray" name="XML" id="XML" value="XML"/>
+						</div>
+						<div class="file-btn">
+							<input type="button" href="#" onClick = "$('#class-table').tableExport({type:'csv',separator:';',escape:'false'});" class="btn gray" name="CSV" id="CSV" value="CSV"/>
+						</div>
+					</div>
+					<div class="showclass-container">
+						<div class="title-content">
+							<h1 class="title">班级成员</h1>
+						</div>
+						<div class="showtab-content">
+							<table class="class-table" id=class-table>
+								<tr>
+								<th>序号</th>
+								<th>姓名</th>
+								<th>性别</th>
+								<th>电话</th>
+								<th>身份证号</th>
+								<th>学生状态</th>
+								</tr>
+								
+							</table>
+							
+							<div class="page-content">
+								<dl class="classpage-list">
+								<dt class="classpage-item classpage-info">
+									总计<span id="totalRows"></span>条记录，<span id="currentPage">1</span>/<span id="totalPages"></span>页
+								</dt>
+								<dt class="classpage-item classpage-operation">
+									<a name="prevBtn">上一页</a><a name="nextBtn">下一页</a>
+								</dt>
+							</dl>
+							</div>
+						</div>
+						<div class="btn-item">
+							<input type="button" class="btn red" name="save" value="关闭" tabindex="-1" data-index = "1" pattern="^[a-zA-Z0-9\u4e00-\u9fa5]{4,30}$" />
+						</div>
+						
+					</div>
+					<table class="data-table">
+						<tr>
+							<th></th>
+							<th>序号</th>
+							<th>用户名</th>
+							<th>姓名</th>
+							<th>机构名称</th>
+							<th>角色</th>
+							<th>电话</th>
+							<th id="email-item">电子信箱</th>
+							<th>用户状态</th>
+						</tr>
+					</table>
+					<dl class="page-list no-select">
+						<dt class="page-item page-info">
+						总计<span id="totalRows"></span>条记录，<span id="currentPage">1</span>/<span id="totalPages"></span>页
+					</dt>
+						<dt class="page-item page-operation">
+						<a name="prevBtn">上一页</a> <a class="page-active page-test">1</a> <a class="page-test">2</a> <a class="page-test">3</a> <a class="page-test">4</a> <a class="page-test">5</a> <a name="nextBtn">下一页</a>
+					</dt>
+					</dl>
+				</div>
+				
+			</div>
+			
+		</div>
+
+		<script src="../../js/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/pid.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/plugin/toastr.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/permission.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/tab.js" type="text/javascript" charset="utf-8"></script>
+		<script src="list.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/tableExport.js" charset="utf-8"></script>
+		<script src="../../js/jquery.base64.js" charset="utf-8"></script>
+	</body>
+
+</html>

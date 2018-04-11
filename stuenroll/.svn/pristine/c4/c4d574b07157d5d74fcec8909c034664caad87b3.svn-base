@@ -1,0 +1,654 @@
+body {
+  background-color: #e7e7e7;
+}
+.main-container {
+  height: 89.375rem;
+  display: -moz-box;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+.main-container .update-color {
+  color: #E86167;
+}
+.main-container .info-content {
+  overflow: hidden;
+  height: inherit;
+  padding-right: 0.9375rem;
+  flex-grow: 1;
+  min-width: 81.875rem;
+}
+.main-container .info-content .info-list {
+  overflow: hidden;
+}
+.main-container .info-content .info-list .info-item {
+  height: 22.34375rem;
+  overflow: hidden;
+}
+.main-container .info-content .info-list .info-item:nth-child(1) {
+  background-color: #fff;
+}
+.main-container .info-content .info-list .info-item:nth-child(1) .title {
+  height: 7.5rem;
+  padding-left: 3.75rem;
+  padding-top: 2.1875rem;
+}
+.main-container .info-content .info-list .info-item:nth-child(1) .title .first-title {
+  float: left;
+  background-color: black;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.625rem;
+  height: 2.8125rem;
+  width: 9.375rem;
+  padding-left: 1.25rem;
+  line-height: 2.8125rem;
+}
+.main-container .info-content .info-list .info-item:nth-child(1) .title .next-title {
+  float: left;
+  font-size: 1.25rem;
+  font-weight: 400;
+  padding-left: 1.25rem;
+  line-height: 1.6875rem;
+  border-bottom: solid 0.3125rem black;
+}
+.main-container .info-content .info-list .info-item:nth-child(1) .input-content {
+  position: relative;
+}
+.main-container .info-content .info-list .info-item:nth-child(1) .input-content .input-flag .sign {
+  position: absolute;
+  width: 3.75rem;
+  height: 2.1875rem;
+  border: solid 0.25rem #297ACC;
+  background-color: #3398FD;
+  border-radius: 30%;
+  border-top-right-radius: 100%;
+  border-bottom-right-radius: 100%;
+  color: #fff;
+  text-align: center;
+  line-height: 1.75rem;
+  font-size: 0.9375rem;
+  left: 7.5rem;
+}
+.main-container .info-content .info-list .info-item:nth-child(1) .input-content .input-flag .desc {
+  position: absolute;
+  left: 12.5rem;
+  font-size: 1.25rem;
+  letter-spacing: 0.0625rem;
+  text-align: center;
+  width: inherit;
+}
+.main-container .info-content .info-list .info-item:nth-child(1) .input-content .input-list {
+  position: absolute;
+  padding-left: 25rem;
+}
+.main-container .info-content .info-list .info-item:nth-child(1) .input-content .input-list .input-item {
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
+}
+.main-container .info-content .info-list .info-item:nth-child(1) .input-content .input-list .input-item label {
+  width: 4.6875rem;
+  font-size: 0.875rem;
+  letter-spacing: 0.0625rem;
+  display: inline-block;
+}
+.main-container .info-content .info-list .info-item:nth-child(1) .input-content .input-list .input-item .input {
+  width: 18.75rem;
+  height: 2.5rem;
+  outline: none;
+  border-radius: 0.1875rem;
+  border: solid 0.0625rem #e0e0e0;
+  color: #333;
+  font-size: 0.875rem;
+  letter-spacing: 0.0625rem;
+  padding-left: 0.9375rem;
+  padding-right: 0.9375rem;
+}
+.main-container .info-content .info-list .info-item:nth-child(1) .input-content .input-photo {
+  background-color: #E0E0E0;
+  left: 62.5rem;
+  position: absolute;
+  width: 11.25rem;
+  height: 11.25rem;
+}
+.main-container .info-content .info-list .info-item:nth-child(1) .input-content .input-photo .selectFile {
+  width: 11.25rem;
+  height: 11.25rem;
+  overflow: hidden;
+  border-radius: 0.3125rem;
+}
+.main-container .info-content .info-list .info-item:nth-child(1) .input-content .input-photo .selectFile .file {
+  width: 12.5rem;
+}
+.main-container .info-content .info-list .info-item:nth-child(1) .input-content .input-photo .selectFile .preView {
+  width: 12.5rem;
+  height: 12.5rem;
+}
+.main-container .info-content .info-list .info-item:nth-child(1) .input-content .input-photo .saveFile-button {
+  margin-top: 0.625rem;
+  padding-left: 3.25rem;
+}
+.main-container .info-content .info-list .info-item:nth-child(1) .input-content .input-photo .saveFile-button .save-btn {
+  width: 5rem;
+  height: 1.5625rem;
+  border-radius: 0.125rem;
+  border: none;
+  font-weight: bold;
+  letter-spacing: 0.0625rem;
+  font-size: 0.625rem;
+  outline: none;
+  cursor: pointer;
+  color: white;
+  background-color: #02A0E9;
+}
+.main-container .info-content .info-list .info-item:nth-child(2) {
+  background-color: #ECF0F1;
+}
+.main-container .info-content .info-list .info-item:nth-child(2) .input-content {
+  position: relative;
+}
+.main-container .info-content .info-list .info-item:nth-child(2) .input-content .input-flag {
+  padding-top: 1.875rem;
+}
+.main-container .info-content .info-list .info-item:nth-child(2) .input-content .input-flag .sign {
+  position: absolute;
+  width: 3.75rem;
+  height: 2.1875rem;
+  border: solid 0.25rem #297ACC;
+  background-color: #3398FD;
+  border-radius: 30%;
+  border-top-right-radius: 100%;
+  border-bottom-right-radius: 100%;
+  color: #fff;
+  text-align: center;
+  line-height: 1.75rem;
+  font-size: 0.9375rem;
+  left: 7.5rem;
+}
+.main-container .info-content .info-list .info-item:nth-child(2) .input-content .input-flag .desc {
+  position: absolute;
+  padding-left: 12.5rem;
+  font-size: 1.25rem;
+  letter-spacing: 0.0625rem;
+  text-align: center;
+  width: inherit;
+}
+.main-container .info-content .info-list .info-item:nth-child(2) .input-content .input-list {
+  position: absolute;
+  padding-left: 25rem;
+}
+.main-container .info-content .info-list .info-item:nth-child(2) .input-content .input-list .input-item {
+  padding-bottom: 1.25rem;
+}
+.main-container .info-content .info-list .info-item:nth-child(2) .input-content .input-list .input-item label {
+  width: 4.6875rem;
+  font-size: 0.875rem;
+  letter-spacing: 0.0625rem;
+  display: inline-block;
+}
+.main-container .info-content .info-list .info-item:nth-child(2) .input-content .input-list .input-item .input {
+  width: 18.75rem;
+  height: 2.5rem;
+  outline: none;
+  border-radius: 0.1875rem;
+  border: solid 0.0625rem #e0e0e0;
+  color: #333;
+  font-size: 0.875rem;
+  letter-spacing: 0.0625rem;
+  padding-left: 0.9375rem;
+  padding-right: 0.9375rem;
+}
+.main-container .info-content .info-list .info-item:nth-child(3) {
+  background-color: #fff;
+}
+.main-container .info-content .info-list .info-item:nth-child(3) .input-content {
+  position: relative;
+}
+.main-container .info-content .info-list .info-item:nth-child(3) .input-content .input-flag {
+  padding-top: 1.875rem;
+}
+.main-container .info-content .info-list .info-item:nth-child(3) .input-content .input-flag .sign {
+  position: absolute;
+  width: 3.75rem;
+  height: 2.1875rem;
+  border: solid 0.25rem #297ACC;
+  background-color: #3398FD;
+  border-radius: 30%;
+  border-top-right-radius: 100%;
+  border-bottom-right-radius: 100%;
+  color: #fff;
+  text-align: center;
+  line-height: 1.75rem;
+  font-size: 0.9375rem;
+  left: 7.5rem;
+}
+.main-container .info-content .info-list .info-item:nth-child(3) .input-content .input-flag .desc {
+  position: absolute;
+  padding-left: 12.5rem;
+  font-size: 1.25rem;
+  letter-spacing: 0.0625rem;
+  text-align: center;
+  width: inherit;
+}
+.main-container .info-content .info-list .info-item:nth-child(3) .input-content .input-list {
+  position: absolute;
+  padding-left: 25rem;
+}
+.main-container .info-content .info-list .info-item:nth-child(3) .input-content .input-list .input-item {
+  padding-bottom: 1.5625rem;
+}
+.main-container .info-content .info-list .info-item:nth-child(3) .input-content .input-list .input-item label {
+  width: 4.6875rem;
+  font-size: 0.875rem;
+  letter-spacing: 0.0625rem;
+  display: inline-block;
+}
+.main-container .info-content .info-list .info-item:nth-child(3) .input-content .input-list .input-item .input {
+  width: 18.75rem;
+  height: 2.5rem;
+  outline: none;
+  border-radius: 0.1875rem;
+  border: solid 0.0625rem #e0e0e0;
+  color: #333;
+  font-size: 0.875rem;
+  letter-spacing: 0.0625rem;
+  padding-left: 0.9375rem;
+  padding-right: 0.9375rem;
+}
+.main-container .info-content .info-list .info-item:nth-child(3) .input-content .input-list .input-item .btn {
+  width: 8.4375rem;
+  height: 1.875rem;
+  border-radius: 0.1875rem;
+  border: none;
+  font-weight: bold;
+  letter-spacing: 0.0625rem;
+  font-size: 0.875rem;
+  outline: none;
+  cursor: pointer;
+}
+.main-container .info-content .info-list .info-item:nth-child(3) .input-content .input-list .input-item .green {
+  color: #fff;
+  background-color: #0EC093;
+}
+.main-container .info-content .info-list .info-item:nth-child(3) .input-content .input-list .input-item .green:active {
+  background-color: #10D8A5;
+}
+.main-container .info-content .info-list .info-item:nth-child(3) .input-content .input-list .input-item .red {
+  color: #fff;
+  background-color: #E86167;
+}
+.main-container .info-content .info-list .info-item:nth-child(3) .input-content .input-list .input-item .red:active {
+  background-color: #EB777C;
+}
+.main-container .info-content .info-list .info-item:nth-child(4) {
+  background-color: #ECF0F1;
+}
+.main-container .info-content .info-list .info-item:nth-child(4) .last-title {
+  width: 12.5rem;
+  color: #666666;
+  padding-left: 2.625rem;
+  float: left;
+}
+.main-container .info-content .info-list .info-item:nth-child(4) .text {
+  float: left;
+  color: #666666;
+}
+.main-container .info-content .info-list .info-item:nth-child(4) .text .first-text {
+  float: left;
+  height: 15rem;
+  width: 25rem;
+}
+.main-container .info-content .info-list .info-item:nth-child(4) .text .line {
+  float: left;
+  width: 0.0625rem;
+  height: 15rem;
+  background-color: #666666;
+  margin-left: 5.625rem;
+}
+.main-container .info-content .info-list .info-item:nth-child(4) .text .second-text {
+  float: left;
+  margin-left: 5.625rem;
+  height: 15rem;
+  width: 25rem;
+}
+.main-container .info-content .info-list .info-item:nth-child(4) .text .sub-title {
+  font-size: 0.875rem;
+}
+.main-container .info-content .info-list .info-item:nth-child(4) .text .desc {
+  font-size: 0.875rem;
+}
+.main-container .myfriends-container {
+  height: 89.375rem;
+  width: 20.625rem;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+.main-container .myfriends-container .search-hidden {
+  height: 0.9375rem;
+  width: 20.625rem;
+  background-color: #E7E7E7;
+  position: relative;
+  z-index: 2;
+}
+.main-container .myfriends-container .myfriends-title {
+  position: relative;
+  height: 5rem;
+  background-color: #fff;
+  width: 20.625rem;
+  z-index: 2;
+}
+.main-container .myfriends-container .myfriends-title .title-context {
+  height: 2.5rem;
+  float: left;
+  margin: 1.25rem 0 0 1.875rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.0625rem;
+  color: #3999FF;
+}
+.main-container .myfriends-container .myfriends-title .title-mark {
+  height: 2.0625rem;
+  width: 1.375rem;
+  text-align: center;
+  margin-top: 0.9375rem;
+  margin-left: 0.625rem;
+  font-size: 1.625rem;
+  font-weight: 700;
+  background-color: #3399FF;
+  color: #fff;
+  float: left;
+  cursor: pointer;
+}
+.main-container .myfriends-container .myfriends-list {
+  background-color: #fff;
+  height: 81.25rem;
+  width: 20.625rem;
+  position: relative;
+}
+.main-container .myfriends-container .myfriends-list .myfriends-search {
+  height: 7.5rem;
+  width: 20.625rem;
+  text-align: center;
+  position: absolute;
+  top: -7.5rem;
+  position: relative;
+  z-index: 1;
+  background-color: rgba(0, 204, 204, 0.949019607843137);
+  transition: all 0.75s;
+}
+.main-container .myfriends-container .myfriends-list .myfriends-search .input {
+  width: 17.5rem;
+  height: 2.8125rem;
+  line-height: 2.8125rem;
+  margin-top: 2.3125rem;
+  padding-left: 3.4375rem;
+  padding-right: 2.8125rem;
+  border-top-left-radius: 2.8125rem;
+  border-top-right-radius: 2.8125rem;
+  border-bottom-left-radius: 2.8125rem;
+  border-bottom-right-radius: 2.8125rem;
+  font-size: 0.875rem;
+  border: solid #e9e9e9 0.0625rem;
+  color: #333;
+  letter-spacing: 0.0625rem;
+  outline: none;
+  border: none;
+}
+.main-container .myfriends-container .myfriends-list .myfriends-search .magnifier {
+  height: 1.375rem;
+  width: 1.375rem;
+  position: absolute;
+  top: 3.0625rem;
+  left: 2.4375rem;
+  cursor: pointer;
+}
+.main-container .myfriends-container .myfriends-list .myfriends-search .search-furcation {
+  height: 1.25rem;
+  width: 1.25rem;
+  position: absolute;
+  top: 3.0625rem;
+  left: 16.375rem;
+  cursor: pointer;
+}
+.main-container .myfriends-container .myfriends-list .list-container {
+  height: inherit;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 0;
+}
+.main-container .myfriends-container .myfriends-list .list-container .list-item {
+  height: 6.25rem;
+  padding-left: 1.1875rem;
+}
+.main-container .myfriends-container .myfriends-list .list-container .list-item .photo-container {
+  margin-top: 0.9375rem;
+  float: left;
+  width: 5.625rem;
+  position: relative;
+}
+.main-container .myfriends-container .myfriends-list .list-container .list-item .photo-container .user-photo {
+  float: left;
+  width: 4.375rem;
+  height: 4.375rem;
+  border-radius: 100%;
+  border: solid 0.125rem #939395;
+}
+.main-container .myfriends-container .myfriends-list .list-container .list-item .photo-container .small-circle {
+  float: left;
+  position: absolute;
+  top: 3.375rem;
+  left: 3.1875rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 100%;
+  background-color: #3188CF;
+  border: solid 0.25rem #fff;
+}
+.main-container .myfriends-container .myfriends-list .list-container .list-item .photo-container .circle-green {
+  background-color: #82D15C;
+}
+.main-container .myfriends-container .myfriends-list .list-container .list-item .photo-container .circle-red {
+  background-color: #F55D5E;
+}
+.main-container .myfriends-container .myfriends-list .list-container .list-item .personal-info {
+  float: left;
+  width: 10rem;
+  height: 5rem;
+  margin-top: 0.9375rem;
+}
+.main-container .myfriends-container .myfriends-list .list-container .list-item .personal-info .info-container {
+  margin: 0;
+}
+.main-container .myfriends-container .myfriends-list .list-container .list-item .personal-info .info-container .myfriends-name {
+  font-size: 1.125rem;
+  font-weight: 600;
+  padding-bottom: 0.3333333333333333rem;
+}
+.main-container .myfriends-container .myfriends-list .list-container .list-item .personal-info .info-container .myfriends-role {
+  font-size: 0.75rem;
+}
+.main-container .myfriends-container .myfriends-list .list-container .list-item .personal-info .info-container .myfriends-organization {
+  font-size: 0.75rem;
+}
+.main-container .myfriends-container .myfriends-list .list-container .list-item .action {
+  float: left;
+  margin-top: 0.9375rem;
+}
+.main-container .myfriends-container .myfriends-list .list-container .list-item .action .star {
+  height: 1.375rem;
+  width: 1.375rem;
+  float: left;
+  margin-right: 0.3125rem;
+  color: #fff;
+  cursor: pointer;
+}
+.main-container .myfriends-container .myfriends-list .list-container .list-item .action .furcation {
+  height: 1.375rem;
+  width: 1.375rem;
+  float: left;
+  margin-right: 0.125rem;
+  color: #fff;
+  cursor: pointer;
+}
+.main-container .myfriends-container .myfriends-list .list-container .list-item .action .friend-id {
+  display: none;
+}
+.main-container .myfriends-container .myfriends-list .list-container .list-item .action-hidden {
+  display: none;
+}
+.main-container .myfriends-container .myfriends-list .list-container .bgc-active {
+  background-color: #3399FF;
+  color: #fff;
+}
+.main-container .myfriends-container .myfriends-list .list-container .add-list-item {
+  height: 6.25rem;
+  padding-left: 1.5625rem;
+}
+.main-container .myfriends-container .myfriends-list .list-container .add-list-item .add-photo-container {
+  margin-top: 0.9375rem;
+  float: left;
+  width: 5.625rem;
+  position: relative;
+}
+.main-container .myfriends-container .myfriends-list .list-container .add-list-item .add-photo-container .add-user-photo {
+  float: left;
+  width: 4.375rem;
+  height: 4.375rem;
+  border-radius: 100%;
+  border: solid 0.125rem #F0C8A1;
+}
+.main-container .myfriends-container .myfriends-list .list-container .add-list-item .add-photo-container .add-small-circle {
+  float: left;
+  position: absolute;
+  top: 3.375rem;
+  left: 3.1875rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 100%;
+  background-color: #3188CF;
+  border: solid 0.25rem #fff;
+}
+.main-container .myfriends-container .myfriends-list .list-container .add-list-item .add-photo-container .add-circle-green {
+  background-color: #82D15C;
+}
+.main-container .myfriends-container .myfriends-list .list-container .add-list-item .add-photo-container .add-circle-red {
+  background-color: #F55D5E;
+}
+.main-container .myfriends-container .myfriends-list .list-container .add-list-item .add-personal-info {
+  float: left;
+  width: 10rem;
+  height: 5rem;
+  margin-top: 0.9375rem;
+}
+.main-container .myfriends-container .myfriends-list .list-container .add-list-item .add-personal-info .add-info-container {
+  margin: 0;
+}
+.main-container .myfriends-container .myfriends-list .list-container .add-list-item .add-personal-info .add-info-container .add-myfriends-name {
+  font-size: 1.125rem;
+  font-weight: 600;
+  padding-bottom: 0.3333333333333333rem;
+  color: #EF7600;
+}
+.main-container .myfriends-container .myfriends-list .list-container .add-list-item .add-personal-info .add-info-container .add-myfriends-role {
+  font-size: 0.75rem;
+  color: #EF7600;
+}
+.main-container .myfriends-container .myfriends-list .list-container .add-list-item .add-personal-info .add-info-container .add-myfriends-organization {
+  font-size: 0.75rem;
+  color: #EF7600;
+}
+.main-container .myfriends-container .myfriends-list .list-container .add-list-item .add-action {
+  float: left;
+  margin-top: 2.0625rem;
+  cursor: pointer;
+}
+.main-container .myfriends-container .myfriends-list .list-container .add-list-item .add-action .add {
+  width: 3.125rem;
+  height: 1.625rem;
+  outline: none;
+  background-color: #F0B478;
+  border-radius: 0.3125rem;
+  border: solid #e9e9e9 0.0625rem;
+  font-weight: bold;
+  font-size: 0.875rem;
+  letter-spacing: 0.0625rem;
+  color: #fff;
+  cursor: pointer;
+}
+.main-container .myfriends-container .myfriends-list .list-container .add-list-item .add-action .add:active {
+  background-color: #F0B981;
+}
+.main-container .myfriends-container .myfriends-list .list-container-hidden {
+  display: none;
+  height: 62.5rem;
+  width: 20.625rem;
+  background-color: #fff;
+}
+.main-container .myfriends-container .myfriends-bottom {
+  width: 20.625rem;
+}
+.main-container .myfriends-container .myfriends-bottom .page-list {
+  margin: 0;
+  padding-top: 0.625rem;
+  overflow: hidden;
+  background-color: #EBEEF7;
+}
+.main-container .myfriends-container .myfriends-bottom .page-list .page-item {
+  height: 2.1875rem;
+  line-height: 2.1875rem;
+  font-size: 0.875rem;
+  font-weight: bold;
+}
+.main-container .myfriends-container .myfriends-bottom .page-list .page-operation1 {
+  float: left;
+  width: 25%;
+  background-color: #3399FF;
+  border-top-left-radius: 1.875rem;
+  border-top-right-radius: 0.5625rem;
+  border-bottom-left-radius: 1.875rem;
+  border-bottom-right-radius: 0.5625rem;
+}
+.main-container .myfriends-container .myfriends-bottom .page-list .page-operation1 a {
+  color: #fff;
+  cursor: pointer;
+  margin-left: 0.75rem;
+  padding-left: 0.3125rem;
+  padding-right: 0.3125rem;
+}
+.main-container .myfriends-container .myfriends-bottom .page-list .page-operation1 a:hover {
+  color: #ff6700;
+}
+.main-container .myfriends-container .myfriends-bottom .page-list .page-operation2 {
+  float: right;
+  width: 25%;
+  background-color: #3399FF;
+  border-top-left-radius: 0.5625rem;
+  border-top-right-radius: 1.875rem;
+  border-bottom-left-radius: 0.5625rem;
+  border-bottom-right-radius: 1.875rem;
+}
+.main-container .myfriends-container .myfriends-bottom .page-list .page-operation2 a {
+  color: #fff;
+  cursor: pointer;
+  margin-left: 0.75rem;
+  padding-left: 0.3125rem;
+  padding-right: 0.3125rem;
+}
+.main-container .myfriends-container .myfriends-bottom .page-list .page-operation2 a:hover {
+  color: #ff6700;
+}
+.main-container .myfriends-container .myfriends-bottom .page-list .page-info {
+  float: left;
+  width: 50%;
+  text-align: center;
+}
+.main-container .myfriends-container .myfriends-bottom .page-list .page-info span {
+  margin-left: 0.3125rem;
+  margin-right: 0.3125rem;
+}
+.main-container .error {
+  color: red !important;
+}
+/*# sourceMappingURL=update.css.map */

@@ -1,0 +1,70 @@
+package cn.gov.hrss.ln.stuenroll.db;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.List;
+
+import com.jfinal.plugin.activerecord.Record;
+
+/**
+ * Friend表接口
+ * 
+ * @author Administrator
+ *
+ */
+public interface I_FriendDao {
+	/**
+	 * 查询好友记录
+	 * 
+	 * @param map
+	 * @param start
+	 * @param length
+	 * @return
+	 */
+	public List<Record> searchFriend(HashMap map,long start,long length);
+	/**
+	 * 查詢user表中的好友
+	 * 
+	 * @param username
+	 * @return
+	 */
+	public Record searchFriendFromUser(String username);
+	/**
+	 * 查询好友总数
+	 * 
+	 * @param map
+	 * @return
+	 */
+	public long searchFriendCount(String username);
+	/**
+	 * 根据ID删除数据
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public int deleteById(Long id);
+	/**
+	 * 好友置顶
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public boolean friendTop(Long id,String username);
+	/**
+	 * 添加好友
+	 * 
+	 * @param username
+	 * @param friendname
+	 * @param role
+	 * @param organization
+	 * @return
+	 */
+	public boolean addFriend(String username,String friendname,String role,String organization);
+	/**
+	 * 获得好友头像id
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public String getPhoto(String name);
+}

@@ -1,0 +1,72 @@
+package cn.gov.hrss.ln.stuenroll.db.mariadb;
+
+import java.util.List;
+
+import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.activerecord.Record;
+
+import cn.gov.hrss.ln.stuenroll.db.I_ProfessionDao;
+
+public class ProfessionDao implements I_ProfessionDao {
+
+	@Override
+	public String searchName(long id) {
+		StringBuffer _builder = new StringBuffer();
+		_builder.append("	SELECT ");
+		_builder.append("	`name` ");
+		_builder.append("	FROM ");
+		_builder.append("	profession ");
+		_builder.append("	WHERE ");
+		_builder.append("	id = ? ");
+
+		String name = Db.queryStr(_builder.toString(), id);
+		return name;
+	}
+
+	@Override
+	public String searchId(String name) {
+		StringBuffer _builder = new StringBuffer();
+		_builder.append("	SELECT ");
+		_builder.append("	id ");
+		_builder.append("	FROM ");
+		_builder.append("	profession ");
+		_builder.append("	WHERE ");
+		_builder.append("	`name` = ? ");
+
+		String id = Db.queryLong(_builder.toString(), name).toString();
+		return id;
+	}
+
+	@Override
+	public List<Record> searchProfessionWithOrganization(String organization) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT DISTINCT ");
+		sql.append("	t.id, ");
+		sql.append("	t.`name` ");
+		sql.append("FROM ");
+		sql.append("	( ");
+		sql.append("		SELECT ");
+		sql.append("			p.`name`, ");
+		sql.append("			CAST(p.id AS CHAR) AS id ");
+		sql.append("		FROM ");
+		sql.append("			organization o ");
+		sql.append("		JOIN organization_join oj ON o.id = oj.organization_id ");
+		sql.append("		JOIN organization_profession op ON op.organization_join_id = oj.id ");
+		sql.append("		JOIN profession p ON op.profession_id = p.id ");
+		sql.append("		WHERE ");
+		sql.append("		o.`name`=? ");
+		sql.append("		AND oj.block = FALSE ");
+		sql.append("		ORDER BY ");
+		sql.append("			p.id ");
+		sql.append("	) t; ");
+
+		List<Record> list = Db.find(sql.toString(),organization);
+		
+		for (Record record : list) {
+			record.set("id", record.getLong("id").toString());
+		}
+		
+		return list;
+	}
+
+}

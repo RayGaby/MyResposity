@@ -1,0 +1,105 @@
+package cn.gov.hrss.ln.stuenroll.enroll;
+
+import java.util.HashMap;
+import java.util.List;
+
+import com.jfinal.aop.Before;
+import com.jfinal.plugin.activerecord.Record;
+import com.jfinal.plugin.activerecord.tx.Tx;
+
+import cn.gov.hrss.ln.stuenroll.db.I_EnrollDao;
+
+public class EnrollService implements I_EnrollService {
+	private I_EnrollDao i_EnrollDao;
+
+	@Override
+	public List<Record> searchEnroll(HashMap map, long start, long length,String index) {
+		List<Record> list = i_EnrollDao.searchEnroll(map, start, length,index);
+		return list;
+	}
+
+	@Override
+	public long searchEnrollCount(HashMap map,String index) {
+		long count = i_EnrollDao.searchEnrollCount(map,index);
+		return count;
+	}
+
+	@Before(Tx.class)
+	@Override
+	public int deleteById(Long[] id) {
+		int i = i_EnrollDao.deleteById(id);
+		return i;
+	}
+
+	public I_EnrollDao getI_EnrollDao() {
+		return i_EnrollDao;
+	}
+
+	public void setI_EnrollDao(I_EnrollDao i_EnrollDao) {
+		this.i_EnrollDao = i_EnrollDao;
+	}
+
+	@Override
+	public int unquit(Long[] id) {
+		int i = i_EnrollDao.unquit(id);
+		return i;
+	}
+	@Override
+	public int quit(Long id,String message) {
+		int i = i_EnrollDao.quit(id,message);
+		return i;
+	}
+
+	@Override
+	public List<Record> getOrganization(Integer year,Long organizationId) {
+		List<Record> list = i_EnrollDao.getOrganization(year,organizationId);
+		return list;
+	}
+
+	@Override
+	public List<Record> getProfession(String organizationId,Integer year) {
+		// TODO Auto-generated method stub
+		List<Record> list = i_EnrollDao.getProfession(organizationId,year);
+		return list;
+	}
+	
+	@Override
+	public List<Record> getPlace(Long organizationId) {
+		// TODO Auto-generated method stub
+		List<Record> list = i_EnrollDao.getPlace(organizationId);
+		return list;
+	}
+
+	@Override
+	public List<Record> getProfessionClass(Long organizationId,Long professionId,Integer year) {
+		// TODO Auto-generated method stub
+		List<Record> list = i_EnrollDao.getProfessionClass(organizationId,professionId,year);
+		return list;
+	}
+
+	@Override
+	public int divide(Long[] id, Long organizationId, Long professionId, String classinId,String place) {
+		int i = i_EnrollDao.divide(id,organizationId,professionId,classinId,place);
+		return i;
+	}
+
+	@Override
+	public int undivided(Long[] id) {
+		int i = i_EnrollDao.undivided(id);
+		return i;
+	}
+
+	@Override
+	public Record getinfo(Long id) {
+		return i_EnrollDao.getinfo(id);
+	}
+
+	//确保修改操作成功,失败则事件回滚
+	@Before(Tx.class)
+	@Override
+	public long update(HashMap map, String method) {
+		// TODO Auto-generated method stub
+		return i_EnrollDao.update(map,method);
+	}
+	
+}

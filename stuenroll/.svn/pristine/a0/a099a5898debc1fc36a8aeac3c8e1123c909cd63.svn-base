@@ -1,0 +1,429 @@
+package cn.gov.hrss.ln.stuenroll.register;
+
+import java.net.URL;
+import java.text.ParseException;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+
+import org.eclipse.xtext.xbase.lib.CollectionLiterals;
+import org.eclipse.xtext.xbase.lib.Exceptions;
+import org.eclipse.xtext.xbase.lib.Pair;
+import org.eclipse.xtext.xbase.lib.Pure;
+import org.eclipse.xtend.lib.annotations.Accessors;
+
+import jodd.datetime.JDateTime;
+
+import com.google.common.base.Objects;
+import com.jfinal.aop.Before;
+import com.jfinal.core.Controller;
+import com.jfinal.plugin.activerecord.Record;
+import com.jfinal.plugin.redis.Cache;
+import com.jfinal.plugin.redis.Redis;
+import com.jfinal.plugin.redis.RedisPlugin;
+import com.jfinal.plugin.spring.Spring;
+
+import cn.gov.hrss.ln.stuenroll.db.I_EnrollRedisDao;
+import cn.gov.hrss.ln.stuenroll.enroll.I_EnrollService;
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.export.ooxml.JRDocxExporter;
+
+/**
+ * 报名Controller
+ * 
+ * @author Viva la Vida
+ *
+ */
+@Spring("registerController")
+public class RegisterController extends Controller implements I_RegisterController {
+	private I_RegisterService i_RegisterService;
+
+	@Override
+	public void searchSelectableEducation() {
+		List<Record> list = i_RegisterService.searchSelectableEducation();
+		renderJson("result", list);
+	}
+
+	@Override
+	public void searchSelectableMajor() {
+		List<Record> list = i_RegisterService.searchSelectableMajor();
+		renderJson("result", list);
+	}
+
+	@Override
+	public void searchSelectableHealthy() {
+		List<Record> list = i_RegisterService.searchSelectableHealthy();
+		renderJson("result", list);
+	}
+
+	@Override
+	public void searchSelectablePolitics() {
+		List<Record> list = i_RegisterService.searchSelectablePolitics();
+		renderJson("result", list);
+	}
+
+	@Override
+	public void searchSelectablePlace() {
+		List<Record> list = i_RegisterService.searchSelectablePlace();
+		renderJson("result", list);
+	}
+
+	// 查询机构和相应专业可选项
+	@Override
+	public void searchOrgnizationJoinInYearAtDropDown() {
+		int year = getParaToInt("year");
+		List<Record> list = i_RegisterService.searchOrgnizationJoinInYearAtDropDown(year);
+		renderJson("result", list);
+
+	}
+
+	@Override
+	public void searchOrgnizationJoinInYearWithProfessionAtDropDown() {
+		int year = getParaToInt("year");
+		Long professionId = getParaToLong("professionId");
+		List<Record> list = i_RegisterService.searchOrgnizationJoinInYearWithProfessionAtDropDown(year, professionId);
+		renderJson("result", list);
+	}
+
+	@Override
+	public void searchProfessionInYearAtDropDown() {
+		int year = getParaToInt("year");
+		List<Record> list = i_RegisterService.searchProfessionInYearAtDropDown(year);
+		renderJson("result", list);
+	}
+
+	// 验证registerId是否已报名
+	@Override
+	public void checkRegisterIdUnique() {
+//		Long asd = (long) 123;
+//		setSessionAttr("registerId", asd);
+		Long registerId = getSessionAttr("registerId");
+		if(registerId!=null){
+			boolean bool = i_RegisterService.checkRegisterIdUnique(registerId);
+			renderJson("result", bool);
+		}else{
+			renderJson("result", "nologin");
+		}
+	}
+
+	// 校验pid是否报名过
+	@Override
+	public void checkPidUnique() {
+		String pid = getPara("pid");
+		boolean bool = i_RegisterService.checkPidUnique(pid);
+		renderJson("result", bool);
+	}
+
+	// 身份证号既要校验redis又要校验sql
+	// redis计时器
+	// 后台校验“提交数据”是否正确
+	@Before(registerValidator.class)
+	@Override
+	public void registerSubmit() {
+		boolean bool = false;
+		// 后台验证pid
+		checkPid checkpid = new checkPid();
+		String pid = getPara("pid");
+		//TODO 后期修改取session
+		Long registerId = getSessionAttr("registerId");
+		boolean tmp;
+		try {
+			tmp = checkPid.IDCardValidate(pid)&&(!i_RegisterService.checkPidUnique(pid))&&(!i_RegisterService.checkRegisterIdUnique(registerId));
+			// 加入登录模块后 将enroll_id是否存在的验证写到js中 在加载页面之前 验证 若非空 则不进入报名界面
+			if (tmp) {
+				// 1.个人信息
+				//将(long)registerId转换成(Stirng)RegisterId
+				String RegisterId = registerId+"";
+				String name = getPara("name");
+				String sex = getPara("sex");
+				String birthday = getPara("birthday");
+				String nation = getPara("nation");
+				String healthy = getPara("healthy");
+				String politics = getPara("politics");
+				// 2.教育信息
+				String graduate_school = getPara("graduateSchool");
+				String graduate_year = getPara("graduateYear");
+				String graduate_date = getPara("graduateDate");
+				String major = getPara("graduateSpecialty");
+				String education = getPara("education");
+				// 3.联系方式
+				String resident_address = getPara("address");
+				String permanent_address = getPara("householdAddress");
+				String home_address = getPara("homeAddress");
+				String tel = getPara("tel");
+				String email = getPara("email");
+				String home_tel = getPara("homeTel");
+				// 4.申报信息
+				String profession_id = getPara("specialty");
+				// 右侧orgnization是前台的历史遗留问题，忽略
+				String organization_id = getPara("orgnization");
+				String place = getPara("place");
+
+				Cache cache = Redis.use("EnrollCache");
+				// 1.个人信息
+				Pair<String, String> item1 = Pair.<String, String> of("name", name);
+				Pair<String, String> item2 = Pair.<String, String> of("sex", sex);
+				Pair<String, String> item3 = Pair.<String, String> of("nation", nation);
+				Pair<String, String> item4 = Pair.<String, String> of("pid", pid);
+				Pair<String, String> item10 = Pair.<String, String> of("healthy", healthy);
+				Pair<String, String> item11 = Pair.<String, String> of("politics", politics);
+				Pair<String, String> item12 = Pair.<String, String> of("birthday", birthday);
+				// 2.教育信息
+				Pair<String, String> item5 = Pair.<String, String> of("graduateSchool", graduate_school);
+				Pair<String, String> item6 = Pair.<String, String> of("graduateYear", graduate_year);
+				Pair<String, String> item7 = Pair.<String, String> of("graduateDate", graduate_date);
+				Pair<String, String> item8 = Pair.<String, String> of("education", education);
+				Pair<String, String> item9 = Pair.<String, String> of("major", major);
+				// 3.联系方式
+				Pair<String, String> item13 = Pair.<String, String> of("residentAddress", resident_address);
+				Pair<String, String> item14 = Pair.<String, String> of("permanentAddress", permanent_address);
+				Pair<String, String> item15 = Pair.<String, String> of("homeAddress", home_address);
+				Pair<String, String> item16 = Pair.<String, String> of("tel", tel);
+				Pair<String, String> item17 = Pair.<String, String> of("homeTel", home_tel);
+				Pair<String, String> item18 = Pair.<String, String> of("email", email);
+				Pair<String, String> item19 = Pair.<String, String> of("wechat", null);
+				// 4.申报信息
+				Pair<String, String> item20 = Pair.<String, String> of("professionId", profession_id);
+				Pair<String, String> item21 = Pair.<String, String> of("classinfoId", null);
+				Pair<String, String> item22 = Pair.<String, String> of("stateId", "1");
+				Pair<String, String> item23 = Pair.<String, String> of("organizationId", organization_id);
+				Pair<String, String> item24 = Pair.<String, String> of("place", place);
+				Pair<String, String> item25 = Pair.<String, String> of("remark", null);
+				Pair<String, String> item26 = Pair.<String, String> of("RegisterId", RegisterId);
+				Map<Object, Object> map = Collections.<Object, Object> unmodifiableMap(CollectionLiterals.<Object, Object> newHashMap(item1,
+						item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13, item14, item15, item16,
+						item17, item18, item19, item20, item21, item22, item23, item24, item25, item26));
+				cache.hmset(pid, map);
+				List li = cache.hmget(pid, map);
+				if (li != null) {
+					bool = true;
+					renderJson("result", bool);
+				}
+				else {
+					renderJson("result", bool);
+				}
+				// 废弃，改用写入redis，slave代理
+				// HashMap map = new HashMap();
+				// map.put("RegisterId", RegisterId);
+				//
+				// // 个人信息
+				// map.put("name", name);
+				// map.put("sex", sex);
+				// map.put("pid", pid);
+				// map.put("birthday", birthday);
+				// map.put("nation", nation);
+				// map.put("healthy", healthy);
+				// map.put("politics", politics);
+				// // 教育信息
+				// map.put("graduate_school", graduate_school);
+				// map.put("graduate_year", graduate_year);
+				// map.put("graduate_date", graduate_date);
+				// map.put("major", major);
+				// map.put("education", education);
+				// // 联系方式
+				// map.put("resident_address", resident_address);
+				// map.put("permanent_address", permanent_address);
+				// map.put("home_address", home_address);
+				// map.put("tel", tel);
+				// map.put("email", email);
+				// map.put("home_tel", home_tel);
+				// // 申报信息
+				// map.put("profession_id", profession_id);
+				// map.put("organization_id", organization_id);
+				// map.put("place", place);
+				// 插入成功 返回bool=true
+				// bool = i_RegisterService.registerSubmit(map);
+				// renderJson("result", bool);
+			}
+			else {
+				// 重定向至注册界面
+				redirect("/frontyard/register/register.html");
+			}
+		}
+		catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void hasRecord() {
+		String pid = getPara("pid");
+		boolean bool = i_RegisterService.hasRecord(pid);
+		renderJson("result", bool);
+	}
+
+	@Override
+	public void downloadRegisterReport() {
+		try {
+			this.renderNull();
+			String pid = getPara("pid");
+			Record record = i_RegisterService.searchRegisterRecord(pid);
+			boolean _equals = Objects.equal(record, null);
+			if (_equals) {
+				this.renderJson("result", "none");
+				return;
+			}
+			Class<? extends RegisterController> _class = this.getClass();
+			URL _resource = _class.getResource("RegisterReport.jasper");
+			String file = _resource.getFile();
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			String _str = record.getStr("name");
+			map.put("name", _str);
+			String _str_1 = record.getStr("sex");
+			map.put("sex", _str_1);
+			String _str_2 = record.getStr("nation");
+			map.put("nation", _str_2);
+			String _str_3 = record.getStr("healthy");
+			map.put("healthy", _str_3);
+			String _str_4 = record.getStr("pid");
+			map.put("pid", _str_4);
+			String _str_5 = record.getStr("birthday");
+			map.put("birthday", _str_5);
+			String _str_6 = record.getStr("politics");
+			map.put("politics", _str_6);
+			String _str_7 = record.getStr("education");
+			map.put("education", _str_7);
+			String _str_8 = record.getStr("graduate_school");
+			map.put("graduate_school", _str_8);
+			String _str_9 = record.getStr("major");
+			map.put("major", _str_9);
+			String _str_10 = record.getStr("graduate_date");
+			map.put("graduate_date", _str_10);
+
+			String _str_40 = record.getStr("graduate_year");
+			map.put("graduate_year", _str_40);
+			// Integer _int = record.getInt("graduate_year");
+			// String _string = _int.toString();
+			// map.put("graduate_year", _string);
+
+			String _str_11 = record.getStr("tel");
+			map.put("tel", _str_11);
+			String _str_12 = record.getStr("home_tel");
+			map.put("home_tel", _str_12);
+			String _str_13 = record.getStr("email");
+			map.put("email", _str_13);
+			String _str_14 = record.getStr("wechat");
+			map.put("wechat", _str_14);
+			String _str_15 = record.getStr("resident_address");
+			map.put("resident_address", _str_15);
+			String _str_16 = record.getStr("permanent_address");
+			map.put("permanent_address", _str_16);
+			String _str_17 = record.getStr("home_address");
+			map.put("home_address", _str_17);
+			String _str_18 = record.getStr("organization");
+			map.put("organization", _str_18);
+			String _str_19 = record.getStr("profession");
+			map.put("profession", _str_19);
+			String _str_20 = record.getStr("remark");
+			map.put("remark", _str_20);
+			String _str_21 = record.getStr("liaison");
+			map.put("liaison", _str_21);
+			String _str_22 = record.getStr("liaison_tel");
+			map.put("liaison_tel", _str_22);
+			String _str_23 = record.getStr("abbreviation");
+			map.put("abbreviation", _str_23);
+			JDateTime _jDateTime = new JDateTime();
+			String _string_1 = _jDateTime.toString("YYYY");
+			map.put("year", _string_1);
+			JREmptyDataSource _jREmptyDataSource = new JREmptyDataSource();
+			JasperPrint jasperPrint = JasperFillManager.fillReport(file, map, _jREmptyDataSource);
+			JRDocxExporter exporter = new JRDocxExporter();
+			exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+			HttpServletResponse _response = this.getResponse();
+			_response.setContentType("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+			HttpServletResponse _response_1 = this.getResponse();
+			_response_1.setHeader("Content-Disposition", "attachment;filename=report.docx");
+			HttpServletResponse _response_2 = this.getResponse();
+			ServletOutputStream _outputStream = _response_2.getOutputStream();
+			exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, _outputStream);
+			try {
+				exporter.exportReport();
+			}
+			catch (final Throwable _t) {
+				if (_t instanceof Exception) {
+					final Exception e = (Exception) _t;
+				}
+				else {
+					throw Exceptions.sneakyThrow(_t);
+				}
+			}
+			finally {
+				this.renderNull();
+			}
+		}
+		catch (Throwable _e) {
+			throw Exceptions.sneakyThrow(_e);
+		}
+	}
+	@Override
+	public void registerRedis() {
+		String name = getPara("name");
+		String sex = getPara("sex");
+		String nation = getPara("nation");
+		String pid = getPara("pid");
+		String graduateSchool = getPara("graduateSchool");
+		String graduateYear = getPara("graduateYear");
+		String graduateDate = getPara("graduateDate");
+		String education = getPara("education");
+		String major = getPara("major");
+		String healthy = getPara("healthy");
+		String politics = getPara("politics");
+		String birthday = getPara("birthday");
+		String residentAddress = getPara("residentAddress");
+		String permanentAddress = getPara("permanentAddress");
+		String homeAddress = getPara("homeAddress");
+		String tel = getPara("tel");
+		String homeTel = getPara("homeTel");
+		String email = getPara("email");
+		String wechat = getPara("wechat");
+		String profession = getPara("profession");
+		String organization = getPara("organization");
+		String place = getPara("place");
+		String remark = getPara("remark");
+		
+		
+		HashMap map = new HashMap();
+		map.put("name", name);
+		map.put("sex", sex);
+		map.put("nation", nation);
+		map.put("pid", pid);
+		map.put("graduateSchool", graduateSchool);
+		map.put("graduateYear", graduateYear);
+		map.put("graduateDate", graduateDate);
+		map.put("education", education);
+		map.put("major", major);
+		map.put("healthy", healthy);
+		map.put("politics", politics);
+		map.put("birthday", birthday);
+		map.put("residentAddress", residentAddress);
+		map.put("permanentAddress", permanentAddress);
+		map.put("homeAddress", homeAddress);
+		map.put("tel", tel);
+		map.put("homeTel", homeTel);
+		map.put("email", email);
+		map.put("wechat", wechat);
+		map.put("profession", profession);
+		map.put("organization", organization);
+		map.put("place", place);
+		map.put("remark", remark);
+		
+		boolean bool=i_RegisterService.registerRedis(map);
+		renderJson("result",bool);
+	}
+
+	public I_RegisterService getI_RegisterService() {
+		return i_RegisterService;
+	}
+
+	public void setI_RegisterService(I_RegisterService i_RegisterService) {
+		this.i_RegisterService = i_RegisterService;
+	}
+
+}

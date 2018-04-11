@@ -1,0 +1,42 @@
+package cn.gov.hrss.ln.stuenroll.enroll;
+
+import java.util.HashMap;
+import java.util.List;
+
+import com.jfinal.aop.Before;
+import com.jfinal.plugin.activerecord.Record;
+import com.jfinal.plugin.activerecord.tx.Tx;
+
+import cn.gov.hrss.ln.stuenroll.db.I_EnrollDao;
+
+public class EnrollService implements I_EnrollService {
+	private I_EnrollDao i_EnrollDao;
+
+	@Override
+	public List<Record> searchEnroll(HashMap map, long start, long length) {
+		List<Record> list = i_EnrollDao.searchEnroll(map, start, length);
+		return list;
+	}
+
+	@Override
+	public long searchEnrollCount(HashMap map) {
+		long count = i_EnrollDao.searchEnrollCount(map);
+		return count;
+	}
+
+	@Before(Tx.class)
+	@Override
+	public int deleteById(Long[] id) {
+		int i = i_EnrollDao.deleteById(id);
+		return i;
+	}
+
+	public I_EnrollDao getI_EnrollDao() {
+		return i_EnrollDao;
+	}
+
+	public void setI_EnrollDao(I_EnrollDao i_EnrollDao) {
+		this.i_EnrollDao = i_EnrollDao;
+	}
+
+}

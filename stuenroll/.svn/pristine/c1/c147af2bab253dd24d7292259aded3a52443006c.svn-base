@@ -1,0 +1,211 @@
+package cn.gov.hrss.ln.stuenroll.userinfo;
+
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+
+import com.jfinal.core.Controller;
+import com.jfinal.plugin.activerecord.Record;
+import com.jfinal.plugin.spring.Spring;
+
+import cn.gov.hrss.ln.stuenroll.db.I_UserInfoDao;
+
+@Spring("userInfoController")
+public class UserInfoController extends Controller implements I_UserInfoController {
+	private I_UserInfoService i_UserInfoService;
+	private int rowsInPage;
+
+	@RequiresPermissions({"1_4"})
+	@Override
+	public void searchUserInfo() {
+		String username = getPara("username");
+		String name = getPara("name");
+		Long organizationId = getParaToLong("organizationId");
+		Long roleId = getParaToLong("roleId");
+		String tel = getPara("tel");
+		String email = getPara("email");
+
+		String organization = getSessionAttr("organization");
+
+		if (organization.equals("辽宁省就业网") == false) {
+			organizationId = getSessionAttr("organizationId");
+		}
+
+		HashMap map = new HashMap();
+		map.put("username", username);
+		map.put("name", name);
+		map.put("organizationId", organizationId);
+		map.put("roleId", roleId);
+		map.put("tel", tel);
+		map.put("email", email);
+
+		Long page = getParaToLong("page");
+		if (page == null) {
+			page = 1L;
+		}
+		long start = (page - 1) * rowsInPage;
+		long length = rowsInPage;
+
+		List<Record> list = i_UserInfoService.searchUserInfo(map, start, length);
+		renderJson("result", list);
+
+	}
+
+	@RequiresPermissions({"1_4"})
+	@Override
+	public void searchUserInfoCount() {
+		String username = getPara("username");
+		HashMap map = new HashMap();
+		map.put("username", username);
+		long count = i_UserInfoService.searchUserInfoCount(map);
+		renderJson("result", count);
+	}
+	
+	@RequiresPermissions({"1_2"})
+	@Override
+	public void deleteUserInfo() {
+		Long[] id = getParaValuesToLong("id");
+		int i = i_UserInfoService.deleteUserInfo(id);
+		renderJson("deleteRows", i);
+
+	}
+
+	@RequiresPermissions({"1_1"})
+	@Override
+	public void searchSelectableRole() {
+		List<Record> list = i_UserInfoService.searchSelectableRole();
+		renderJson("result", list);
+
+	}
+
+	@RequiresPermissions({"1_1"})
+	@Override
+	public void searchOrganizationJoinInYearAtDropDown() {
+		int year = getParaToInt("year");
+		List<Record> list = i_UserInfoService.searchOrganizationJoinInYearAtDropDown(year);
+		renderJson("result", list);
+
+	}
+
+	@RequiresPermissions({"1_1"})
+	@Override
+	public void insertUserInfo() {
+		String username = getPara("username");
+		String password = getPara("password");
+		String name = getPara("name");
+		String sex = getPara("sex");
+		String pid = getPara("pid");
+		String tel = getPara("tel");
+		String email = getPara("email");
+		String organization = getPara("organization");
+		Integer block = getParaToInt("block");
+		String role = getPara("role");
+
+		HashMap map = new HashMap();
+		map.put("username", username);
+		map.put("password", password);
+		map.put("name", name);
+		map.put("sex", sex);
+		map.put("pid", pid);
+		map.put("tel", tel);
+		map.put("email", email);
+		map.put("organization", organization);
+		map.put("block", block);
+		map.put("role", role);
+		int i = i_UserInfoService.insertUserInfo(map);
+		renderJson("insert", i);
+
+	}
+
+	@RequiresPermissions({"8_4"})
+	@Override
+	public void searchClassMember() {
+		String name = getPara("name");
+		String sex = getPara("sex");
+		String tel = getPara("tel");
+		String pid = getPara("pid");
+		String state = getPara("state");
+
+		HashMap map = new HashMap();
+		map.put("name", name);
+		map.put("sex", sex);
+		map.put("tel", tel);
+		map.put("pid", pid);
+		map.put("state", state);
+
+		Long page = getParaToLong("page");
+		if (page == null) {
+			page = 1L;
+		}
+		long start = (page - 1) * rowsInPage;
+		long length = rowsInPage;
+
+		List<Record> list = i_UserInfoService.searchClassMember(map, start, length);
+		renderJson("result", list);
+
+	}
+	
+	@RequiresPermissions({"8_4"})
+	@Override
+	public void searchClassMemberCount() {
+		String name = getPara("name");
+		HashMap map = new HashMap();
+		map.put("name", name);
+		long count = i_UserInfoService.searchClassMemberCount(map);
+		renderJson("result", count);
+		
+	}
+	
+	@RequiresPermissions({"1_3"})
+	@Override
+	public void updateUserInfo() {
+		String id = getPara("id");
+		String username=getPara("username");
+		String password = getPara("password");
+		String name = getPara("name");
+		String pid = getPara("pid");
+		String sex = getPara("sex");
+		String organization = getPara("organization");
+		String tel = getPara("tel");
+		String email = getPara("email");
+		Integer block = getParaToInt("block");
+		String role = getPara("role");
+		
+		HashMap map=new HashMap();
+		map.put("id", id);
+		map.put("username", username);
+		map.put("password", password);
+		map.put("name",name);
+		map.put("pid", pid);
+		map.put("sex", sex);
+		map.put("organization", organization);
+		map.put("tel", tel);
+		map.put("email", email);
+		map.put("block", block);
+		map.put("role", role);
+		
+		int result=i_UserInfoService.updateUserInfo(map);
+		renderJson("result",result);
+		
+	}
+
+	public I_UserInfoService getI_UserInfoService() {
+		return i_UserInfoService;
+	}
+
+	public void setI_UserInfoService(I_UserInfoService i_UserInfoService) {
+		this.i_UserInfoService = i_UserInfoService;
+	}
+
+	public int getRowsInPage() {
+		return rowsInPage;
+	}
+
+	public void setRowsInPage(int rowsInPage) {
+		this.rowsInPage = rowsInPage;
+	}
+
+
+
+}

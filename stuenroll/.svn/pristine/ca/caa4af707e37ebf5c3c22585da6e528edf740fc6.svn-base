@@ -1,0 +1,318 @@
+package cn.gov.hrss.ln.stuenroll.userinfo;
+
+import com.jfinal.core.Controller;
+import com.jfinal.plugin.spring.Spring;
+import com.jfinal.upload.UploadFile;
+import com.mongodb.DB;
+import com.mongodb.gridfs.GridFS;
+import com.mongodb.gridfs.GridFSDBFile;
+import com.mongodb.gridfs.GridFSInputFile;
+import java.io.File;
+import java.util.HashMap;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import org.bson.types.ObjectId;
+import org.eclipse.xtext.xbase.lib.Exceptions;
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+
+import com.jfinal.core.Controller;
+import com.jfinal.plugin.activerecord.Record;
+import com.jfinal.plugin.spring.Spring;
+import com.jfinal.upload.UploadFile;
+
+import cn.gov.hrss.ln.stuenroll.db.I_UserInfoDao;
+import cn.gov.hrss.ln.stuenroll.plugin.MongoKit;
+
+@Spring("userInfoController")
+public class UserInfoController extends Controller implements I_UserInfoController {
+	private I_UserInfoService i_UserInfoService;
+	private int rowsInPage;
+	private int rowsInPage1;
+
+	@RequiresPermissions({ "1_4" })
+	@Override
+	public void searchUserInfo() {
+		String username = getPara("username");
+		String name = getPara("name");
+		Long organizationId = getParaToLong("organizationId");
+		Long roleId = getParaToLong("roleId");
+		String tel = getPara("tel");
+		String email = getPara("email");
+
+		String organization = getSessionAttr("organization");
+
+		if (organization.equals("辽宁省就业网") == false) {
+			organizationId = getSessionAttr("organizationId");
+		}
+
+		HashMap map = new HashMap();
+		map.put("username", username);
+		map.put("name", name);
+		map.put("organizationId", organizationId);
+		map.put("roleId", roleId);
+		map.put("tel", tel);
+		map.put("email", email);
+
+		Long page = getParaToLong("page");
+		if (page == null) {
+			page = 1L;
+		}
+		long start = (page - 1) * rowsInPage;
+		long length = rowsInPage;
+
+		List<Record> list = i_UserInfoService.searchUserInfo(map, start, length);
+		renderJson("result", list);
+
+	}
+
+	@RequiresPermissions({ "1_4" })
+	@Override
+	public void searchUserInfoCount() {
+		String username = getPara("username");
+		HashMap map = new HashMap();
+		map.put("username", username);
+		long count = i_UserInfoService.searchUserInfoCount(map);
+		renderJson("result", count);
+	}
+
+	@RequiresPermissions({ "1_2" })
+	@Override
+	public void deleteUserInfo() {
+		Long[] id = getParaValuesToLong("id");
+		int i = i_UserInfoService.deleteUserInfo(id);
+		renderJson("deleteRows", i);
+
+	}
+
+	@RequiresPermissions({ "1_1" })
+	@Override
+	public void searchSelectableRole() {
+		List<Record> list = i_UserInfoService.searchSelectableRole();
+		renderJson("result", list);
+
+	}
+
+	@RequiresPermissions({ "1_1" })
+	@Override
+	public void searchOrganizationJoinInYearAtDropDown() {
+		try {
+			int year = getParaToInt("year");
+			List<Record> list = i_UserInfoService.searchOrganizationJoinInYearAtDropDown(year);
+			renderJson("result", list);
+		}
+		catch (Exception e) {
+			e.getStackTrace();
+		}
+
+	}
+
+	@RequiresPermissions({ "1_1" })
+	@Override
+	public void insertUserInfo() {
+		String username = getPara("username");
+		String password = getPara("password");
+		String name = getPara("name");
+		String sex = getPara("sex");
+		String pid = getPara("pid");
+		String tel = getPara("tel");
+		String email = getPara("email");
+		String job = getPara("job");
+		String organization = getPara("organization");
+		Integer block = getParaToInt("block");
+		String role = getPara("role");
+		String photo_id = getPara("photo_id");
+
+		HashMap map = new HashMap();
+		map.put("username", username);
+		map.put("password", password);
+		map.put("name", name);
+		map.put("sex", sex);
+		map.put("pid", pid);
+		map.put("tel", tel);
+		map.put("email", email);
+		map.put("job", job);
+		map.put("organization", organization);
+		map.put("block", block);
+		map.put("role", role);
+		map.put("photo_id", photo_id);
+		int i = i_UserInfoService.insertUserInfo(map);
+		renderJson("insert", i);
+
+	}
+
+	@RequiresPermissions({ "8_4" })
+	@Override
+	public void searchClassMember() {
+		String name = getPara("name");
+		String sex = getPara("sex");
+		String tel = getPara("tel");
+		String pid = getPara("pid");
+		String state = getPara("state");
+
+		HashMap map = new HashMap();
+		map.put("name", name);
+		map.put("sex", sex);
+		map.put("tel", tel);
+		map.put("pid", pid);
+		map.put("state", state);
+
+		Long page = getParaToLong("page");
+		if (page == null) {
+			page = 1L;
+		}
+		long start = (page - 1) * rowsInPage1;
+		long length = rowsInPage1;
+
+		List<Record> list = i_UserInfoService.searchClassMember(map, start, length);
+		renderJson("result", list);
+
+	}
+
+	@RequiresPermissions({ "8_4" })
+	@Override
+	public void searchClassMemberCount() {
+		String name = getPara("name");
+		HashMap map = new HashMap();
+		map.put("name", name);
+		long count = i_UserInfoService.searchClassMemberCount(map);
+		renderJson("result", count);
+
+	}
+
+	@RequiresPermissions({ "1_3" })
+	@Override
+	public void updateUserInfo() {
+		String id = getPara("id");
+		String username = getPara("username");
+		String password = getPara("password");
+		String name = getPara("name");
+		String pid = getPara("pid");
+		String sex = getPara("sex");
+		String organization = getPara("organization");
+		String tel = getPara("tel");
+		String email = getPara("email");
+		String job = getPara("job");
+		Integer block = getParaToInt("block");
+		String role = getPara("role");
+		String photo_id = getPara("photo_id");
+
+		HashMap map = new HashMap();
+		map.put("id", id);
+		map.put("username", username);
+		map.put("password", password);
+		map.put("name", name);
+		map.put("pid", pid);
+		map.put("sex", sex);
+		map.put("organization", organization);
+		map.put("tel", tel);
+		map.put("email", email);
+		map.put("job", job);
+		map.put("block", block);
+		map.put("role", role);
+		map.put("photo_id", photo_id);
+
+		int result = i_UserInfoService.updateUserInfo(map);
+		renderJson("result", result);
+
+	}
+
+	@RequiresPermissions({ "1_4" })
+	@Override
+	public void searchExsitingdata() {
+		String id = getPara("id");
+		List<Record> exsitingdata = i_UserInfoService.searchExsitingdata(id);
+		renderJson("exsitingdata", exsitingdata);
+	}
+
+	@RequiresPermissions({ "1_3" })
+	@Override
+	public void updateUserBlock() {
+		String id = getPara("id");
+		int block = getParaToInt("block");
+		int result = i_UserInfoService.updateUserBlock(id, block);
+		renderJson("result", result);
+
+	}
+
+	@RequiresPermissions({ "1_3" })
+	@Override
+	public void save() {
+		try {
+			UploadFile _file = this.getFile("photo");
+			System.out.println(_file);
+			File file = _file.getFile();
+			// System.out.println(file);
+			DB db = MongoKit.getDB();
+			GridFS gridFS = new GridFS(db, "image");
+			GridFSInputFile fsFile = gridFS.createFile(file);
+			fsFile.save();
+			file.delete();
+			// HashMap map = new HashMap<Object, Object>();
+			// map.put("result", Boolean.valueOf(true));
+			Object _id = fsFile.getId();
+			String _string = _id.toString();
+			// map.put("photo_id", _string);
+			// this.renderJson(map);
+			this.renderJson("result", _string);
+
+		}
+		catch (Throwable _e) {
+			throw Exceptions.sneakyThrow(_e);
+		}
+	}
+
+	@RequiresPermissions({ "1_4" })
+	@Override
+	public void searchFile() {
+		try {
+			String id = this.getPara("id");
+			DB db = MongoKit.getDB();
+			GridFS gridFS = new GridFS(db, "image");
+			ObjectId _objectId = new ObjectId(id);
+			GridFSDBFile fsFile = gridFS.findOne(_objectId);
+			HttpServletResponse _response = this.getResponse();
+			ServletOutputStream _outputStream = _response.getOutputStream();
+			fsFile.writeTo(_outputStream);
+			this.renderNull();
+		}
+		catch (Throwable _e) {
+			throw Exceptions.sneakyThrow(_e);
+		}
+	}
+
+	@RequiresPermissions({ "1_4" })
+	@Override
+	public void searchPhotoId() {
+		String id = getPara("id");
+		String photo_id = i_UserInfoService.searchPhotoId(id);
+		this.renderJson("photo_id", photo_id);
+
+	}
+
+	public I_UserInfoService getI_UserInfoService() {
+		return i_UserInfoService;
+	}
+
+	public void setI_UserInfoService(I_UserInfoService i_UserInfoService) {
+		this.i_UserInfoService = i_UserInfoService;
+	}
+
+	public int getRowsInPage() {
+		return rowsInPage;
+	}
+
+	public void setRowsInPage(int rowsInPage) {
+		this.rowsInPage = rowsInPage;
+	}
+	public int getRowsInPage1() {
+		return rowsInPage1;
+	}
+	
+	public void setRowsInPage1(int rowsInPage1) {
+		this.rowsInPage1 = rowsInPage1;
+	}
+
+}

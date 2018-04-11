@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="../../css/base.css" />
+		<link rel="stylesheet" type="text/css" href="../../font/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="../../js/plugin/toastr.css" />
+		<link rel="stylesheet" type="text/css" href="welcome.css" />
+	</head>
+
+	<body>
+		<div class="main-container">
+			<div class="chart-container">
+				<div class="annual-statistics">
+					<h2 class="title"><span class="year"></span>年辽宁省离校未就业转换数据</h2>
+					<dl class="step-list">
+						<dt class="step-item">起始</dt>
+						<dt class="step-item">报名期</dt>
+						<dt class="step-item">审查期</dt>
+						<dt class="step-item">归档期</dt>
+						<dt class="step-item">核查期</dt>
+						<dt class="step-item">……</dt>
+					</dl>
+					<div class="statistics"></div>
+				</div>
+				<div class="organiztion-statistics">
+					<dl class="statistics-4">
+						<dt>
+							<div class="statistics-4-item">
+							</div>
+						</dt>
+						<dt>
+							<div class="statistics-4-item"></div>
+						</dt>
+						<dt>
+							<div class="statistics-4-item"></div>
+						</dt>
+						<dt>
+							<div class="statistics-4-item"></div>
+						</dt>
+					</dl>
+					<dl class="statistics-2">
+						<dt>
+							<div class="statistics-2-item"></div>
+						</dt>
+						<dt>
+							<div class="statistics-2-item"></div>
+						</dt>
+					</dl>
+				</div>
+			</div>
+			<div class="info-container">
+				<div class="monthly-analysis">
+					<div class="header">
+						<h2 class="header-title">
+							<span name="date-year"></span>年<span name="date-month"></span>月
+						</h2>
+						<a class="change" name="prevBtn"><i class="iconfont">&#xe6ef;</i></a>
+						<a class="change" name="nextBtn"><i class="iconfont">&#xe6f0;</i></a>
+						<h2 class="sum"><span name="passNumber"></span></h2>
+					</div>
+					<div class="analysis-title">
+						<div class="orgnization"> 
+							<span name="organization_name"></span> 
+						</div>
+						<div class="data">
+							<span name="actualNumber">0</span>人/<span name="acceptNumber">2000</span>人
+						</div>
+					</div>
+					<div class="analysis-table"></div>
+				</div>
+				
+				<div class="analysis-container">
+					<h2 class="section-title">学生分析</h2>
+					<div class="analysis-list">
+						<div class="analysis">
+							<dl class="analysis-entry">
+								<dd class="analysis-arrow"><i class="iconfont">&#xe618;</i></dd>
+								<dd class="analysis-square analysis-green"><i class="iconfont">&#xe642;</i></dd>
+								<dd class="analysis-info">
+									<h4 class="analysis-specifics">报名人数</h4>
+									<p class="analysis-desc">2016/06/12</p>
+								</dd>
+								<dd class="analysis-number"><span name="applyNumber"></span>人</dd>
+							</dl>
+						</div>
+						<div class="analysis">
+							<dl class="analysis-entry">
+								<dd class="analysis-arrow"><i class="iconfont">&#xe618;</i></dd>
+								<dd class="analysis-square analysis-blue"><i class="iconfont">&#xe642;</i></dd>
+								<dd class="analysis-info">
+									<h4 class="analysis-specifics">审核人数</h4>
+									<p class="analysis-desc">2016/06/12</p>
+								</dd>
+								<dd class="analysis-number"><span name="ckeckNumber">0</span>人</dd>
+							</dl>
+						</div>
+						<div class="analysis">
+							<dl class="analysis-entry">
+								<dd class="analysis-arrow"><i class="iconfont">&#xe618;</i></dd>
+								<dd class="analysis-square analysis-yellow"><i class="iconfont">&#xe642;</i></dd>
+								<dd class="analysis-info">
+									<h4 class="analysis-specifics">归档人数</h4>
+									<p class="analysis-desc">2016/06/12</p>
+								</dd>
+								<dd class="analysis-number"><span name="archiveNumber">0</span>人</dd>
+							</dl>
+						</div>
+						<div class="analysis">
+							<dl class="analysis-entry">
+								<dd class="analysis-arrow"><i class="iconfont">&#xe618;</i></dd>
+								<dd class="analysis-square analysis-red"><i class="iconfont">&#xe642;</i></dd>
+								<dd class="analysis-info">
+									<h4 class="analysis-specifics">中退人数</h4>
+									<p class="analysis-desc">2016/06/12</p>
+								</dd>
+								<dd class="analysis-number"><span name="quitNumber">0</span>人</dd>
+							</dl>
+						</div>
+					</div>
+				</div>
+				
+				<div class="clock no-select">
+					<h4 class="date"></h4>
+					<div class="time">
+						<span class="hour"></span>
+						<span class="punctuation">:</span>
+						<span class="minute"></span>
+						<span class="punctuation">:</span>
+						<span class="second"></span>
+					</div>
+				
+				</div>
+				<div class="analysis-container">
+					<h2 class="section-title">资金分析</h2>
+					<div class="analysis-list">
+						<div class="analysis">
+							<dl class="analysis-entry">
+								<dd class="analysis-arrow"><i class="iconfont">&#xe618;</i></dd>
+								<dd class="analysis-square analysis-green"><i class="iconfont">&#xe642;</i></dd>
+								<dd class="analysis-info">
+									<h4 class="analysis-specifics">总培训费</h4>
+									<p class="analysis-desc">2016/06/12</p>
+								</dd>
+								<dd class="analysis-number">¥<span name="totalpayment">6800</span></dd>
+							</dl>
+						</div>
+						<div class="analysis">
+							<dl class="analysis-entry">
+								<dd class="analysis-arrow"><i class="iconfont">&#xe618;</i></dd>
+								<dd class="analysis-square analysis-blue"><i class="iconfont">&#xe642;</i></dd>
+								<dd class="analysis-info">
+									<h4 class="analysis-specifics">实际费用</h4>
+									<p class="analysis-desc">2016/06/12</p>
+								</dd>
+								<dd class="analysis-number">¥<span name="actualpayment">4012</span></dd>
+							</dl>
+						</div>
+						<div class="analysis">
+							<dl class="analysis-entry">
+								<dd class="analysis-arrow"><i class="iconfont">&#xe618;</i></dd>
+								<dd class="analysis-square analysis-yellow"><i class="iconfont">&#xe642;</i></dd>
+								<dd class="analysis-info">
+									<h4 class="analysis-specifics">中退费用</h4>
+									<p class="analysis-desc">2016/06/12</p>
+								</dd>
+								<dd class="analysis-number">¥<span name="quickpayment">1514</span></dd>
+							</dl>
+						</div>
+						<div class="analysis">
+							<dl class="analysis-entry">
+								<dd class="analysis-arrow"><i class="iconfont">&#xe618;</i></dd>
+								<dd class="analysis-square analysis-red"><i class="iconfont">&#xe642;</i></dd>
+								<dd class="analysis-info">
+									<h4 class="analysis-specifics">其他费用</h4>
+									<p class="analysis-desc">2016/06/12</p>
+								</dd>
+								<dd class="analysis-number">¥<span name="otherpayment">300</span></dd>
+							</dl>
+						</div>
+					</div>
+				</div>
+				<div class="message-container">
+					<h2 class="section-title">消息通知</h2>
+					<div class="message-list">
+						<div class="message">
+							<dl class=" message-entry">
+								<dt class="message-photo">
+								<img src="../../img/man.png" width="80"/>
+							</dt>
+								<dd class="message-content">
+									<div class="message-header">
+										<h4 class="message-title">网站管理员</h4>
+										<span class="message-datetime">2015/6/12 15:36</span>
+									</div>
+									<div class="message-desc">原生手游市场已是红海，腾讯、网易等寡头独霸天下，H5游戏市场或将成为下一个风口。据笔者所知，很多H5游戏开发团队由于选择引擎不慎导致项目甚至团队夭折。如何选择适合团队和项目的引擎，笔者通过学习和项目实践，总结微薄经验，供大家参考，非技术人员也可以将本篇内容作为引擎选择的重要关注点。</div>
+								</dd>
+							</dl>
+						</div>
+						<div class="message">
+							<dl class=" message-entry">
+								<dt class="message-photo">
+								<img src="../../img/man.png" width="80"/>
+							</dt>
+								<dd class="message-content">
+									<div class="message-header">
+										<h4 class="message-title">网站管理员</h4>
+										<span class="message-datetime">2015/6/12 15:36</span>
+									</div>
+									<div class="message-desc">原生手游市场已是红海，腾讯、网易等寡头独霸天下，H5游戏市场或将成为下一个风口。据笔者所知，很多H5游戏开发团队由于选择引擎不慎导致项目甚至团队夭折。如何选择适合团队和项目的引擎，笔者通过学习和项目实践，总结微薄经验，供大家参考，非技术人员也可以将本篇内容作为引擎选择的重要关注点。</div>
+								</dd>
+							</dl>
+						</div>
+						<div class="message">
+							<dl class=" message-entry">
+								<dt class="message-photo">
+								<img src="../../img/man.png" width="80"/>
+							</dt>
+								<dd class="message-content">
+									<div class="message-header">
+										<h4 class="message-title">网站管理员</h4>
+										<span class="message-datetime">2015/6/12 15:36</span>
+									</div>
+									<div class="message-desc">原生手游市场已是红海，腾讯、网易等寡头独霸天下，H5游戏市场或将成为下一个风口。据笔者所知，很多H5游戏开发团队由于选择引擎不慎导致项目甚至团队夭折。如何选择适合团队和项目的引擎，笔者通过学习和项目实践，总结微薄经验，供大家参考，非技术人员也可以将本篇内容作为引擎选择的重要关注点。</div>
+								</dd>
+							</dl>
+						</div>
+						<div class="message">
+							<dl class=" message-entry">
+								<dt class="message-photo">
+								<img src="../../img/man.png" width="80"/>
+							</dt>
+								<dd class="message-content">
+									<div class="message-header">
+										<h4 class="message-title">网站管理员</h4>
+										<span class="message-datetime">2015/6/12 15:36</span>
+									</div>
+									<div class="message-desc">原生手游市场已是红海，腾讯、网易等寡头独霸天下，H5游戏市场或将成为下一个风口。据笔者所知，很多H5游戏开发团队由于选择引擎不慎导致项目甚至团队夭折。如何选择适合团队和项目的引擎，笔者通过学习和项目实践，总结微薄经验，供大家参考，非技术人员也可以将本篇内容作为引擎选择的重要关注点。</div>
+								</dd>
+							</dl>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="../../js/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/echarts/echarts.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/plugin/toastr.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/permission.js" type="text/javascript" charset="utf-8"></script>
+		<script src="welcome.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+
+</html>

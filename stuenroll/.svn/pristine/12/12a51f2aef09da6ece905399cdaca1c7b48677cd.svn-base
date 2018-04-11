@@ -1,0 +1,322 @@
+package cn.gov.hrss.ln.stuenroll.setting;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
+
+import com.jfinal.core.Controller;
+import com.jfinal.plugin.activerecord.Page;
+import com.jfinal.plugin.activerecord.Record;
+import com.jfinal.plugin.spring.Spring;
+import com.jfinal.upload.UploadFile;
+
+import cn.gov.hrss.ln.stuenroll.plugin.MongoKit;
+import jodd.util.Base64;
+
+@Spring("settingController")
+public class SettingController extends Controller implements I_SettingController {
+	private I_SettingService i_SettingService;
+
+	@Override
+	public void logout() {
+		// TODO Auto-generated method stub
+		// 收回Shiro认证令牌
+		try {
+			Subject subject = SecurityUtils.getSubject();
+			subject.logout();
+			HttpSession session = getSession();
+			Enumeration<String> enumeration = session.getAttributeNames();
+			while (enumeration.hasMoreElements()) {
+				String name = enumeration.nextElement();
+				session.removeAttribute(name);
+			}
+		}
+		finally {
+		}
+		
+		renderJson("logout", true);
+	}
+
+	@Override
+	public void setIcon() {
+		Long registerId = getSessionAttr("registerId");
+		if (registerId != null) {
+			UploadFile _file = this.getFile("icon");
+			File file = _file.getFile();
+			boolean bool = i_SettingService.setIcon(registerId, file);
+			file.delete();
+			if (bool) {
+				renderNull();
+			}
+		}
+	}
+
+	@Override
+	public void getIcon() {
+		// TODO Auto-generated method stub
+		Long registerId = getSessionAttr("registerId");
+		if (registerId != null) {
+			File file = i_SettingService.getIcon(registerId);
+			if (file != null) {
+				HttpServletResponse _response = this.getResponse();
+				ServletOutputStream _outputStream;
+				try {
+					_outputStream = _response.getOutputStream();
+					FileInputStream inputStream = new FileInputStream(file);
+					int b = 0;
+					byte[] buffer = new byte[512];
+					b = inputStream.read(buffer);
+					while (b != -1) {
+						_outputStream.write(buffer, 0, b);
+						b = inputStream.read(buffer);
+					}
+					inputStream.close();
+					_outputStream.close();
+					_outputStream.flush();
+				}
+				catch (IOException e) {
+					e.printStackTrace();
+				}
+
+			}
+			try {
+				file.delete();
+			}
+			catch (Exception e) {
+
+			}
+
+		}
+		this.renderNull();
+	}
+
+	@Override
+	public void getInfo() {
+		Record record = null;
+		Long registerId = getSessionAttr("registerId");
+		if (registerId != null) {
+			record = i_SettingService.getInfo(registerId);
+		}
+		renderJson("result", record);
+	}
+
+	@Override
+	public void getMoreInfo() {
+		Record record = null;
+		Long registerId = getSessionAttr("registerId");
+		if (registerId != null) {
+			record = i_SettingService.getMoreInfo(registerId);
+		}
+		renderJson("result", record);
+
+	}
+
+	@Override
+	public void setPassword() {
+		String info = "访问错误,未登录的用户";
+		Long registerId = getSessionAttr("registerId");
+		if (registerId != null) {
+			String username = getPara("username");
+			String password = getPara("password");
+			String newpassword = getPara("newpassword");
+			info = i_SettingService.setPassword(registerId, username, password, newpassword);
+		}
+		renderJson("result", info);
+	}
+
+	@Override
+	public void setTel() {
+		boolean bool = false;
+		Long registerId = getSessionAttr("registerId");
+		if (registerId != null) {
+			long tel = getParaToLong("tel");
+			bool = i_SettingService.setTel(registerId, tel);
+		}
+		renderJson("result", bool);
+
+	}
+
+	@Override
+	public void setEmail() {
+		boolean bool = false;
+
+		String temp = getPara("id");
+
+		String email = getPara("email");
+		long time = getParaToLong("time");
+		try {
+			Long registerId = Long.parseLong(Base64.decodeToString(temp));
+			email = Base64.decodeToString(email);
+			if (registerId != null) {
+				bool = i_SettingService.setEmail(registerId, email, time);
+			}
+		}
+		catch (Exception e) {
+			bool = false;
+		}
+
+		StringBuffer html = new StringBuffer();
+		html.append("<title>辽宁省就业网</title>");
+		html.append("<link rel='stylesheet' type='text/css' href='../css/emailsuccess.css'/>");
+		html.append(
+				"<div class='toolbar'><a href='http://www.jyw.gov.cn/' hidefocus='true' id='logo'><img src='../img/Elogo.png'></a><h4>辽宁省就业网</h4></div>");
+		html.append("<div class='con_box'><div class='ps_con'><div class='right_con'><h3 class='super_size'>");
+		if (bool) {
+			html.append("Email 验证成功</h3><p>您已成功绑定邮箱地址： <strong>" + email + "</strong><br></p>");
+		}
+		else {
+			html.append("您要访问的请求找不到了</h3><br>");
+		}
+		html.append("</div></div></div>");
+		html.append("<div class='tool_bar'><a href='http://www.jyw.gov.cn/' class='bt_action'>完成</a></div><div class='copyright'></div>");
+		renderHtml(html.toString());
+	}
+
+	@Override
+	public void sendEmail() {
+		boolean bool = false;
+		Long registerId = getSessionAttr("registerId");
+		if (registerId != null) {
+			String email = getPara("email");
+			bool = i_SettingService.sendEmail(registerId, email);
+		}
+		renderJson("result", bool);
+
+	}
+
+	@Override
+	public void setNickname() {
+		boolean bool = false;
+		Long registerId = getSessionAttr("registerId");
+		if (registerId != null) {
+			String nickname = getPara("nickname");
+			bool = i_SettingService.setNickname(registerId, nickname);
+		}
+		renderJson("result", bool);
+	}
+
+	@Override
+	public void feedback() {
+		UploadFile _file;
+		// feedback Image
+		List<File> files = new ArrayList<>();
+		int i = 0;
+		String filename;
+		while (true) {
+			try {
+				filename = "images" + i;
+				_file = this.getFile(filename);
+				files.add(_file.getFile());
+				i++;
+			}
+			catch (Exception e) {
+				break;
+			}
+		}
+
+		Record record = new Record();
+		// device information
+		String plus_version = getPara("plus_version");
+		String platform = getPara("platform");
+		String os = getPara("os");
+		String app_version = getPara("app_version");
+		String imei = getPara("imei");
+		String net = getPara("net");
+		String model = getPara("model");
+		String appid = getPara("appid");
+		// feedback content
+		String contact = getPara("contact");
+		String content = getPara("content");
+		String score = getPara("score");
+
+		record.set("plus_version", plus_version);
+		record.set("platform", platform);
+		record.set("score", score);
+		record.set("os", os);
+		record.set("app_version", app_version);
+		record.set("imei", imei);
+		record.set("net", net);
+		record.set("model", model);
+		record.set("appid", appid);
+		record.set("contact", contact);
+		record.set("content", content);
+		boolean bool = i_SettingService.saveFeedback(record, files);
+		for (File file : files) {
+			file.delete();
+		}
+		System.out.println(bool);
+		renderNull();
+	}
+
+	@Override
+	public void update() {
+		String appid = getPara("appid");
+		String version = getPara("version");
+		Record record = i_SettingService.checkupdate(appid);
+		boolean bool = true;
+		if (version.equals(record.get("version"))) {
+			bool = false;
+
+		}
+		record.set("status", bool);
+		record.set("url", "http://192.168.1.52/stuenroll/download/" + record.get("url"));
+		renderJson(record);
+	}
+
+	public I_SettingService getI_SettingService() {
+		return i_SettingService;
+	}
+
+	public void setI_SettingService(I_SettingService i_SettingService) {
+		this.i_SettingService = i_SettingService;
+	}
+
+	@Override
+	public void getfeedback() {
+		// 测试用方法
+		Page<Record> page = MongoKit.paginate("AppFeedback", 1, 20);
+		renderJson("result", page);
+	}
+
+	@Override
+	public void getfeedbackpic() {
+		// 测试用方法
+		String id = getPara("picid");
+		File file = MongoKit.getFile("AppFeedbackPic", id);
+		if (file != null) {
+			HttpServletResponse _response = this.getResponse();
+			ServletOutputStream _outputStream;
+			try {
+				_outputStream = _response.getOutputStream();
+				FileInputStream inputStream = new FileInputStream(file);
+				int b = 0;
+				byte[] buffer = new byte[512];
+				b = inputStream.read(buffer);
+				while (b != -1) {
+					_outputStream.write(buffer, 0, b);
+					b = inputStream.read(buffer);
+				}
+				inputStream.close();
+				_outputStream.close();
+				_outputStream.flush();
+			}
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+
+		}
+		file.delete();
+		renderNull();
+	}
+
+}

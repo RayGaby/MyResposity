@@ -1,0 +1,51 @@
+package cn.gov.hrss.ln.stuenroll.db.mongo;
+
+/**
+ * 动态消息表Dao类实现
+ * 
+ */
+import java.util.HashMap;
+import java.util.List;
+
+import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.activerecord.Page;
+import com.jfinal.plugin.activerecord.Record;
+
+import cn.gov.hrss.ln.stuenroll.db.I_NewsfeedDao;
+import cn.gov.hrss.ln.stuenroll.plugin.MongoKit;
+
+public class NewsfeedDao implements I_NewsfeedDao {
+
+	@Override
+	public List<Record> getNewsfeed(long id, int currentPage) {
+
+		StringBuffer sql = new StringBuffer();
+		long organizationId = 0;
+		Page<Record> page = new Page<>(null, 0, 0, 0, 0);
+		List<Record> list=null;
+		sql.append("SELECT ");
+		sql.append("	e.organization_id ");
+		sql.append("FROM ");
+		sql.append("	enroll e ");
+		sql.append("JOIN register r ON e.id = r.enroll_id ");
+		sql.append("WHERE ");
+		sql.append("	r.id = ? ");
+
+		try {
+			organizationId = Db.queryLong(sql.toString(), id);
+		}
+		catch (Exception e) {
+			return list;
+		}
+
+		HashMap filter = new HashMap();
+		filter.put("organizationId", organizationId);
+		HashMap sort = new HashMap();
+		sort.put("savedate", null);
+		page = MongoKit.paginate("newsfeed", currentPage, 10, filter, null, sort);
+		
+		list=page.getList();
+		return list;
+	}
+
+}

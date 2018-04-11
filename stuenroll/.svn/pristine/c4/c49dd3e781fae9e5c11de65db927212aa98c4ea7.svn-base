@@ -1,0 +1,64 @@
+package cn.gov.hrss.ln.stuenroll.db;
+
+import java.util.HashMap;
+import java.util.List;
+
+import com.jfinal.plugin.activerecord.Record;
+
+public interface I_UserInfoDao {
+	/**
+	 * 查询用户信息记录
+	 * 
+	 * @param map
+	 * @param start
+	 * @param length
+	 * @return
+	 */
+	public List<Record> searchUserInfo(HashMap map, long start, long length);
+	/**
+	 * 查询记录总数
+	 * 
+	 * @param map
+	 * @return
+	 */
+	public long searchUserInfoCount(HashMap map);
+
+	/**
+	 * 根据id删除用户信息记录
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public int deleteUserInfo(Long[] id);
+	/**
+	 * 查询角色可选项
+	 * @return
+	 */
+	public List<Record> searchSelectableRole();
+	/**
+	 *  查询 当前年份 培训机构 可选项
+	 * @param year
+	 * @return
+	 */
+	public List<Record> searchOrganizationJoinInYearAtDropDown(int year);
+	/**
+	 * 插入用户信息记录
+	 * @param map
+	 * @return
+	 */
+	public int insertUserInfo(HashMap map);
+	/**
+	 * 查询班级成员信息记录
+	 * @param map
+	 * @param start
+	 * @param length
+	 * @return
+	 */
+	public List<Record> searchClassMember(HashMap map, long start, long length);
+	/**
+	 * 查询班级成员总数
+	 * @param map
+	 * @return
+	 */
+	public long searchClassMemberCount(HashMap map);
+}

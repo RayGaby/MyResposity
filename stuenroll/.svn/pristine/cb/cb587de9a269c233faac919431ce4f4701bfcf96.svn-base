@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="../../css/base.css" />
+		<link rel="stylesheet" type="text/css" href="../../font/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="../../js/plugin/toastr.css" />
+		<link rel="stylesheet" type="text/css" href="organization.css" />
+		<link rel="stylesheet" type="text/css" href="../../js/plugin/button.css" />
+	</head>
+	<body>
+		<div class="main-container">
+			<dl class="tab-list no-select">
+				<dt class="tab-item tab-active" data-index ="机构列表">机构列表</dt>
+				<dt class="tab-item" data-index="参与转换">参与转换</dt>
+			</dl>
+			<div class="tab-container">
+				<div class="tab-content content-active" data-index="机构列表">
+					<dl class="operation-list no-select">
+						<dt class="operation-item" name="addOrganization">添加</dt>
+						<dt class="operation-item" name="updateOrganization">修改</dt>
+						<dt class="operation-item" name="deleteOrganization">删除</dt>
+						<dt class="operation-item" name="addJoin">参与转换</dt>
+					</dl>
+					<div class="check-table" name="checkTableOfOrganization">
+						<div class="table-title">
+							<span name="addInfo">机构信息添加</span>
+							<span name="updateInfo">机构信息修改</span>
+						</div>
+						<div class="table-info">
+							<dl class="check-info">
+								<dt class="info-title">机构信息</dt>
+								<dt class="check-item">
+									<lable for="name">机构名称</lable>
+									<input type="text" id="name" name="name" class="input" placeholder="机构名称" autocomplete="off" tabindex="-1" required="required" pattern="^[a-zA-Z0-9\u4e00-\u9fa5]{4,30}$" />
+									<lable for="name">机构简称</lable>
+									<input type="text" id="abbreviation" name="abbreviation" class="input" placeholder="机构简称" autocomplete="off" tabindex="-1" required="required" pattern="^[\u4e00-\u9fa5]{4,10}$" />
+									<input type="button" class="btn red" name="saveBtn" value="保存" tabindex="-1" dataindex="1" />
+									<input type="button" class="btn red" name="updateBtn" value="修改" tabindex="-1" dataindex="1" />
+								</dt>
+								<dt class="check-item">
+									<lable for="address">机构地址</lable>
+									<input type="text" id="address" name="address" class="input" placeholder="机构地址" autocomplete="off" tabindex="-1" required="required" pattern="^[a-zA-Z0-9\u4e00-\u9fa5]{5,50}$" />
+									<input type="button" class="btn red" name="quitBtn" value="取消" tabindex="-1" dataindex="1" />
+								</dt>
+								<dt class="check-item">
+									<lable for="name">联系人</lable>
+									<input type="text" id="liaison" name="liaison" class="input" placeholder="联系人" autocomplete="off" tabindex="-1" required="required" pattern="^[\u4e00-\u9fa5]{2,15}$" />
+									<lable for="name">联系电话</lable>
+									<input type="text" id="tel" name="tel" class="input" placeholder="联系电话" autocomplete="off" tabindex="-1" required="required" pattern="^[1-9]\d{10}$" />
+									<input type="button" class="btn red" name="clearBtn" value="清除" tabindex="-1" dataindex="1" />
+								</dt>
+							</dl>
+						</div>
+					</div>
+					<dl class="addJoin-table" name="addTableOfJoin">
+						<div class="table-title">
+							<span name="addJoinInfo">参与转换信息</span>
+						</div>
+						<div class="table-info">
+							<dl class="addJoin-info">
+								<dt class="info-title">学生基本信息</dt>
+								<dt class="addJoin-item">
+									<lable for="number">机构数量</lable>
+									<input type="text" id="number" name="number" class="input" placeholder="机构数量" autocomplete="off" tabindex="-1" readonly="readonly" pattern="^[1-9]\d{0,}$" />
+									<input type="button" class="btn red" name="addJoinBtn" value="保存" tabindex="-1" dataindex="1" />
+								</dt>
+								<dt class="addJoin-item">
+									<lable for="year">参与年届</lable>
+									<input type="text" id="year" name="year" class="input" placeholder="参与年届" autocomplete="off" tabindex="-1" required="required" pattern="^[1-9]\d{3}$" />
+									<input type="button" class="btn red" name="quitJoinBtn" value="取消" tabindex="-1" dataindex="1" />
+								</dt>
+								<dt class="addJoin-item">
+									<lable for="select">开放报名</lable>
+									<select class="select" name="select" >
+										<option>- 选择 -</option>
+										<option value="开放">开放</option>
+										<option value="不开放">不开放</option>
+									</select>
+								</dt>
+							</dl>
+						</div>
+					</dl>
+					<table class="data-table">
+						<tr>
+							<th></th>
+							<th>序号</th>
+							<th>机构名称</th>
+							<th>机构简称</th>
+							<th>机构地址</th>
+							<th>联系电话</th>
+							<th>联系人</th>
+							<th>专业数量</th>
+							<th>班级数量</th>
+							<th>学员数量</th>
+						</tr>
+					</table>
+					<dl class="page-list no-select">
+						<dt class="page-item page-info">
+							总计<span id="totalRows"></span>条记录，<span id="currentPage">1</span>/<span id="toatalPages">1</span>页
+						</dt>
+						<dt class="page-item page-operation">
+							第 1 页
+						</dt>
+					</dl>
+				</div>
+			<div class="tab-content" data-index="参与转换">
+				<dl class="operation-list no-select">
+					<dt class="operation-item" name="searchJoin">查询</dt>
+					<dt class="operation-item" name="updateJoin">修改</dt>
+					<dt class="operation-item" name="deleteJoin">删除</dt>
+				</dl>
+				<div class="check-table" name="checkTableOfJoin">
+					<div class="table-title">
+						<span name="searchInfo">机构信息查询</span>
+						<span name="updateInfo">机构信息修改</span>
+					</div>
+					<div class="table-info">
+						<dl class="check-info">
+							<dt class="info-title">机构信息</dt>
+							<dt class="check-item">
+								<lable for="name">机构名称</lable>
+								<input type="text" id="name" name="name" class="input" placeholder="机构名称" autocomplete="off" tabindex="-1" required="required" pattern="^[a-zA-Z0-9\u4e00-\u9fa5]{4,30}$" />
+								<input type="button" class="btn red" name="searchBtn" value="查询" tabindex="-1" dataindex="1" />
+								<input type="button" class="btn red" name="updateBtn" value="修改" tabindex="-1" dataindex="1" />
+							</dt>
+							<dt class="check-item">
+								<lable for="abbreviation">机构简称</lable>
+								<input type="text" id="abbreviation" name="abbreviation" class="input" placeholder="机构简称" autocomplete="off" tabindex="-1" required="required" pattern="^[\u4e00-\u9fa5]{4,10}$" />
+								<input type="button" class="btn red" name="quitBtn" value="取消" tabindex="-1" dataindex="1" />
+							</dt>
+							<dt class="check-item">
+								<lable for="year">年届</lable>
+								<input type="text" id="year" name="year" class="input" placeholder="年届" autocomplete="off" tabindex="-1" required="required" pattern="^[1-9]\d{3}$" />
+								<input type="button" class="btn red" name="clearBtn" value="清除" tabindex="-1" dataindex="1" />
+							</dt>
+						</dl>
+					</div>
+				</div>
+				<table class="data-table">
+					<tr>
+						<th></th>
+						<th>序号</th>
+						<th>机构名称</th>
+						<th>机构简称</th>
+						<th>年届</th>
+						<th>专业数量</th>
+						<th>班级数量</th>
+						<th>学员数量</th>
+						<th>中退人数</th>
+						<th>就业人数</th>
+						<th>开放报名</th>
+					</tr>
+				</table>
+				<dl class="page-list no-select">
+					<dt class="page-item page-info">
+						总计<span id="totalRows"></span>条记录，<span id="currentPage">1</span>/<span id="totalPages"></span>页
+					</dt>
+					<dt class="page-item page-operation">
+						<a name="prevBtn">上一页</a> <a class="page-active page-test"></a> <a class="page-test"></a> <a class="page-test"></a> <a class="page-test""></a> <a class="page-test"></a> <a name="nextBtn">下一页</a>
+					</dt>
+				</dl>
+			</div>
+		</div>
+		<script src="../../js/jquery-2.1.4.min.js" type="text/javascript" charset="UTF-8"></script>
+		<script src="../../js/pid.js" type="text/javascript" charset="UTF-8"></script>
+		<script src="../../js/plugin/toastr.js" type="text/javascript" charset="UTF-8"></script>
+		<script src="../../js/permission.js" type="text/javascript" charset="UTF-8"></script>
+		<script src="../../js/tab.js" type="text/javascript" charset="UTF-8"></script>
+		<script src="organization.js" type="text/javascript" charset="UTF-8"></script>
+	</body>
+</html>

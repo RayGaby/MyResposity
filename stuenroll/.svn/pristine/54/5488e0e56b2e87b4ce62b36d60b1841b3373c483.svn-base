@@ -1,0 +1,117 @@
+package cn.gov.hrss.ln.stuenroll.enroll;
+
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+
+import com.jfinal.core.Controller;
+import com.jfinal.plugin.activerecord.Record;
+import com.jfinal.plugin.spring.Spring;
+
+@Spring("enrollController")
+public class EnrollController extends Controller implements I_EnrollController {
+	private I_EnrollService i_EnrollService;
+	private int rowsInPage;
+
+	@RequiresPermissions({ "3_4" })
+	@Override
+	public void searchEnroll() {
+		String name = getPara("name");
+		String pid = getPara("pid");
+		Integer year = getParaToInt("year");
+		String sex = getPara("sex");
+		String education = getPara("education");
+		Long organizationId = getParaToLong("organizationId");
+		Long professionId = getParaToLong("professionId");
+		Long classinfoId = getParaToLong("classinfoId");
+		Long stateId = getParaToLong("stateId");
+
+		String organization = getSessionAttr("organization"); // HttpSession中的组织名称
+		// 如果不是就业网用户那么Java程序从HttpSession中提取机构ID，强制使用这个机构ID查询数据，所以用户只能看到自己机构的数据
+		if (organization.equals("辽宁省就业网") == false) {
+			organizationId = getSessionAttr("organizationId");
+		}
+
+		HashMap map = new HashMap();
+		map.put("name", name);
+		map.put("pid", pid);
+		map.put("year", year);
+		map.put("sex", sex);
+		map.put("education", education);
+		map.put("organizationId", organizationId);
+		map.put("professionId", professionId);
+		map.put("classinfoId", classinfoId);
+		map.put("stateId", stateId);
+
+		Long page = getParaToLong("page");
+		if (page == null) {
+			page = 1L;
+		}
+		long start = (page - 1) * rowsInPage;
+		long length = rowsInPage;
+
+		List<Record> list = i_EnrollService.searchEnroll(map, start, length);
+		renderJson("result", list);
+	}
+
+	@RequiresPermissions({ "3_4" })
+	@Override
+	public void searchEnrollCount() {
+		String name = getPara("name");
+		String pid = getPara("pid");
+		Integer year = getParaToInt("year");
+		String sex = getPara("sex");
+		String education = getPara("education");
+		Long organizationId = getParaToLong("organizationId");
+		Long professionId = getParaToLong("professionId");
+		Long classinfoId = getParaToLong("classinfoId");
+		Long stateId = getParaToLong("stateId");
+
+		String organization = getSessionAttr("organization"); // HttpSession中的组织名称
+		// 如果不是就业网用户那么Java程序从HttpSession中提取机构ID，强制使用这个机构ID查询数据，所以用户只能看到自己机构的数据
+		if (organization.equals("辽宁省就业网") == false) {
+			organizationId = getSessionAttr("organizationId");
+		}
+
+		HashMap map = new HashMap();
+		map.put("name", name);
+		map.put("pid", pid);
+		map.put("year", year);
+		map.put("sex", sex);
+		map.put("education", education);
+		map.put("organizationId", organizationId);
+		map.put("professionId", professionId);
+		map.put("classinfoId", classinfoId);
+		map.put("stateId", stateId);
+
+		long count = i_EnrollService.searchEnrollCount(map);
+		renderJson("result", count);
+
+	}
+
+	@RequiresPermissions({ "3_2" })
+	@Override
+	public void deleteById() {
+		Long[] id = getParaValuesToLong("id");
+		int i = i_EnrollService.deleteById(id);
+		renderJson("deleteRows", i);
+	}
+
+	public I_EnrollService getI_EnrollService() {
+		return i_EnrollService;
+	}
+
+	public void setI_EnrollService(I_EnrollService i_EnrollService) {
+		this.i_EnrollService = i_EnrollService;
+	}
+
+	public int getRowsInPage() {
+		return rowsInPage;
+	}
+
+	public void setRowsInPage(int rowsInPage) {
+		this.rowsInPage = rowsInPage;
+	}
+
+}

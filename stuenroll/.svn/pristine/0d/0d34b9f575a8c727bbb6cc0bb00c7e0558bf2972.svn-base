@@ -1,0 +1,32 @@
+package cn.gov.hrss.ln.stuenroll.friend;
+
+import java.util.HashMap;
+import java.util.List;
+
+import com.jfinal.plugin.activerecord.Record;
+
+public interface I_FriendService {
+	/**
+	 * 查询好友记录
+	 * 
+	 * @param map
+	 * @param start
+	 * @param length
+	 * @return
+	 */
+	public List<Record> searchFriend(HashMap map,long start,long length);
+	/**
+	 * 查询好友总数
+	 * 
+	 * @param map
+	 * @return
+	 */
+	public long searchFriendCount(String username);
+	/**
+	 * 根据ID删除数据
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public int deleteById(Long id);
+}

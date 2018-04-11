@@ -1,0 +1,24 @@
+.header {
+  background-color: #E21C46;
+}
+.f1 {
+  color: #fff;
+}
+.f1:active {
+  color: #fff;
+}
+.f2 {
+  margin-left: 1.25rem;
+  margin-top: 1.25rem;
+  margin-bottom: 0.9375rem;
+}
+.slt {
+  font-size: 1px;
+}
+.operate {
+  margin: 1.25rem 0.9375rem;
+}
+.error {
+  color: red !important;
+}
+/*# sourceMappingURL=register.css.map */

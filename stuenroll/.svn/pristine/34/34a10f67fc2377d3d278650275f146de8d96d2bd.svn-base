@@ -1,0 +1,734 @@
+$(function(){
+	
+	if (!checkPermission([ "8_5" ])) {
+		return;
+	}
+	
+	require.config({
+		paths : {
+			echarts : '../../js/echarts'
+		}
+	});
+	
+	/**
+	 * tel_visit接口
+	 */
+	var I_Visit = function(){
+		
+	} 
+	
+	
+	I_Visit.prototype.randomStu = function(json){
+		throw "抽象方法";
+	}
+	
+	I_Visit.prototype.save = function(json){
+		throw "抽象方法";
+	}
+	
+	I_Visit.prototype.searchStu = function(json){
+		throw "抽象方法";
+	}
+	
+	I_Visit.prototype.absent = function(){
+		throw "抽象方法";
+	}
+	I_Visit.prototype.grade = function(){
+		throw "抽象方法";
+	}
+	
+	var Visit = function(){
+		
+	}
+	
+	Visit.prototype = new I_Visit();
+	
+	Visit.prototype.randomStu = function(json){
+		$.ajax({
+			"url" : "/stuenroll/visit/randomQuery",
+			"type" : "post",
+			"dateType" : "json",
+			"data" : json,
+			"success" : function(json){
+				var data = json.result;
+				
+				$(".left .registry .form-title").data("id",data.id);
+				
+				$(".left .form .content .name .input").text(data.name);
+				$(".left .form .content .birth .input[name='year']").text(data.year);
+				$(".left .form .content .birth .input[name='month']").text(data.month);
+				$(".left .form .content .birth .input[name='date']").text(data.date);
+				$(".left .form .content .info-left .input[name='pid']").text(data.pid);
+				$(".left .form .content .info-right .input[name='email']").text(data.email);
+				$(".left .form .content .info-left .input[name='tel']").text(data.tel);
+				$(".left .form .content .info-right .input[name='resident']").text(data.resident_address);
+				$(".left .form .content .info-left .input[name='address']").text(data.home_address);
+				$(".left .form .content .info-right .input[name='permanent']").text(data.permanent_address);
+				$(".left .form .content .info-left .input[name='school']").text(data.graduateSchool);
+				$(".left .form .content .info-right .input[name='profession']").text(data.profession);
+				$("#name").text(data.name);
+				$("#tel").text(data.tel);
+				var age = data.currentYear - data.year;
+				$("#age").text(age);
+				$("#sex").text(data.sex);
+				$("input[name='sex'][value='"+data.sex+"']").attr("checked",true);
+				
+			},
+			"error" : function(){
+				//toastr.error("系统异常");
+			}
+		});
+	}
+	
+	Visit.prototype.save = function(json){
+		$.ajax({
+			"url" : "/stuenroll/visit/save",
+			"type" : "post",
+			"dataType" : "json",
+			"data" : json,
+			"success" : function(json){
+				var page = paramMap.page;
+				var classInfo = paramMap.classInfo;
+				var year = paramMap.year;
+				var organization = paramMap.organization;
+				var profession = paramMap.profession;
+				var classinfoId = paramMap.classinfoId;
+				var stuId = $(".left .form-title").data("id");
+				$(window.parent.document).find("iframe").attr("src","classinfo/classinfo.html?index=4&operation=1&page="+page+"&classInfo="+classInfo+"&year="+year+"&organization="+organization+"&profession="+profession+"&stuId="+stuId+"&classinfoId="+classinfoId);
+			},
+			"error" : function(){
+				toastr.error("系统异常");
+			}
+		});
+	}
+	
+	Visit.prototype.searchStu = function(json){
+		$.ajax({
+			"url" : "/stuenroll/visit/searchVisitById",
+			"type" : "post",
+			"dateType" : "json",
+			"data" : json,
+			"success" : function(json){
+				var data = json.result;
+				
+				$(".left .registry .form-title").data("id",data.id);
+				
+				$(".left .form .content .name .input").text(data.name);
+				$(".left .form .content .birth .input[name='year']").text(data.year);
+				$(".left .form .content .birth .input[name='month']").text(data.month);
+				$(".left .form .content .birth .input[name='date']").text(data.date);
+				$(".left .form .content .info-left .input[name='pid']").text(data.pid);
+				$(".left .form .content .info-right .input[name='email']").text(data.email);
+				$(".left .form .content .info-left .input[name='tel']").text(data.tel);
+				$(".left .form .content .info-right .input[name='resident']").text(data.resident_address);
+				$(".left .form .content .info-left .input[name='address']").text(data.home_address);
+				$(".left .form .content .info-right .input[name='permanent']").text(data.permanent_address);
+				$(".left .form .content .info-left .input[name='school']").text(data.graduateSchool);
+				$(".left .form .content .info-right .input[name='profession']").text(data.profession);
+				$("#name").text(data.name);
+				$("#tel").text(data.tel);
+				var age = data.currentYear - data.year;
+				$("#age").text(age);
+				$("#sex").text(data.sex);
+				$("#time").text(data.time);
+				$("input[name='sex'][value='"+data.sex+"']").attr("checked",true);
+				if(data.info != null){
+					$("input[name='info'][value='"+data.info+"']").attr("checked",true);
+				}
+				if(data.global != null){
+					$("input[name='global'][value='"+data.global+"']").attr("checked",true);
+				}
+				if(data.org_global != null){
+					$("input[name='organization'][value='"+data.org_global+"']").attr("checked",true);
+				}
+				if(data.org_study != null){
+					$("input[name='study'][value='"+data.org_study+"']").attr("checked",true);
+				}
+				if(data.org_daily != null){
+					$("input[name='daily'][value='"+data.org_daily+"']").attr("checked",true);
+				}
+				if(data.pro_set != null){
+					$("input[name='proSet'][value='"+data.pro_set+"']").attr("checked",true);
+				}
+				
+				if(data.pro_study != null){
+					$("input[name='cycle'][value='"+data.pro_study+"']").attr("checked",true);
+				}
+				if(data.change != null){
+					$("textarea[name='change']").text(data.change);
+				}
+				if(data.get_job != null){
+					$("input[name='job'][value='"+data.get_job+"']").attr("checked",true);
+				}
+				if(data.size != null){
+					$("input[name='size'][value='"+data.size+"']").attr("checked",true);
+				}
+				
+				if(data.type != null){
+					$("input[name='type'][value='"+data.type+"']").attr("checked",true);
+				}
+				if(data.income != null){
+					$("input[name='income'][value='"+data.income+"']").attr("checked",true);
+				}
+				if(data.fit != null){
+					$("input[name='fit'][value='"+data.fit+"']").attr("checked",true);
+				}
+				if(data.satisfy != null){
+					$("input[name='satisfy'][value='"+data.satisfy+"']").attr("checked",true);
+				}
+				if(data.way != null){
+					$("input[name='way'][value='"+data.way+"']").attr("checked",true);
+				}
+				if(data.job_satisty != null){
+					$("input[name='jobSatisfy'][value='"+data.job_satisty+"']").attr("checked",true);
+				}
+				
+				if(data.advise != null){
+					$("textarea[name='text']").text(data.advise);
+				}
+				
+			},
+			"error" : function(){
+				toastr.error("系统异常");
+			}
+		});
+	}
+	
+	Visit.prototype.absent = function(){
+		require([ 'echarts', 'echarts/chart/pie' ], function(ec) {
+			var myChart = ec.init($(".attend")[0], 'macarons');
+			var option = {
+				title : {
+            		x:'15',
+        			y:'15',
+	        		text: '出勤/请假环形图',
+	        		textStyle:{
+	        			color:'#666666',
+	        			fontSize:18,
+	        			
+	        		}
+	   			},
+				 tooltip : {
+				        trigger: 'item',
+				        formatter: "{a} <br/>{b} : {c} ({d}%)"
+				    },
+				    legend: {
+				        x : 'left',
+				        y : 'bottom',
+				        data:['出勤','请假']
+				    },
+				    
+				    calculable : true,
+				    series : [
+				        {
+				            name:'访问来源',
+				            type:'pie',
+				            radius : ['50%', '60%'],
+				            itemStyle : {
+				                normal : {
+				                    label : {
+				                        show : false
+				                    },
+				                    labelLine : {
+				                        show : false
+				                    }
+				                },
+				                emphasis : {
+				                    label : {
+				                        show : true,
+				                        position : 'center',
+				                        textStyle : {
+				                            fontSize : '30',
+				                            fontWeight : 'bold'
+				                        }
+				                    }
+				                }
+				            },
+				            data:[
+				                {value:14, name:'出勤'},
+				                {value:6, name:'请假'}
+				            ]
+				        }
+				    ]
+			};
+			myChart.setOption(option);
+		});
+	}
+	
+	Visit.prototype.grade = function(){
+		require([ 'echarts', 'echarts/chart/line' ], function(ec) {
+			var myChart = ec.init($(".report")[0], 'macarons');
+
+			var option = {
+				title : {
+            		x:'15',
+        			y:'15',
+	        		text: '考试成绩折线',
+	        		textStyle:{
+	        			color:'#666666',
+	        			fontSize:18,
+	        			
+	        		}
+	   			},
+		   		tooltip : {
+		   	        trigger: 'axis'
+		   	    },
+		   	    legend: {
+		   	        data:['期中','期末'],
+		   	        x:'left',
+		   	        y:'bottom'
+		   	    },
+		   	    grid: {
+		   	    	x:'15%',
+        			y:'25%',
+					width:'70%',
+					height:'40%'
+				},
+		   	    calculable : true,
+		   	    xAxis : [
+		   	        {
+		   	            type : 'category',
+		   	            boundaryGap : false,
+		   	            data : ['软件工程','数值分析','数据库','数据结构']
+		   	        }
+		   	    ],
+		   	    yAxis : [
+		   	        {
+		   	            type : 'value'
+		   	        }
+		   	    ],
+		   	    series : [
+		   	        {
+		   	            name:'期中',
+		   	            type:'line',
+		   	            stack: '总量',
+		   	            data:[60, 70, 80, 90]
+		   	        },
+		   	        {
+		   	            name:'期末',
+		   	            type:'line',
+		   	            stack: '总量',
+		   	            data:[20, 82, 91, 34]
+		   	        }
+		   	    ]
+			};
+			myChart.setOption(option);
+		});
+	}
+	
+	//判断分钟或小时加0
+	function addTime(i)
+    {
+	    if (i<10) 
+	      {i="0" + i}
+	      return i
+    }
+    function startTime(h,m,s,temp,from)
+    {
+    	h = new Number(h);
+    	m = new Number(m);
+    	s = new Number(s);
+	    s=s+1;
+	    if(s==60){
+	    	s=0;
+	    	m=m+1;
+	    	if(m==60){
+	    		m=0;
+	    		h=h+1;
+	    	}
+	    }
+	    // add a zero in front of numbers<10
+	    m=addTime(m);
+	    s=addTime(s);
+	    h=addTime(h);
+	    $("#time").text(h+":"+m+":"+s);
+	    t=setTimeout(function(){
+	    	if($(".play").val()!="通话结束" && from != 0){//说明没有打过电话
+	    		if($(".play").val()=="连接中…"){
+	    			if($("#time").text()=="00:00:10"){//如果打不通，10秒钟自动挂断
+		    			toastr.warning("电话未拨通！");
+		    			$(".play").val("拨打");
+		    			$("#time").text("00:00:00");
+	    			}
+	    			else{
+	    				var temp1=0;
+		    			$(".play").unbind("click");
+	    				$(".play").click(function(){//在拨电话的过程中，还未接通就挂断
+		    		    	$(this).val("已挂断");
+		    		    	$("#time").text("00:00:00");
+		    		    	temp1=1;
+		    		    });
+		    			if($("#time").text()==temp){//此时电话是拨通的
+		            		$(".play").val("|| 挂断");
+		            		h=0;
+		    				m=0;
+		    				s=0;
+		        		}
+		    			if(temp1==0)//未点击就继续计时
+		    				startTime(h,m,s,temp);
+	    			}
+	    		}
+	    		else if($(".play").val()=="|| 挂断"){
+	    			var temp2=0;
+	    			$(".play").unbind("click");
+	    			$(".play").click(function(){
+	    				
+	    		    	$(this).val("通话结束");
+	    		    	temp2=1;
+	    		    	toastr.success("回访成功");
+	    		    });
+	    			if(temp2==0)
+	    				startTime(h,m,s,temp,from);
+	    		}
+	    	}
+	    	else if($(".play").val() != "停止" && from == 0){
+	    		if($(".play").val() == "|| 暂停"){
+	    			if($("#time").text()==temp){//如果打不通，10秒钟自动挂断
+		    			$(".play").val("停止");
+	    			}
+	    			var temp1 = 0;
+	    			$(".play").unbind("click");
+	    			$(".play").click(function(){
+	    				$(this).val("继续");
+	    				temp1 = 1;
+	    			});
+	    			if(temp1 == 0){
+	    				startTime(h,m,s,temp,0);
+	    			}
+	    			
+	    		}
+	    		else{
+	    			if($("#time").text()==temp){//如果打不通，10秒钟自动挂断
+		    			$(".play").val("停止");
+	    			}
+	    			var temp2 = 1;
+	    			$(".play").unbind("click");
+	    			$(".play").click(function(){
+	    				$(this).val("|| 暂停");
+	    				startTime(h,m,s,temp,0);
+	    			});
+	    			
+	    		}
+	    	}
+	    },1000);
+	    	
+	    
+    }
+
+	var visit = new Visit();
+	
+	var paramMap = getIframeParams("page");
+	var classinfoId = paramMap.classinfoId;
+	var from = paramMap.from;
+	
+	//来自哪个网页
+	//来自detail网页
+	if(from == 0){
+		$("#save").css("display","none");
+		$(".left .detail").css("display","none");
+		var stuId = paramMap.stuId;
+		visit.searchStu({
+			"classinfo" : classinfoId,
+			"stuId" : stuId
+		});
+		
+
+		$(".play").val("开始");
+		$(".play").click(function(){
+			$(this).val("|| 暂停");
+	    	var temp = $("#time").text();
+	    	startTime(0,0,0,temp,0);
+	    });
+	}
+	else{
+		visit.randomStu({
+			"classinfo" : classinfoId
+		});
+		$(".play").val("拨打");
+		$(".play").click(function(){
+			$(this).val("连接中…")
+	    	var connected=Math.random();
+	    	if(connected>0.1){//打通
+	    		var connectTime=Math.random()*9;//多少秒接通
+	    		connectTime=Math.round(connectTime);
+	    		if(connectTime<10)
+	    			connectTime="0"+connectTime;
+	    		//设置此时是拨通的
+	    		var temp="00:00:"+connectTime;
+	    		startTime(0,0,0,temp)
+	    		
+	    	}
+	    	else{
+	    		var temp="00:00:"+"11";
+	    		startTime(0,0,0,temp,from)
+	    	}
+	    });
+	}
+	
+	visit.absent();
+	visit.grade();
+	
+	$(".left .condition *[name='info']").click(function(){
+		if($(this).attr("checked")!=false)
+        {  
+            $(this).siblings().attr("checked",false);  
+            $(this).attr("checked",true);  
+        } 
+	});
+	
+	$(".left .condition *[name='global']").click(function(){
+		if($(this).attr("checked")!=false)
+        {  
+            $(this).siblings().attr("checked",false);  
+            $(this).attr("checked",true);  
+        } 
+	});
+	
+	$(".left .condition *[name='organization']").click(function(){
+		if($(this).attr("checked")!=false)
+        {  
+            $(this).siblings().attr("checked",false);  
+            $(this).attr("checked",true);  
+        } 
+	});
+	
+	$(".left .condition *[name='study']").click(function(){
+		if($(this).attr("checked")!=false)
+        {  
+            $(this).siblings().attr("checked",false);  
+            $(this).attr("checked",true);  
+        } 
+	});
+	
+	$(".left .condition *[name='daily']").click(function(){
+		if($(this).attr("checked")!=false)
+        {  
+            $(this).siblings().attr("checked",false);  
+            $(this).attr("checked",true);  
+        } 
+	});
+	
+	$(".left .condition *[name='proSet']").click(function(){
+		if($(this).attr("checked")!=false)
+        {  
+            $(this).siblings().attr("checked",false);  
+            $(this).attr("checked",true);  
+        } 
+	});
+	
+	$(".left .condition *[name='cycle']").click(function(){
+		if($(this).attr("checked")!=false)
+        {  
+            $(this).siblings().attr("checked",false);  
+            $(this).attr("checked",true);  
+        } 
+	});
+	
+	$(".left .condition *[name='job']").click(function(){
+		if($(this).attr("checked")!=false)
+        {  
+            $(this).siblings().attr("checked",false);  
+            $(this).attr("checked",true);  
+        } 
+        
+        var job = $(".left .condition *[name='job']:checked").val();
+
+		if(job == "否"){
+			$(".left .condition *[name='size']").attr("checked",false);
+			$(".left .condition *[name='size']").click(function(){
+				$(this).attr("checked",false);
+			});
+			$(".left .condition *[name='type']").attr("checked",false);
+			$(".left .condition *[name='type']").click(function(){
+				$(this).attr("checked",false);
+			});
+			$(".left .condition *[name='income']").attr("checked",false);
+			$(".left .condition *[name='income']").click(function(){
+				$(this).attr("checked",false); 
+			});
+			$(".left .condition *[name='fit']").attr("checked",false);
+			$(".left .condition *[name='fit']").click(function(){
+				$(this).attr("checked",false);
+			});
+			$(".left .condition *[name='satisfy']").attr("checked",false);
+			$(".left .condition *[name='satisfy']").click(function(){
+				$(this).attr("checked",false);
+			});
+			$(".left .condition *[name='way']").attr("checked",false);
+			$(".left .condition *[name='way']").click(function(){
+				$(this).attr("checked",false);
+			});
+			$(".left .condition *[name='jobSatisfy']").attr("checked",false);
+			$(".left .condition *[name='jobSatisfy']").click(function(){
+				$(this).attr("checked",false);
+			});
+			
+			$(".left .condition *[name='text']").keyup(function(){
+				var val=$(this).val().length;
+				if(val>0){
+					toastr.warning("你尚未就业，不可以填写就业建议！");
+					$(this).val($(this).val().substring(0,0));
+				}
+			});
+			
+		}
+		else{
+			$(".left .condition *[name='size']").click(function(){
+				if($(this).attr("checked")!=false)
+		        {  
+		            $(this).siblings().attr("checked",false);  
+		            $(this).attr("checked",true);  
+		        } 
+			});
+			
+			$(".left .condition *[name='type']").click(function(){
+				if($(this).attr("checked")!=false)
+		        {  
+		            $(this).siblings().attr("checked",false);  
+		            $(this).attr("checked",true);  
+		        } 
+			});
+			
+			$(".left .condition *[name='income']").click(function(){
+				if($(this).attr("checked")!=false)
+		        {  
+		            $(this).siblings().attr("checked",false);  
+		            $(this).attr("checked",true);  
+		        } 
+			});
+			
+			$(".left .condition *[name='fit']").click(function(){
+				if($(this).attr("checked")!=false)
+		        {  
+		            $(this).siblings().attr("checked",false);  
+		            $(this).attr("checked",true);  
+		        } 
+			});
+			
+			$(".left .condition *[name='satisfy']").click(function(){
+				if($(this).attr("checked")!=false)
+		        {  
+		            $(this).siblings().attr("checked",false);  
+		            $(this).attr("checked",true);  
+		        } 
+			});
+			
+			$(".left .condition *[name='way']").click(function(){
+				if($(this).attr("checked")!=false)
+		        {  
+		            $(this).siblings().attr("checked",false);  
+		            $(this).attr("checked",true);  
+		        } 
+			});
+			
+			$(".left .condition *[name='jobSatisfy']").click(function(){
+				if($(this).attr("checked")!=false)
+		        {  
+		            $(this).siblings().attr("checked",false);  
+		            $(this).attr("checked",true);  
+		        } 
+			});
+			
+			
+		}
+	});
+	
+	
+	$("#save").click(function(){
+		var button = $(".play").val();
+		if(button != "通话结束"){
+			$(window.parent.document).find("body").animate({scrollTop:0},5);
+			toastr.warning("未拨通电话");
+		}
+		else{
+			var info = $(".left .condition").find("*[name='info']:checked").val();
+			var global = $(".left .condition").find("*[name='global']:checked").val();
+			var orgGlobal = $(".left .condition").find("*[name='organization']:checked").val();
+			var orgStudy = $(".left .condition").find("*[name='study']:checked").val();
+			var orgDaily = $(".left .condition").find("*[name='daily']:checked").val();
+			var proSet = $(".left .condition").find("*[name='proSet']:checked").val();
+			var proStudy = $(".left .condition").find("*[name='cycle']:checked").val();
+			var change = $(".left .condition").find("*[name='change']").val();
+			var getJob = $(".left .condition").find("*[name='job']:checked").val();
+			var size = $(".left .condition").find("*[name='size']:checked").val();
+			var type = $(".left .condition").find("*[name='type']:checked").val();
+			var income = $(".left .condition").find("*[name='income']:checked").val();
+			var fit = $(".left .condition").find("*[name='fit']:checked").val();
+			var satisfy = $(".left .condition").find("*[name='satisfy']:checked").val();
+			var way = $(".left .condition").find("*[name='way']:checked").val();
+			var jobSatisfy = $(".left .condition").find("*[name='jobSatisfy']:checked").val();
+			var advise = $(".left .condition").find("*[name='text']").val();
+			var time = $("#time").text();
+			var stuId = $(".left .registry .form-title").data("id");
+			
+			global = new Number(global);
+			orgGlobal = new Number(orgGlobal);
+			orgStudy = new Number(orgStudy);
+			orgDaily = new Number(orgDaily);
+			
+			var satisfy_degree =  orgGlobal + orgStudy + orgDaily + global;
+			var satisfyDegree = "";
+			if(satisfy_degree < 18 || satisfy_degree == 18){
+				satisfyDegree = "不满意" ;
+			}
+			else if(satisfy_degree > 18 && satisfy_degree < 26 || satisfy_degree == 26){
+				satisfyDegree = "一般" ;
+			}
+			else if(satisfy_degree > 26 && satisfy_degree < 34 || satisfy_degree == 34){
+				satisfyDegree = "满意" ;
+			}
+			else{
+				satisfyDegree = "很满意";
+			}
+			
+			if(info != null && satisfyDegree != null  && proSet != null && proStudy != null && change != null && change != "" && getJob != null && global != null && orgGlobal != null && orgStudy != null && orgDaily != null ){
+				visit.save({
+					"stuId" : stuId,
+					"info" :info ,
+					"global" :global ,
+					"org_global" :orgGlobal ,
+					"org_study" :orgStudy ,
+					"org_daily" :orgDaily ,
+					"proSet" : proSet,
+					"proStudy" : proStudy,
+					"change" : change,
+					"getJob" : getJob,
+					"size" : size,
+					"type" : type,
+					"income" : income,
+					"fit" : fit,
+					"satisfy" : satisfy,
+					"way" : way,
+					"jobSatisfy" : jobSatisfy,
+					"advise" : advise,
+					"time" : time,
+					"satisfyDegree" : satisfyDegree
+				});
+				
+			}
+			else{
+				//回到顶部
+				$(window.parent.document).find("body").animate({scrollTop:0},5);
+				toastr.warning("请填写完整人工填写");
+			}
+		}
+		
+		
+	});
+	
+	$("#return").click(function(){
+		if(from == 0){
+			var detailPage = paramMap.detailPage;
+			$(window.parent.document).find("iframe").attr("src","classinfo/detail.html?from=0&detailPage="+detailPage+"&classinfoId="+classinfoId);
+		}
+		else{
+			var page = paramMap.page;
+			var classInfo = paramMap.classInfo;
+			var year = paramMap.year;
+			var organization = paramMap.organization;
+			var profession = paramMap.profession;
+			$(window.parent.document).find("iframe").attr("src","classinfo/classinfo.html?index=4&operation=0&page="+page+"&classInfo="+classInfo+"&year="+year+"&organization="+organization+"&profession="+profession);
+		}
+		
+	});
+});

@@ -1,0 +1,19 @@
+package cn.gov.hrss.ln.stuenroll.db;
+/**
+ * 动态消息表Dao接口
+ */
+
+import java.util.List;
+
+import com.jfinal.plugin.activerecord.Page;
+import com.jfinal.plugin.activerecord.Record;
+
+public interface I_NewsfeedDao {
+	/**
+	 * 获取当前registerId下的动态消息
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public List<Record> getNewsfeed(long id, int currentPage);
+}

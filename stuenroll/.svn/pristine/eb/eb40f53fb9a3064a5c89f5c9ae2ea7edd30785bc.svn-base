@@ -1,0 +1,186 @@
+package cn.gov.hrss.ln.stuenroll.db.mariadb;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.activerecord.Record;
+
+import cn.gov.hrss.ln.stuenroll.db.I_ArchiveDao;
+
+/**
+ * Archive表Dao类
+ * 
+ * @author YangDi
+ *
+ */
+public class ArchiveDao implements I_ArchiveDao {
+
+	@Override
+	public long searchCountByCondition(int year, int month, int stateId, long organizationId) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT ");
+		sql.append("	COUNT(*) ");
+		sql.append("FROM ");
+		sql.append("	archive ");
+		sql.append("WHERE ");
+		sql.append("	YEAR (create_time) = ? ");
+		sql.append("AND MONTH (create_time) = ? ");
+		sql.append("AND state_id = ? ");
+		if (organizationId != -1) {
+			sql.append("AND organization_id = ? ");
+			long count = Db.queryLong(sql.toString(), year, month, stateId, organizationId);
+			return count;
+		}
+		else {
+			long count = Db.queryLong(sql.toString(), year, month, stateId);
+			return count;
+		}
+
+	}
+
+	@Override
+	public Record searchPersonalEnroll(long registerId, long pid) {
+		// 获取enroll个人详细信息(mobile)从归档表
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT ");
+		sql.append("	a.id,a.`name`,a.sex,a.pid,a.birthday, ");
+		sql.append("	a.nation,a.politics,a.healthy, ");
+		sql.append("	a.graduate_school,a.graduate_year,a.graduate_date, ");
+		sql.append("	a.major,a.education,a.wechat,a.remark, ");
+		sql.append("	AES_DECRYPT(UNHEX(a.resident_address),'HelloHrss') AS resident_address, ");
+		sql.append("	AES_DECRYPT(UNHEX(a.permanent_address),'HelloHrss') AS permanent_address, ");
+		sql.append("	AES_DECRYPT(UNHEX(a.home_address),'HelloHrss') AS home_address, ");
+		sql.append("	AES_DECRYPT(UNHEX(a.tel), 'HelloHrss') AS tel ,a.email, ");
+		sql.append("	AES_DECRYPT(UNHEX(a.home_tel),'HelloHrss') AS home_tel, ");
+		sql.append("	p.`name` AS profession,o.`name` AS organization,a.place, ");
+		sql.append("	o.abbreviation AS abbreviation,o.liaison AS liaison, o.liaison_tel AS liaison_tel ");
+		sql.append("FROM archive a ");
+		sql.append("JOIN profession p ON a.profession_id = p.id ");
+		sql.append("JOIN organization o ON a.organization_id = o.id ");
+		Record record = null;
+		if (registerId != 0 && pid == 0) {
+			sql.append("WHERE a.register_id=?; ");
+			record = Db.findFirst(sql.toString(), registerId);
+		}
+		if (pid != 0 && registerId == 0) {
+			sql.append("WHERE a.pid=?; ");
+			record = Db.findFirst(sql.toString(), pid);
+		}
+
+		if (record != null) {
+			Map<String, Object> map = record.getColumns();
+			for (String key : map.keySet()) {
+				if (map.get(key) == null) {
+					record.set(key, "");
+				}
+			}
+			byte[] temp = record.getBytes("resident_address");
+			record.set("resident_address", new String(temp));
+			temp = record.getBytes("permanent_address");
+			record.set("permanent_address", new String(temp));
+			temp = record.getBytes("home_address");
+			record.set("home_address", new String(temp));
+			temp = record.getBytes("tel");
+			record.set("tel", new String(temp));
+			temp = record.getBytes("home_tel");
+			record.set("home_tel", new String(temp));
+			map = record.getColumns();
+			for (String key : map.keySet()) {
+				record.set(key, map.get(key).toString());
+			}
+		}
+
+		return record;
+	}
+
+	@Override
+	public String searchPersonalState(long id) {
+		// 获取个人当前状态信息(mobile)
+		StringBuffer sql = new StringBuffer();
+
+		sql.append("SELECT ");
+		sql.append("	ss.`name` ");
+		sql.append("FROM student_state ss ");
+		sql.append("JOIN archive a ON a.state_id=ss.id  ");
+		sql.append("WHERE a.register_id=?; ");
+
+		String state = Db.queryStr(sql.toString(), id);
+		return state;
+	}
+
+	@Override
+	public boolean hasRecord(String pid) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT count(*) ");
+		sql.append("FROM archive ");
+		sql.append("WHERE pid=? ");
+		
+		long count = Db.queryLong(sql.toString(),pid);
+
+		boolean bool = (count == 1);
+		return bool;
+	}
+
+	@Override
+	public Record searchRegisterRecord(String pid) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT ");
+		sql.append("	a.`name`, ");
+		sql.append("	a.sex, ");
+		sql.append("	a.nation, ");
+		sql.append("	a.pid, ");
+		sql.append("	a.graduate_school, ");
+//		sql.append("	a.graduate_year, ");
+		sql.append("	CAST(a.graduate_year AS CHAR) AS graduate_year, ");
+		sql.append("	CAST(DATE_FORMAT(a.graduate_date,'%Y-%m-%d') AS CHAR) AS graduate_date, ");
+		sql.append("	a.education, ");
+		sql.append("	a.major, ");
+		sql.append("	a.healthy, ");
+		sql.append("	a.politics, ");
+		sql.append("	CAST(DATE_FORMAT(a.birthday,'%Y-%m-%d') AS CHAR) AS birthday, ");
+		sql.append("	CAST(AES_DECRYPT(UNHEX(a.resident_address),'HelloHrss') AS CHAR) AS resident_address, ");
+		sql.append("	CAST(AES_DECRYPT(UNHEX(a.permanent_address),'HelloHrss') AS CHAR) AS permanent_address, ");
+		sql.append("	CAST(AES_DECRYPT(UNHEX(a.home_address),'HelloHrss') AS CHAR) AS home_address, ");
+		sql.append("	CAST(AES_DECRYPT(UNHEX(a.tel),'HelloHrss') AS CHAR) AS tel, ");
+		sql.append("	CAST(AES_DECRYPT(UNHEX(a.home_tel),'HelloHrss') AS CHAR) AS home_tel, ");
+		sql.append("	a.email, ");
+//		sql.append("	CAST(AES_DECRYPT(UNHEX(a.wechat),'HelloHrss') AS CHAR) AS wechat, ");
+		sql.append("	a.wechat, ");
+		sql.append("	CAST(IFNULL(a.remark,'') AS CHAR) AS remark, ");
+		sql.append("	o.`name` AS organization, ");
+		sql.append("	o.abbreviation, ");
+		sql.append("	o.liaison, ");
+		sql.append("	o.liaison_tel, ");
+		sql.append("	p.`name` AS profession ");
+		sql.append("FROM ");
+		sql.append("	archive AS a ");
+		sql.append("JOIN organization AS o ON a.organization_id = o.id ");
+		sql.append("JOIN profession AS p ON a.profession_id = p.id ");
+		sql.append("WHERE ");
+		sql.append("	a.pid = ?; ");
+
+		Record record = Db.findFirst(sql.toString(),pid);
+		return record;
+	}
+
+	@Override
+	public boolean checkRegisterIdUnique(long registerId) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT COUNT(*) FROM archive WHERE register_id = ?;");
+		long count = Db.queryLong(sql.toString(),registerId);
+		boolean bool = (count == 1);
+		return bool;
+	}
+
+	@Override
+	public boolean checkPidUnique(String pid) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT COUNT(*) FROM archive WHERE pid = ?;");
+		long count = Db.queryLong(sql.toString(),pid);
+		boolean bool = (count == 1);
+		return bool;
+	}
+}

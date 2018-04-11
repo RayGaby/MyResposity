@@ -1,0 +1,165 @@
+package cn.gov.hrss.ln.stuenroll.setting;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Enumeration;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
+
+import com.jfinal.core.Controller;
+import com.jfinal.plugin.activerecord.Record;
+import com.jfinal.plugin.spring.Spring;
+import com.jfinal.upload.UploadFile;
+
+import jodd.util.Base64;
+
+@Spring("settingController")
+public class SettingController extends Controller implements I_SettingController {
+	private I_SettingService i_SettingService;
+
+	@Override
+	public void logout() {
+		// TODO Auto-generated method stub
+		// 收回Shiro认证令牌
+		// Subject subject = SecurityUtils.getSubject();
+		// subject.logout();
+		HttpSession session = getSession();
+		Enumeration<String> enumeration = session.getAttributeNames();
+		while (enumeration.hasMoreElements()) {
+			String name = enumeration.nextElement();
+			session.removeAttribute(name);
+		}
+		renderJson("logout", true);
+	}
+
+	@Override
+	public void setIcon() {
+		Long registerId = getSessionAttr("registerId");
+		if (registerId != null) {
+			UploadFile _file = this.getFile("icon");
+			File file = _file.getFile();
+			boolean bool = i_SettingService.setIcon(registerId, file);
+			if (bool) {
+				renderNull();
+			}
+		}
+	}
+
+	@Override
+	public void getIcon() {
+		// TODO Auto-generated method stub
+		Long registerId = getSessionAttr("registerId");
+		if (registerId != null) {
+			File file = i_SettingService.getIcon(registerId);
+			if (file != null) {
+				HttpServletResponse _response = this.getResponse();
+				ServletOutputStream _outputStream;
+				try {
+					_outputStream = _response.getOutputStream();
+					FileInputStream inputStream = new FileInputStream(file);
+					int b = 0;
+					byte[] buffer = new byte[512];
+					b = inputStream.read(buffer);
+					while (b != -1) {
+						_outputStream.write(buffer, 0, b);
+						b = inputStream.read(buffer);
+					}
+					inputStream.close();
+					_outputStream.close();
+					_outputStream.flush();
+				}
+				catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+			}
+			
+		}
+		this.renderNull();
+	}
+
+	@Override
+	public void getInfo() {
+		Record record = null;
+		Long registerId = getSessionAttr("registerId");
+		if (registerId != null) {
+			record = i_SettingService.getInfo(registerId);
+		}
+		renderJson("result", record);
+	}
+
+	@Override
+	public void getMoreInfo() {
+		Record record = null;
+		Long registerId = getSessionAttr("registerId");
+		if (registerId != null) {
+			record = i_SettingService.getMoreInfo(registerId);
+		}
+		renderJson("result", record);
+
+	}
+
+	@Override
+	public void setPassword() {
+		String info="访问错误,未登录的用户";
+		Long registerId = getSessionAttr("registerId");
+		if (registerId != null) {
+			String username = getPara("username");
+			String password = getPara("password");
+			String newpassword = getPara("newpassword");
+			info = i_SettingService.setPassword(registerId, username, password, newpassword);
+		}
+		renderJson("result", info);
+
+	}
+
+	@Override
+	public void setTel() {
+		boolean bool = false;
+		Long registerId = getSessionAttr("registerId");
+		if (registerId != null) {
+			long tel = getParaToLong("tel");
+			bool = i_SettingService.setTel(registerId, tel);
+		}
+		renderJson("result", bool);
+
+	}
+
+	@Override
+	public void setEmail() {
+		boolean bool = false;
+		Long registerId = getSessionAttr("registerId");
+		if (registerId != null) {
+			String email = getPara("email");
+			bool = i_SettingService.setEmail(registerId, email);
+		}
+		renderJson("result", bool);
+
+	}
+	@Override
+	public void setNickname() {
+		boolean bool = false;
+		Long registerId = getSessionAttr("registerId");
+		if (registerId != null) {
+			String nickname = getPara("nickname");
+			bool = i_SettingService.setNickname(registerId, nickname);
+		}
+		renderJson("result", bool);
+	}
+
+	public I_SettingService getI_SettingService() {
+		return i_SettingService;
+	}
+
+	public void setI_SettingService(I_SettingService i_SettingService) {
+		this.i_SettingService = i_SettingService;
+	}
+
+}

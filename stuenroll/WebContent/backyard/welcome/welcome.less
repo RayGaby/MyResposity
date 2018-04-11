@@ -1,0 +1,395 @@
+body {
+    background-color: #e7e7e7;
+}
+.main-container {
+    height: 1250/16rem;
+    padding: 15/16rem;
+    .chart-container {
+        height: inherit;
+        width: 70%;
+        float: left;
+        padding-right: 15/16rem;
+        .annual-statistics {
+            background-color: #fff;
+            height: 671/16rem;
+            margin-bottom: 15/16rem;
+            overflow: hidden;
+            .title {
+                color: #555;
+                font-size: 18/16rem;
+                font-weight: 500;
+                letter-spacing: 1/16rem;
+                margin-left: 20/16rem;
+                margin-top: 22/16rem;
+                margin-bottom: 22/16rem;
+            }
+            .step-list {
+                margin: 0 0 0 20/16rem;
+                padding: 0;
+                height: 36/16rem;
+                .step-item {
+                    float: left;
+                    text-align: center;
+                    color: #fff;
+                    padding-left: 30/16rem;
+                    padding-right: 30/16rem;
+                    height: 30/16rem;
+                    font-size: 14/16rem;
+                    letter-spacing: 1/16rem;
+                    line-height: 30/16rem;
+                    &:nth-child(1) {
+                        background-color: #2AB0DB;
+                        border-top-left-radius: 18/16rem;
+                        border-bottom-left-radius: 18/16rem;
+                    }
+                    &:nth-child(2) {
+                        background-color: #40B8DF;
+                    }
+                    &:nth-child(3) {
+                        background-color: #56C0E3;
+                    }
+                    &:nth-child(4) {
+                        background-color: #6CC8E7;
+                    }
+                    &:nth-child(5) {
+                        background-color: #82D0EB;
+                    }
+                    &:nth-child(6) {
+                        background-color: #98D8EF;
+                    }
+                }
+                .step-active {
+                    height: 36/16rem;
+                    line-height: 36/16rem;
+                    margin-top: -3/16rem;
+                }
+            }
+            .statistics {
+                margin-left: 20/16rem;
+                margin-right: 20/16rem;
+                margin-top: 20/16rem;
+                height: 530/16rem;
+            }
+        }
+        .organiztion-statistics {
+            .statistics-4 {
+                display: -moz-box;
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: -webkit-flex;
+                display: flex;
+                margin: 0 0 15/16rem;
+                padding: 0;
+                dt {
+                    width: 100%;
+                    flex-grow: 1;
+                    overflow: hidden;
+                    margin-right: 15/16rem;
+                    background-color: #fff;
+                    height: 350/16rem;
+                    &:last-child {
+                        margin-right: 0;
+                    }
+                    .statistics-4-item{
+                        height: inherit;
+                        width: 100%;
+                    }
+                }
+            }
+            .statistics-2 {
+                display: -moz-box;
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: -webkit-flex;
+                display: flex;
+                margin: 0;
+                padding: 0;
+                dt {
+                    background-color: #fff;
+                    height: 380/16rem;
+                    overflow: hidden;
+                    &:first-child {
+                        flex-grow: 2;
+                        width: 67%;
+                        margin-right: 15/16rem;
+                    }
+                    &:last-child {
+                        flex-grow: 1;
+                        width: 33%;
+                    }
+                    .statistics-2-item{
+                        height: inherit;
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+    .info-container {
+        height: 1430/16rem;
+        width: 30%;
+        background-color: #fff;
+        float: left;
+        padding: 15/16rem ;
+        .change{
+            cursor: pointer;
+        }
+        .section-title {
+            font-size: 18/16rem;
+            font-weight: 400;
+            margin-top: 0;
+            margin-bottom: 0;
+            height: 40/16rem;
+            line-height: 30/16rem;
+            border-bottom: solid #eaeaea 1/16rem;
+            color: #555;
+            letter-spacing: 1/16rem;
+        }
+        .monthly-analysis {
+            margin-bottom: 10/16rem;
+            overflow: hidden;
+            .header {
+                height: 30/16rem;
+                .header-title {
+                    float: left;
+                    display: inline-block;
+                    font-size: 22/16rem;
+                    font-weight: 400;
+                    margin-top: 0;
+                    margin-bottom: 0;
+                    height: 30/16rem;
+                    line-height: 30/16rem;
+                    margin-right: 10/16rem;
+                    color: #555;
+                    letter-spacing: 1/16rem;
+                }
+                .change {
+                    float: left;
+                    display: inline-block;
+                    height: 30/16rem;
+                    line-height: 30/16rem;
+                    font-size: 16/16rem;
+                    color: #999;
+                    text-decoration: none;
+                    margin-left: 4/16rem;
+                    margin-right: 4/16rem;
+                }
+                .sum {
+                    float: right;
+                    display: inline-block;
+                    font-size: 22/16rem;
+                    font-weight: 400;
+                    margin-top: 0;
+                    margin-bottom: 0;
+                    height: 30/16rem;
+                    line-height: 30/16rem;
+                    color: #00ADF0;
+                    letter-spacing: 1/16rem;
+                }
+            }
+            .analysis-title {
+                overflow: hidden;
+                margin-top: 10/16rem;
+                .orgnization {
+                    float: left;
+                    font-size: 14/16rem;
+                    color: #555;
+                    letter-spacing: 1/16rem;
+                }
+                .data {
+                    float: right;
+                    font-size: 14/16rem;
+                    color: #555;
+                    letter-spacing: 1/16rem;
+                }
+            }
+            .analysis-table{
+                overflow: hidden;
+                width: 100%;
+                margin-top: 5/16rem;
+                height: 70/16rem;
+            }
+            
+        }
+        .analysis-container {
+            clear: both;
+            .analysis-list {
+                margin: 0;
+                padding-left: 0;
+                padding-top: 10/16rem;
+                padding-bottom: 10/16rem;
+                list-style: none;
+                .analysis {
+                    @height: 65/16rem;
+                    height: @height;
+                    .analysis-entry {
+                        height: inherit;
+                        display: -moz-box;
+                        display: -webkit-box;
+                        display: -ms-flexbox;
+                        display: -webkit-flex;
+                        display: flex;
+                        align-items: center;
+                        position: relative;
+                        margin-top: 0;
+                        margin-bottom: 0;
+                        .analysis-arrow {
+                            margin-left: 10/16rem;
+                            margin-right: 10/16rem;
+                            color: #888;
+                            i {
+                                font-size: 10/16rem;
+                            }
+                        }
+                        .analysis-square {
+                            width: 45/16rem;
+                            height: 45/16rem;
+                            line-height: 45/16rem;
+                            text-align: center;
+                            display: inline-block;
+                            margin-left: 3/16rem;
+                            font-size: 22/16rem;
+                            color: #fff;
+                        }
+                        .analysis-green {
+                            background-color: #73D59C;
+                        }
+                        .analysis-blue {
+                            background-color: #1FC7FE;
+                        }
+                        .analysis-yellow {
+                            background-color: #FFCB5B;
+                        }
+                        .analysis-red {
+                            background-color: #EC5483;
+                        }
+                        .analysis-info {
+                            margin-left: 20/16rem;
+                        }
+                        .analysis-specifics {
+                            margin-top: 0;
+                            margin-bottom: 0;
+                            font-size: 14/16rem;
+                            font-weight: 600;
+                            color: #555;
+                            letter-spacing: 1/16rem;
+                        }
+                        .analysis-desc {
+                            margin-top: 0;
+                            margin-bottom: 0;
+                            font-size: 14/16rem;
+                            color: #888;
+                            letter-spacing: 1/16rem;
+                        }
+                        .analysis-number {
+                            position: absolute;
+                            top: 0;
+                            right: 10/16rem;
+                            line-height: @height;
+                            font-size: 18/16rem;
+                            color: #555;
+                            letter-spacing: 1/16rem;
+                        }
+                    }
+                }
+            }
+        }
+        .clock{
+            margin-top: 15/16rem;
+            margin-bottom: 25/16rem;
+            .date{
+                margin-top: 0;
+                margin-bottom: 0;
+                @height: 46/16rem;
+                height: @height;
+                line-height: @height;
+                background-color: #334F53;
+                color: #f5f5f5;
+                font-size: 18/16rem;
+                letter-spacing: 1/16rem;
+                border-top-left-radius: 5/16rem;
+                border-top-right-radius: 5/16rem;
+                padding-left: 20/16rem;
+            }
+            .time {
+                background-color: #1FBBA6;
+                font-size: 50/16rem;
+                color: #f5f5f5;
+                text-align: center;
+                border-bottom-left-radius: 5/16rem;
+                border-bottom-right-radius: 5/16rem;
+                .hour,
+                .minute,
+                .second {
+                    font-weight: bold;
+                }
+                .punctuation {
+                    font-weight: bold;
+                    position: relative;
+                    top: -3/16rem;
+                    color: #8EE0D4;
+                }
+            }
+        }
+        .message-container{
+            .message-list {
+                list-style: none;
+                padding-left: 0;
+                margin: 0;
+                .message {
+                    margin-bottom: 25/16rem;
+                    &:first-child {
+                        margin-top: 25/16rem;
+                    }
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                    .message-entry {
+                        display: -moz-box;
+                        display: -webkit-box;
+                        display: -ms-flexbox;
+                        display: -webkit-flex;
+                        display: flex;
+                        margin-top: 0;
+                        margin-bottom: 0;
+                        .message-photo {
+                            img {
+                                vertical-align: middle;
+                            }
+                        }
+                        .message-content {
+                            margin-left: 20/16rem;
+                            .message-header {
+                                overflow: hidden;
+                                .message-title {
+                                    float: left;
+                                    margin-top: 0;
+                                    margin-bottom: 0;
+                                    letter-spacing: 1/16rem;
+                                    font-size: 14/16rem;
+                                    display: inline-block;
+                                }
+                                .message-datetime {
+                                    float: right;
+                                    letter-spacing: 1/16rem;
+                                    font-size: 14/16rem;
+                                }
+                            }
+                            .message-desc {
+                                margin-top: 0;
+                                margin-bottom: 0;
+                                font-size: 13/16rem;
+                                height: 60/16rem;
+                                line-height: 20/16rem;
+                                overflow: hidden;
+                                color: #999;
+                                letter-spacing: 1/16rem;
+                                clear: both;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

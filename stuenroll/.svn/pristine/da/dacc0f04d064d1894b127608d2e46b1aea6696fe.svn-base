@@ -1,0 +1,70 @@
+package cn.gov.hrss.ln.stuenroll.db.mariadb;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.activerecord.Record;
+
+import cn.gov.hrss.ln.stuenroll.db.I_RolePermissionDao;
+
+public class RolePermissionDao implements I_RolePermissionDao {
+
+	@Override
+	public List<Record> searchRolePermission(HashMap map, long start, long length) {
+		ArrayList param = new ArrayList();
+
+		String name = (String) map.get("name");
+		// Long roleaccount = (Long) map.get("roleaccount");
+		// Long useraccount = (Long) map.get("useraccount");
+
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT ");
+		sql.append("	id, ");
+		sql.append("	name  ");
+		// sql.append(" COUNT(*) AS roleaccount, ");
+		// sql.append(" COUNT(*) AS useraccount ");
+		sql.append("FROM ");
+		sql.append("	role ");
+		// sql.append("LEFT JOIN role r ON rp.role_id = r.id ");
+		// sql.append("WHERE ");
+		// sql.append(" role_id = ? ");
+		sql.append("WHERE ");
+		sql.append("	1 = 1 ");
+		if (name != null && name.length() > 0) {
+			sql.append(" AND name = ? ");
+			param.add(name);
+		}
+		sql.append("LIMIT ?, ? ");
+		param.add(start);
+		param.add(length);
+
+		List<Record> list = Db.find(sql.toString(), param.toArray());
+		for (Record record : list) {
+
+			record.set("id", record.getLong("id").toString());
+		}
+		return list;
+	}
+
+	@Override
+	public int deleteRoleById(Long[] id) {
+		StringBuffer sql=new StringBuffer();
+		sql.append("DELETE ");
+		sql.append("FROM ");
+		sql.append("	role ");
+		sql.append("WHERE");
+		sql.append("	id IN ( ");
+		for(int i=0;i<id.length;i++){
+			sql.append("?");
+			if(i!=id.length-1){
+				sql.append(",");
+			}
+		}
+		sql.append(") ");
+		int i=Db.update(sql.toString(),id);
+		return i;
+	}
+
+}

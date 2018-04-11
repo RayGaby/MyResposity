@@ -1,0 +1,51 @@
+package cn.gov.hrss.ln.stuenroll.register;
+
+import com.jfinal.core.Controller;
+import com.jfinal.validate.Validator;
+
+public class registerValidator extends Validator {
+
+	@Override
+	protected void handleError(Controller controller) {
+		controller.redirect("/WebContent/backyard/register/register.html");
+	}
+
+	// TODO 修改正则表达式
+	@Override
+	protected void validate(Controller controller) {
+		String actionKey = this.getActionKey();
+		boolean equals = actionKey.equals("/register/registerSubmit");
+		if (equals) {
+			// 1.个人信息
+			validateRegex("name", "^[\u4e00-\u9fa5]{2,15}$", "errorMsg", "姓名错误");
+			validateRegex("sex", "\\S+", "errorMsg", "性别错误");
+			validateRegex("birthday", "^\\d{4}(\\-|\\/|\\.)\\d{1,2}\\1\\d{1,2}$", "errorMsg", "日期错误");
+			validateRegex("nation", "\\S+", "errorMsg", "民族错误");
+			// checkpid.java
+			validateRegex("healthy", "\\S+", "errorMsg", "错误");
+			validateRegex("politics", "\\S+", "errorMsg", "错误");
+			// 2. 教育信息
+			validateRegex("graduateSchool", "^[\u4e00-\u9fa5]{4,30}$", "errorMsg", "错误");
+			validateRegex("graduateYear", "^\\d{4}$", "errorMsg", "错误");
+			validateRegex("graduateDate", "^\\d{4}(\\-|\\/|\\.)\\d{1,2}\\1\\d{1,2}$", "errorMsg", "错误");
+			validateRegex("graduateSpecialty", "\\S+", "errorMsg", "错误");
+			validateRegex("education", "\\S+", "errorMsg", "错误");
+			// 3. 联系方式
+			// 居住地址
+			validateRegex("address", "^[a-zA-Z0-9\\u4e00-\\u9fa5]{5,50}$", "errorMsg", "错误");
+			// 户籍地址
+			validateRegex("householdAddress", "^[a-zA-Z0-9\\u4e00-\\u9fa5]{5,50}$", "errorMsg", "错误");
+			// 家庭地址
+			validateRegex("homeAddress", "^[a-zA-Z0-9\\u4e00-\\u9fa5]{5,50}$", "errorMsg", "错误");
+			validateRegex("tel", "^1\\d{10}$", "errorMsg", "错误");
+			validateRegex("email",
+					"[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\\w](?:[\\w-]*[\\w])?\\.)+[\\w](?:[\\w-]*[\\w])?",
+					"errorMsg", "错误");
+			validateRegex("homeTel", "^1\\d{10}$", "errorMsg", "错误");
+			// 4. 申报信息
+			validateRegex("specialty", "\\S+", "errorMsg", "错误");
+			validateRegex("orgnization", "\\S+", "errorMsg", "错误");
+			validateRegex("place", "\\S+", "errorMsg", "错误");
+		}
+	}
+}

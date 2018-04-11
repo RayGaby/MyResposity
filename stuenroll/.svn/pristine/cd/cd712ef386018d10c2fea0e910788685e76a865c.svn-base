@@ -1,0 +1,180 @@
+$(function() {
+
+	require.config({
+		paths : {
+			echarts : '../../js/echarts'
+		}
+	});
+
+	/**
+	 * 年度统计抽象接口
+	 */
+	var I_AnnualStatistics = function() {
+
+	}
+
+	I_AnnualStatistics.prototype.init = function() {
+		throw "抽象方法";
+	}
+
+	var AnnualStatistics = function() {
+
+	}
+
+	AnnualStatistics.prototype = new I_AnnualStatistics();
+
+	AnnualStatistics.prototype.init = function() {
+		// 如果不具备相应权限，下列程序将不会执行
+		if (!checkPermission(["3_4","4_4"])) {
+			return;
+		}
+
+		var date = new Date();
+		var year = date.getFullYear();
+		var statistics = $(".annual-statistics");
+		statistics.find(".year").text(year);
+
+		// 更新进度
+		var month = date.getMonth() + 1;
+		var items = statistics.find(".step-list .step-item");
+		items.removeClass("step-active");
+		if (month >= 1 && month < 3) {
+			$(items[0]).addClass("step-active");
+		}
+		else if (month >= 3 && month < 7) {
+			$(items[1]).addClass("step-active");
+		}
+		else if (month >= 7 && month < 9) {
+			$(items[2]).addClass("step-active");
+		}
+		else if (month >= 9 && month < 11) {
+			$(items[3]).addClass("step-active");
+		}
+		else if (month >= 11) {
+			$(items[4]).addClass("step-active");
+		}
+
+		// Ajax查询年度数据
+		$.ajax({
+			"url" : "/stuenroll/welcome/statisticsInYear",
+			"type" : "post",
+			"dataType" : "json",
+			"data" : {
+				"year" : year
+			},
+			"success" : function(json) {
+				var list_1 = json.statistics.报名数据;
+				var list_2 = json.statistics.审查数据;
+				var list_3 = json.statistics.学习数据;
+				var list_4 = json.statistics.中退数据;
+				var list_5 = json.statistics.就业数据;
+
+				require([ 'echarts', 'echarts/chart/line' ], function(ec) {
+					var myChart = ec.init($(".statistics")[0], 'macarons');
+
+					var option = {
+						tooltip : {
+							trigger : 'axis'
+						},
+						legend : {
+							data : [ '报名人数', '审查人数', '学习人数', '中退人数', '就业人数' ]
+						},
+						toolbox : {
+							show : true,
+							feature : {
+								saveAsImage : {
+									show : true
+								}
+							}
+						},
+						calculable : false,
+						xAxis : [ {
+							type : 'category',
+							boundaryGap : false,
+							data : [ '1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月' ]
+						} ],
+						yAxis : [ {
+							type : 'value'
+						} ],
+						series : [ {
+							name : '报名人数',
+							type : 'line',
+							stack : '总量',
+							itemStyle : {
+								normal : {
+									areaStyle : {
+										type : 'default'
+									}
+								}
+							},
+							data : list_1
+						}, {
+							name : '审查人数',
+							type : 'line',
+							stack : '总量',
+							itemStyle : {
+								normal : {
+									areaStyle : {
+										type : 'default'
+									}
+								}
+							},
+							data : list_2
+						}, {
+							name : '学习人数',
+							type : 'line',
+							stack : '总量',
+							itemStyle : {
+								normal : {
+									areaStyle : {
+										type : 'default'
+									}
+								}
+							},
+							data : list_3
+						}, {
+							name : '中退人数',
+							type : 'line',
+							stack : '总量',
+							itemStyle : {
+								normal : {
+									areaStyle : {
+										type : 'default'
+									}
+								}
+							},
+							data : list_4
+						}, {
+							name : '就业人数',
+							type : 'line',
+							stack : '总量',
+							itemStyle : {
+								normal : {
+									areaStyle : {
+										type : 'default'
+									}
+								}
+							},
+							data : list_5
+						} ]
+					};
+
+					// 为echarts对象加载数据
+					myChart.setOption(option);
+				});
+			},
+			"error" : function() {
+				toastr.error("系统异常");
+			}
+		});
+	}
+
+	function factory(key) {
+		if (key == "AnnualStatistics") {
+			return new AnnualStatistics();
+		}
+	}
+
+	var annualStatistics = factory("AnnualStatistics");
+	annualStatistics.init();
+});

@@ -1,0 +1,35 @@
+package cn.gov.hrss.ln.stuenroll.userinfo;
+
+import java.util.HashMap;
+import java.util.List;
+
+import com.jfinal.aop.Before;
+import com.jfinal.plugin.activerecord.Record;
+import com.jfinal.plugin.activerecord.tx.Tx;
+
+import cn.gov.hrss.ln.stuenroll.db.I_UserInfoDao;
+
+public class UserInfoService implements I_UserInfoService {
+	private I_UserInfoDao i_UserInfoDao;
+
+	@Override
+	public List<Record> searchUserInfo(HashMap map, long start, long length) {
+		List<Record> list = i_UserInfoDao.searchUserInfo(map, start, length);
+		return list;
+	}
+	@Before(Tx.class)
+	@Override
+	public int deleteUserInfo(Long[] id) {
+		int i=i_UserInfoDao.deleteUserInfo(id);
+		return i;
+	}
+	public I_UserInfoDao getI_UserInfoDao() {
+		return i_UserInfoDao;
+	}
+
+	public void setI_UserInfoDao(I_UserInfoDao i_UserInfoDao) {
+		this.i_UserInfoDao = i_UserInfoDao;
+	}
+
+
+}
